@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Enums;
 using UnityEngine;
+using Microsoft.Unity.VisualStudio.Editor;
 
 [CreateAssetMenu(fileName = "Card_", menuName = "Create/NewCard")]
 public class CardData : ScriptableObject
@@ -20,4 +21,6 @@ public class CardData : ScriptableObject
     public type cardType;
     
     public int attackPower;
+    
+    public Sprite art;
 }

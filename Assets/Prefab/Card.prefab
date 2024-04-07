@@ -484,6 +484,7 @@ MonoBehaviour:
   cardSlot: 0
   cardType: 0
   attackPower: 0
+  art: {fileID: 9161095751068518372}
 --- !u!1 &7849872849220578396
 GameObject:
   m_ObjectHideFlags: 0

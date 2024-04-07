@@ -42,6 +42,8 @@ public class Player1CardManager : MonoBehaviour
         {
             GameObject g = Instantiate(newCardPrefab, handPlayer1);
             //set the Card to the CardData or the cloned prefav
+            g.GetComponent<Card>().cardData = currentPlayer1CardsInDeck[i];
+            g.name = g.GetComponent<Card>().cardData.cardName;
             //set the cards name in hierarchy
         }
 
