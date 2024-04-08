@@ -11,15 +11,11 @@ public class Player1CardManager : MonoBehaviour
     #region Variables
     public turn currentTurn;
 
-    public GameObject newCardPrefab;
+    public GameObject cardPrefab;
     
-    public Transform deckPlayer1;
-    public Transform graveyardPlayer1;
-    public Transform handPlayer1;
-
-    [Header ("Cards Player 1")]
-    public List<CardData> currentPlayer1CardsInDeck = new List<CardData>();
-    public List<CardData> totalPlayer1Cards = new List<CardData>();
+    public GameObject deckPlayer1;
+    public GameObject graveyardPlayer1;
+    public GameObject handPlayer1;
 
     [Header ("Hand Counter")]
     public int startingHandSize = 10;
@@ -32,83 +28,40 @@ public class Player1CardManager : MonoBehaviour
     public TextMeshProUGUI discardTextPlayer1;
     #endregion
 
+    public void DrawCard(int amount)
+    {
+        for (int i = 0; i < amount; i++)
+        {           
+            GameObject g = Instantiate(cardPrefab, handPlayer1.transform);
+            //set the Card to the CardData or the cloned prefav
+            g.GetComponent<Card>().cardData = deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck[i];
+            deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck.RemoveAt(i);
+            //set the cards name in hierarchy
+            g.name = g.GetComponent<Card>().cardData.cardName;            
+        }
+    }
 
+    static void ShuffleDeck(List<CardData> deck)
+    {
+        System.Random rng = new System.Random();  
+        int n = deck.Count;  
+        while (n > 1)
+        {
+            n--;
+            int k = rng.Next(n + 1);
+            CardData value = deck[k];
+            deck[k] = deck[n];
+            deck[n] = value;
+        }
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//     public void Start()
-//     {
-//         isDrawing = true;
-//         LoadDeck();
-//     }
-//     private void LoadDeck()
-//     {
-//         for (int i = 0; i < currentPlayer1CardsInDeck.Count; i++)
-//         {
-//             GameObject g = Instantiate(newCardPrefab, deckPlayer1);
-//             //set the Card to the CardData or the cloned prefav
-//             g.GetComponent<Card>().cardData = currentPlayer1CardsInDeck[i];
-//             //set the cards name in hierarchy
-//             g.name = g.GetComponent<Card>().cardData.cardName;            
-//         }
-
-//         UpdateDisplay();
-
-//         InitialDrawForTurn();
-//     }
-
-//     public void UpdateDisplay()
-//     {
-//         deckTextPlayer1.text = deckPlayer1.childCount.ToString();
-//         discardTextPlayer1.text = graveyardPlayer1.childCount.ToString();
-
-//         for (int i = 0; i < handPlayer1.childCount; i++)
-//         {
-//                     //quitar lo mas seguro
-//         }
-//     }
-//     //first time we draw cards each turn
-//     public void InitialDrawForTurn()
-//     {
-//         currentTurn = turn.Player1;
-
-//         while (handPlayer1.childCount < startingHandSize)
-//         {
-//             DrawCard();
-//         }
-//     }
-//     public void DrawCard()
-//     {
-//         if (deckPlayer1.childCount > 0)
-//         {
-//             int r = Random.Range(0, deckPlayer1.childCount);
-//             deckPlayer1.GetChild(r).transform.parent = handPlayer1;
-//         }
-//         else if (deckPlayer1.childCount <= 0)
-//         {
-//             //u lose, and change round
-//         }
-//     }
-//     public void ResetCardTransform(Transform card)
-//     {
-//         card.localPosition = Vector2.zero;
-//     }
+     public void Start()
+     {
+        ShuffleDeck(deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck);
+        DrawCard(10);
+     }
+     public void Update()
+     {
+        deckTextPlayer1.text = deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck.Count.ToString();
+     }
  }

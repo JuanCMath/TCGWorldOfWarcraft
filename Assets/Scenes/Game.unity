@@ -123,50 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &8275554
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8275556}
-  - component: {fileID: 8275557}
-  m_Layer: 0
-  m_Name: CardDatabase
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8275556
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8275554}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -45.657104, y: 244.95624, z: 1.6888746}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1681513803}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8275557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8275554}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d8702b6130ec5646879a7cb3cef8d20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &69520766
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,7 +820,7 @@ GameObject:
   - component: {fileID: 216967029}
   - component: {fileID: 216967028}
   m_Layer: 5
-  m_Name: Hand P1
+  m_Name: Hand p1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -981,7 +937,7 @@ GameObject:
   - component: {fileID: 322155616}
   - component: {fileID: 322155614}
   m_Layer: 5
-  m_Name: Lider P1
+  m_Name: Lider p1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1516,7 +1472,7 @@ GameObject:
   - component: {fileID: 737718823}
   - component: {fileID: 737718822}
   m_Layer: 5
-  m_Name: Aumento R P1
+  m_Name: Aumento R p1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1906,6 +1862,7 @@ Transform:
   m_Children:
   - {fileID: 1651074406}
   - {fileID: 599532842}
+  - {fileID: 1438966710}
   m_Father: {fileID: 180033779}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &858685630
@@ -1921,48 +1878,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTurn: 0
-  newCardPrefab: {fileID: 5710362436332554621, guid: d85dbb108131e9941b6f1711e1d924a1, type: 3}
-  deckPlayer1: {fileID: 1438966710}
-  graveyardPlayer1: {fileID: 843968477}
-  handPlayer1: {fileID: 216967026}
-  currentPlayer1CardsInDeck:
-  - {fileID: 11400000, guid: 0b236a26109de3d469566667fc56177b, type: 2}
-  - {fileID: 11400000, guid: 00a2e8096c1501241b427d5dc786f0cf, type: 2}
-  - {fileID: 11400000, guid: 3a9656ce74011df42824ab631571801a, type: 2}
-  - {fileID: 11400000, guid: 991de1afea1f71c4a84f134eafcb8914, type: 2}
-  - {fileID: 11400000, guid: 9aea3f07d6ee53f4f8639236676ea185, type: 2}
-  - {fileID: 11400000, guid: ed526612c0364074d93ae24ce7afdf9b, type: 2}
-  - {fileID: 11400000, guid: 95209e99c77206f42b9034b9ac9c3458, type: 2}
-  - {fileID: 11400000, guid: 8a7d6bc860d8faa4892a181b732eb21a, type: 2}
-  - {fileID: 11400000, guid: 9a032c4e47e8bd2489b268767565d021, type: 2}
-  - {fileID: 11400000, guid: eaac5e34aa241e140b52a920546c6715, type: 2}
-  - {fileID: 11400000, guid: 881a13d1306bce8418bc0d2d6891570e, type: 2}
-  - {fileID: 11400000, guid: 725bfc72d97cc5d48ba5922476c57694, type: 2}
-  - {fileID: 11400000, guid: dfdf8257f691c7a42aed6cd8c9c8568a, type: 2}
-  - {fileID: 11400000, guid: 51ee36cabb123cf4ab77df6996e1477c, type: 2}
-  - {fileID: 11400000, guid: e1617867d63493844ae81770dbd06c6a, type: 2}
-  - {fileID: 11400000, guid: 205cbea0018dba74aafafb4c1ca44582, type: 2}
-  - {fileID: 11400000, guid: 4a40a8932b069f34dbe84c4d514e759d, type: 2}
-  - {fileID: 11400000, guid: 9f8e9d0b247773548915bcff29114aa1, type: 2}
-  totalPlayer1Cards:
-  - {fileID: 11400000, guid: 0b236a26109de3d469566667fc56177b, type: 2}
-  - {fileID: 11400000, guid: 00a2e8096c1501241b427d5dc786f0cf, type: 2}
-  - {fileID: 11400000, guid: 3a9656ce74011df42824ab631571801a, type: 2}
-  - {fileID: 11400000, guid: 991de1afea1f71c4a84f134eafcb8914, type: 2}
-  - {fileID: 11400000, guid: 9aea3f07d6ee53f4f8639236676ea185, type: 2}
-  - {fileID: 11400000, guid: ed526612c0364074d93ae24ce7afdf9b, type: 2}
-  - {fileID: 11400000, guid: 95209e99c77206f42b9034b9ac9c3458, type: 2}
-  - {fileID: 11400000, guid: 8a7d6bc860d8faa4892a181b732eb21a, type: 2}
-  - {fileID: 11400000, guid: 9a032c4e47e8bd2489b268767565d021, type: 2}
-  - {fileID: 11400000, guid: eaac5e34aa241e140b52a920546c6715, type: 2}
-  - {fileID: 11400000, guid: 881a13d1306bce8418bc0d2d6891570e, type: 2}
-  - {fileID: 11400000, guid: 725bfc72d97cc5d48ba5922476c57694, type: 2}
-  - {fileID: 11400000, guid: dfdf8257f691c7a42aed6cd8c9c8568a, type: 2}
-  - {fileID: 11400000, guid: 51ee36cabb123cf4ab77df6996e1477c, type: 2}
-  - {fileID: 11400000, guid: e1617867d63493844ae81770dbd06c6a, type: 2}
-  - {fileID: 11400000, guid: 205cbea0018dba74aafafb4c1ca44582, type: 2}
-  - {fileID: 11400000, guid: 4a40a8932b069f34dbe84c4d514e759d, type: 2}
-  - {fileID: 11400000, guid: 9f8e9d0b247773548915bcff29114aa1, type: 2}
+  cardPrefab: {fileID: 5710362436332554621, guid: d85dbb108131e9941b6f1711e1d924a1, type: 3}
+  deckPlayer1: {fileID: 1438966709}
+  graveyardPlayer1: {fileID: 843968476}
+  handPlayer1: {fileID: 216967025}
   startingHandSize: 10
   maxHandSize: 10
   isDrawing: 0
@@ -2215,8 +2134,9 @@ GameObject:
   - component: {fileID: 1217779662}
   - component: {fileID: 1217779661}
   - component: {fileID: 1217779660}
+  - component: {fileID: 1217779664}
   m_Layer: 5
-  m_Name: Aumento M P1
+  m_Name: Aumento M p1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2319,6 +2239,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1217779657}
   m_CullTransparentMesh: 1
+--- !u!114 &1217779664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217779657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f9c5491b86f0854e87147b3552ddeb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1219823143
 GameObject:
   m_ObjectHideFlags: 0
@@ -2652,7 +2584,7 @@ GameObject:
   - component: {fileID: 1331299084}
   - component: {fileID: 1331299083}
   m_Layer: 5
-  m_Name: Aumento S P1
+  m_Name: Aumento S p1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2782,16 +2714,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1438966709}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10.584203}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1651074406}
+  m_Children:
+  - {fileID: 1710099803}
+  m_Father: {fileID: 858685629}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 395.04, y: -335.1876}
+  m_AnchoredPosition: {x: 361.62936, y: -328.49973}
   m_SizeDelta: {x: 78.45, y: 120.9647}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1438966711
@@ -2888,6 +2821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d8702b6130ec5646879a7cb3cef8d20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aspectosDeck: []
 --- !u!1 &1453628168
 GameObject:
   m_ObjectHideFlags: 0
@@ -3015,7 +2949,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1651074406}
   m_Layer: 5
-  m_Name: Panels P1
+  m_Name: Panels p1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3042,8 +2976,6 @@ RectTransform:
   - {fileID: 171783804}
   - {fileID: 2025033407}
   - {fileID: 1988740574}
-  - {fileID: 1710099803}
-  - {fileID: 1438966710}
   - {fileID: 843968477}
   m_Father: {fileID: 858685629}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3085,7 +3017,6 @@ Transform:
   - {fileID: 2018725610}
   - {fileID: 180033779}
   - {fileID: 1742807367}
-  - {fileID: 8275556}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1681513804
@@ -3100,6 +3031,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d4eeb23682c4a84994b7c654fec9a9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
 --- !u!1 &1710099802
 GameObject:
   m_ObjectHideFlags: 0
@@ -3112,7 +3044,7 @@ GameObject:
   - component: {fileID: 1710099805}
   - component: {fileID: 1710099804}
   m_Layer: 5
-  m_Name: Cartas
+  m_Name: '#cartas'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3130,11 +3062,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1651074406}
+  m_Father: {fileID: 1438966710}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 538.24005, y: -277.3876}
+  m_AnchoredPosition: {x: 143.20001, y: 57.799988}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1710099804

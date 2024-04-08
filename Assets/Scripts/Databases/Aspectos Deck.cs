@@ -9,12 +9,12 @@ public class AspectosDeck : MonoBehaviour
 {
     //Coleccion de cartas
     public List<CardData> aspectosDeck = new List<CardData>();
-
+    
     public void Awake()
     {
         LoadDeck();
     }
-    public void LoadDeck()
+    private void LoadDeck()
     {
         CardData[] aspectosCards = Resources.LoadAll<CardData>("Scriptable Objects/Aspectos Deck");
         aspectosDeck.AddRange(aspectosCards);
