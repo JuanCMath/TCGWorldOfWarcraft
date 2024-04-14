@@ -82,6 +82,7 @@
     <Compile Include="Assets\Scripts\Panels Scripts\DropZone C P2.cs" />
     <Compile Include="Assets\Scripts\CardData.cs" />
     <Compile Include="Assets\Scripts\Manager\Player 1 Card Manager.cs" />
+    <Compile Include="Assets\Scripts\Databases\Arthas Deck.cs" />
     <Compile Include="Assets\Scripts\Databases\Enums.cs" />
   </ItemGroup>
   <ItemGroup>

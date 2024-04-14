@@ -29,9 +29,18 @@ namespace Enums
         Despeje,
         Señuelo
     }
-    public enum turn
+    //public enum turn
+    //{
+     //   Player1,
+    //    Player2
+   // }
+    public enum gameTracker
     {
-        Player1,
-        Player2
+        Starting, 
+        Playing, 
+        Turn1, 
+        Turn2,
+        FinalOfRound, 
+        GameOver
     }
 }

@@ -20,4 +20,4 @@ MonoBehaviour:
   cardSlot: 0
   cardType: 0
   attackPower: 0
-  art: {fileID: 0}
+  art: {fileID: 21300000, guid: d81ca15a3c92bce4193e1f1661e9b860, type: 3}

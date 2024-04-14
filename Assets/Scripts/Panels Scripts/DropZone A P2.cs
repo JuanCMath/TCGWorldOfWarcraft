@@ -36,19 +36,23 @@ public class DropZoneAP2 : MonoBehaviour, IDropHandler, IPointerEnterHandler, IP
         }
         public void OnDrop(PointerEventData eventData) //Metodo que se inicia cuando un onjeto se dropea en la zona
         {
-            Debug.Log(eventData.pointerDrag.name + "OnDrop to " + gameObject.name);
+            //Debug.Log(eventData.pointerDrag.name + "OnDrop to " + gameObject.name);
 
             Draggable  draggedComponent = eventData.pointerDrag.GetComponent<Draggable>();
             //Si tienes algo agarrado y Si el panel no esta lleno y Si la carta es del mismo tipo del panel entonces dropear
-            if (draggedComponent != null && GameManager.player1 == true && maxCards >= this.transform.childCount)
+            if (draggedComponent != null && GameManager.player2 == true && maxCards >= this.transform.childCount)
             {
-                if (GameManager.player2 == true)
+                if (GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable > 0)
                 {
-                    if (eventData.pointerDrag.GetComponent<CardData>().cardType == type.Aumento )
+                    if (GameManager.player2 == true)
                     {
-                        draggedComponent.parentToReturnTo = this.transform;
-                    }      
-                } 
-            }
+                        if (eventData.pointerDrag.GetComponent<Card>().cardType == type.Aumento )
+                        {
+                            draggedComponent.parentToReturnTo = this.transform;
+                            GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable --;
+                        }      
+                    } 
+                }
+            }    
         }
 }

@@ -12,7 +12,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     GameObject placeholder = null;
     public void OnBeginDrag(PointerEventData eventData)                                //Inicia cuando el objeto se agarra
     {
-        Debug.Log("On Being Drag");
+        //Debug.Log("On Being Drag");
 
         placeholder = new GameObject();                                                 // Creando un objeto que se quedara en el lugar de la carta agarrada
         placeholder.transform.SetParent(this.transform.parent);
@@ -58,12 +58,12 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     }
     public void OnEndDrag(PointerEventData eventData)  //Inicia cuando el objeto es soltado
     {
-        Debug.Log("On End Drag");
+        //Debug.Log("On End Drag");
         
         this.transform.SetParent(parentToReturnTo);
         this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
         GetComponent<CanvasGroup>().blocksRaycasts =  true;
 
-        Destroy(placeholder);
+        Destroy(placeholder);        
     }
 }

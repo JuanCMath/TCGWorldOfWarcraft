@@ -43,13 +43,18 @@ public class DropZoneSP1 : MonoBehaviour, IDropHandler, IPointerEnterHandler, IP
             //Si tienes algo agarrado y Si el panel no esta lleno y Si la carta es del mismo tipo del panel entonces dropear
             if (draggedComponent != null && GameManager.player1 == true && maxCards >= this.transform.childCount)
             {
-                if (GameManager.player1 == true)
+                if (GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable > 0)
                 {
-                    if (eventData.pointerDrag.GetComponent<Card>().cardSlot == slot.S || eventData.pointerDrag.GetComponent<Card>().cardSlot == slot.MS || eventData.pointerDrag.GetComponent<Card>().cardSlot == slot.RS || eventData.pointerDrag.GetComponent<Card>().cardSlot == slot.MRS)
+                    if (GameManager.player1 == true)
                     {
-                        draggedComponent.parentToReturnTo = this.transform;
-                    }  
+                        if (eventData.pointerDrag.GetComponent<Card>().cardSlot == slot.S || eventData.pointerDrag.GetComponent<Card>().cardSlot == slot.MS || eventData.pointerDrag.GetComponent<Card>().cardSlot == slot.RS || eventData.pointerDrag.GetComponent<Card>().cardSlot == slot.MRS)
+                        {
+                            draggedComponent.parentToReturnTo = this.transform;
+                            GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable --;                     
+                        }
+                    }      
                 }                                     
             }
+            
         }
 }

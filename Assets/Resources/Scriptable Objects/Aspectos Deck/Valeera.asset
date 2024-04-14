@@ -17,7 +17,7 @@ MonoBehaviour:
   cardFaction: 0
   cardDescription: 
   isHero: 0
-  cardSlot: 0
+  cardSlot: 7
   cardType: 3
   attackPower: 0
   art: {fileID: 21300000, guid: 4efa5a92c68b8854aa4c7f26c00dcb0e, type: 3}

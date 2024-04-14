@@ -41,14 +41,18 @@ public class DropZoneRP2 : MonoBehaviour, IDropHandler, IPointerEnterHandler, IP
     
             Draggable  draggedComponent = eventData.pointerDrag.GetComponent<Draggable>();
             //Si tienes algo agarrado y Si el panel no esta lleno y Si la carta es del mismo tipo del panel entonces dropear
-            if (draggedComponent != null && GameManager.player1 == true && maxCards >= this.transform.childCount)
+            if (draggedComponent != null && GameManager.player2 == true && maxCards >= this.transform.childCount)
             {
-                if (GameManager.player2 == true)
+                if (GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable > 0)
                 {
-                    if (eventData.pointerDrag.GetComponent<Card>().cardSlot == slot.R || eventData.pointerDrag.GetComponent<Card>().cardSlot == slot.MR || eventData.pointerDrag.GetComponent<Card>().cardSlot == slot.RS || eventData.pointerDrag.GetComponent<Card>().cardSlot == slot.MRS)
+                    if (GameManager.player2 == true)
                     {
-                        draggedComponent.parentToReturnTo = this.transform;
-                    }   
+                        if (eventData.pointerDrag.GetComponent<Card>().cardSlot == slot.R || eventData.pointerDrag.GetComponent<Card>().cardSlot == slot.MR || eventData.pointerDrag.GetComponent<Card>().cardSlot == slot.RS || eventData.pointerDrag.GetComponent<Card>().cardSlot == slot.MRS)
+                        {
+                            draggedComponent.parentToReturnTo = this.transform;
+                            GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable --;
+                        }
+                    }       
                 }                                    
             }
         }
