@@ -48,6 +48,14 @@ public class Player1Manager : MonoBehaviour
         
     }
 
+    //Retorna una carta seleccionada al deck
+    public void ReturnCardToDeck(GameObject card)  //Funciona???? to be continued
+    {
+        string name = card.GetComponent<Card>().cardName;
+        Destroy(card);
+        deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck.Add(Resources.Load<CardData>("Scriptable Objects/Aspectos Deck" + name));
+    }
+
     //Robar Carta del Deck
     public void DrawCard(int amount)       
     {

@@ -10,6 +10,7 @@ public class AspectosDeck : MonoBehaviour
     //Coleccion de cartas
     public List<CardData> aspectosDeck = new List<CardData>();
     
+    
     public void Awake()
     {
         LoadDeck();
