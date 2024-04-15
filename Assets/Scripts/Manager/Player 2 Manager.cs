@@ -32,20 +32,50 @@ public class Player2Manager : MonoBehaviour
     public TextMeshProUGUI discardTextPlayer2;
     #endregion
 
+    public void CleanField()
+    {
+        GameObject[] cartas = GameObject.FindGameObjectsWithTag("Card Player2");
+
+        foreach (GameObject carta in cartas)
+        {
+            //Si esta en la mano no la destruyas
+            if (carta.transform.IsChildOf(handPlayer2.transform)) continue;
+
+            //Si no esta en la mano destruyela, Aqui podriamos poner despues que se vayan al cementerio
+            carta.transform.SetParent(graveyardPlayer2.transform);
+            carta.transform.localPosition = new Vector3(0,0,0);
+        }       
+    }
+
     //Robar carta del Deck
     public void DrawCard(int amount)
     {
-        for (int i = 0; i < amount; i++)
+        for (int i = 0; i < amount; i++)     
         {   
-            //Instanciando la carta con el prefab y en la posicion de la mano        
-            GameObject g = Instantiate(cardPrefab2, handPlayer2.transform);
-            //Dandole a cada prefab de carta los datos de los scriptable objects
-            g.GetComponent<Card>().cardData = deckPlayer2.GetComponent<ArthasDeck>().arthasDeck[i];
-            //Eliminando la carta robada
-            deckPlayer2.GetComponent<ArthasDeck>().arthasDeck.RemoveAt(i);
-            //Dandole un nombre a la carta en el inspector
-            g.name = g.GetComponent<Card>().cardData.cardName;      
-        }
+            if (handPlayer2.transform.childCount < 10)
+            {       
+                //Instanciando la carta con el prefab y en la posicion de la mano
+                GameObject g = Instantiate(cardPrefab2, handPlayer2.transform);                         
+                //Dandole a cada prefab de carta los datos de los scriptable objects
+                g.GetComponent<Card>().cardData = deckPlayer2.GetComponent<ArthasDeck>().arthasDeck[i];
+                //Eliminando la carta robada
+                deckPlayer2.GetComponent<ArthasDeck>().arthasDeck.RemoveAt(i);                          
+                //Dandole un nombre a la carta en el inspector
+                g.name = g.GetComponent<Card>().cardData.cardName;  
+            }
+            else
+            {
+                //Instanciando la carta con el prefab y en la posicion de la mano
+                GameObject g = Instantiate(cardPrefab2, graveyardPlayer2.transform);
+                g.transform.localPosition = new Vector3(0,0,0);                         
+                //Dandole a cada prefab de carta los datos de los scriptable objects
+                g.GetComponent<Card>().cardData = deckPlayer2.GetComponent<ArthasDeck>().arthasDeck[i];
+                //Eliminando la carta robada
+                deckPlayer2.GetComponent<ArthasDeck>().arthasDeck.RemoveAt(i);                          
+                //Dandole un nombre a la carta en el inspector
+                g.name = g.GetComponent<Card>().cardData.cardName;
+            }                   
+        } 
     }
 
     //Barajear el Deck
@@ -88,5 +118,6 @@ public class Player2Manager : MonoBehaviour
      public void Update()
      {
         deckTextPlayer2.text = deckPlayer2.GetComponent<ArthasDeck>().arthasDeck.Count.ToString();
+        discardTextPlayer2.text = (graveyardPlayer2.transform.childCount - 1).ToString();
      }
  }

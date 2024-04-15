@@ -32,20 +32,51 @@ public class Player1Manager : MonoBehaviour
     public TextMeshProUGUI discardTextPlayer1;
     #endregion
 
+    public void CleanField()
+    {
+        GameObject[] cartas = GameObject.FindGameObjectsWithTag("Card Player1");
+
+        foreach (GameObject carta in cartas)
+        {
+            //Si esta en la mano no la destruyas
+            if (carta.transform.IsChildOf(handPlayer1.transform)) continue;
+
+            //Si no esta en la mano destruyela, Aqui podriamos poner despues que se vayan al cementerio
+            carta.transform.SetParent(graveyardPlayer1.transform);
+            carta.transform.localPosition = new Vector3(0,0,0);
+        }
+        
+    }
+
     //Robar Carta del Deck
     public void DrawCard(int amount)       
     {
         for (int i = 0; i < amount; i++)     
-        {           
-            //Instanciando la carta con el prefab y en la posicion de la mano
-            GameObject g = Instantiate(cardPrefab1, handPlayer1.transform);                         
-            //Dandole a cada prefab de carta los datos de los scriptable objects
-            g.GetComponent<Card>().cardData = deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck[i];
-            //Eliminando la carta robada
-            deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck.RemoveAt(i);                          
-            //Dandole un nombre a la carta en el inspector
-            g.name = g.GetComponent<Card>().cardData.cardName;                         
-        }
+        {   
+            if (handPlayer1.transform.childCount < 10)
+            {       
+                //Instanciando la carta con el prefab y en la posicion de la mano
+                GameObject g = Instantiate(cardPrefab1, handPlayer1.transform);                         
+                //Dandole a cada prefab de carta los datos de los scriptable objects
+                g.GetComponent<Card>().cardData = deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck[i];
+                //Eliminando la carta robada
+                deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck.RemoveAt(i);                          
+                //Dandole un nombre a la carta en el inspector
+                g.name = g.GetComponent<Card>().cardData.cardName;  
+            }
+            else
+            {
+                //Instanciando la carta con el prefab y en la posicion de la mano
+                GameObject g = Instantiate(cardPrefab1, graveyardPlayer1.transform);           
+                g.transform.localPosition = new Vector3(0,0,0);              
+                //Dandole a cada prefab de carta los datos de los scriptable objects
+                g.GetComponent<Card>().cardData = deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck[i];
+                //Eliminando la carta robada
+                deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck.RemoveAt(i);                          
+                //Dandole un nombre a la carta en el inspector
+                g.name = g.GetComponent<Card>().cardData.cardName;
+            }                   
+        }     
     }
 
     //Barajear el Deck
@@ -89,5 +120,6 @@ public class Player1Manager : MonoBehaviour
     public void Update()
     {
        deckTextPlayer1.text = deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck.Count.ToString();
+       discardTextPlayer1.text = (graveyardPlayer1.transform.childCount - 1).ToString();
     }
  }

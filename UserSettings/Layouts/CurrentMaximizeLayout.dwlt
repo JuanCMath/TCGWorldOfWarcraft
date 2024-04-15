@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 17584
+  controlID: 39
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 17585
+  controlID: 40
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 17586
+  controlID: 41
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -192,8 +192,8 @@ MonoBehaviour:
     y: 0
     width: 228.8
     height: 528.8
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 6}
   m_Panes:
   - {fileID: 6}
@@ -235,10 +235,10 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: da070000
+      scrollPos: {x: 0, y: 105.20001}
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 646cffffc0f4ffff90f5ffff1afbffffcc610000d6610000e4610000086200004c6200008a620000aa620000b6620000c8620000ec62000000630000
+      m_ExpandedIDs: 1afbffffe66100001262000018620000526200005c6200007e620000e0620000e46200001063000048630000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -658,9 +658,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 1078.7246, y: 549.8221, z: 13.725015}
+    m_Target: {x: 1066.2754, y: 539.07117, z: 13.110162}
     speed: 2
-    m_Value: {x: 1078.7246, y: 549.8221, z: 13.725015}
+    m_Value: {x: 1066.2754, y: 539.07117, z: 13.110162}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -710,9 +710,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 516.87354
+    m_Target: 589.6697
     speed: 2
-    m_Value: 516.87354
+    m_Value: 589.6697
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -809,7 +809,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Panels Scripts
+    - Assets/Scripts/Manager
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -817,16 +817,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 46
   m_LastFolders:
-  - Assets/Scripts/Panels Scripts
+  - Assets/Scripts/Manager
   m_LastFoldersGridSize: 46
   m_LastProjectPath: D:\Unity\TCGWorldOfWarcraft
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 91}
-    m_SelectedIDs: 7a640000
-    m_LastClickedID: 25722
-    m_ExpandedIDs: 00000000526400005464000056640000586400005a6400005c6400005e640000606400007264000000ca9a3b
+    scrollPos: {x: 0, y: 43}
+    m_SelectedIDs: a4640000
+    m_LastClickedID: 25764
+    m_ExpandedIDs: 000000007e64000080640000826400008464000086640000886400008a6400008c64000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -854,7 +854,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000526400005464000056640000586400005a6400005c6400005e6400006064000000ca9a3b
+    m_ExpandedIDs: 000000007e64000080640000826400008464000086640000886400008a6400008c640000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -879,8 +879,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: da070000
-    m_LastClickedInstanceID: 2010
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000000000007c610000d461000038660000d8610000
     m_RenameOverlay:
@@ -963,8 +963,8 @@ MonoBehaviour:
     y: 0
     width: 334.40002
     height: 770.8
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}

@@ -504,16 +504,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 170981884}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 2.6540422}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 137599600}
-  m_Father: {fileID: 376274186}
+  m_Father: {fileID: 334112063}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 486.43967, y: 156.08289}
+  m_AnchoredPosition: {x: 308.08395, y: 427.31}
   m_SizeDelta: {x: 78.449, y: 118.3381}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &170981886
@@ -763,8 +763,8 @@ RectTransform:
   - {fileID: 858685629}
   - {fileID: 334112063}
   - {fileID: 599532842}
-  - {fileID: 1202475667}
   - {fileID: 2045945879}
+  - {fileID: 1202475667}
   m_Father: {fileID: 1681513803}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1192,6 +1192,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 376274186}
+  - {fileID: 170981885}
   - {fileID: 1453628169}
   - {fileID: 1222444521}
   m_Father: {fileID: 180033779}
@@ -1209,7 +1210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerPlayer2: 0
-  cardPrefab2: {fileID: 5710362436332554621, guid: d85dbb108131e9941b6f1711e1d924a1, type: 3}
+  cardPrefab2: {fileID: 5710362436332554621, guid: 193d7fa1a705c1c45b8de4c705e6f1d7, type: 3}
   deckPlayer2: {fileID: 1222444520}
   graveyardPlayer2: {fileID: 170981884}
   handPlayer2: {fileID: 1453628168}
@@ -1256,7 +1257,6 @@ RectTransform:
   - {fileID: 403890435}
   - {fileID: 2117122874}
   - {fileID: 96004660}
-  - {fileID: 170981885}
   m_Father: {fileID: 334112063}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1959,10 +1959,10 @@ RectTransform:
   - {fileID: 641329559}
   m_Father: {fileID: 1651074406}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 394.17035, y: -149.13318}
-  m_SizeDelta: {x: 78.449, y: 118.3381}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 344.17035, y: -199.13318}
+  m_SizeDelta: {x: 78.449005, y: 118.338104}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &843968478
 MonoBehaviour:
@@ -2378,7 +2378,7 @@ GameObject:
   - component: {fileID: 1202475669}
   - component: {fileID: 1202475668}
   m_Layer: 0
-  m_Name: Contar Ataque Player1
+  m_Name: Test Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3464,6 +3464,7 @@ MonoBehaviour:
   numberOfActionsAvailable: 1
   player1WinedRounds: 0
   player2WinedRounds: 0
+  player1StartTheRound: 1
   player1pass: 0
   player2pass: 0
   handp1: {fileID: 216967025}
@@ -3673,7 +3674,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: CountAttack
+  m_Text: Test
 --- !u!222 &1737857440
 CanvasRenderer:
   m_ObjectHideFlags: 0

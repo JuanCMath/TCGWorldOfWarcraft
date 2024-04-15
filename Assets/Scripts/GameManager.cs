@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public int player1WinedRounds = 0;
     public int player2WinedRounds = 0;
 
+    public bool player1StartTheRound = true;
+
     public bool player1pass;
     public bool player2pass;
 
@@ -20,21 +22,6 @@ public class GameManager : MonoBehaviour
     public gameTracker state;
     public static bool player1;
     public static bool player2;
-
-    public void CleanField()
-    {
-        GameObject[] cartas = GameObject.FindGameObjectsWithTag("Card");
-
-        foreach (GameObject carta in cartas)
-        {
-            //Si esta en la mano no la destruyas
-            if (carta.transform.IsChildOf(handp1.transform) || carta.transform.IsChildOf(handp2.transform)) continue;
-
-            //Si no esta en la mano destruyela, Aqui podriamos poner despues que se vayan al cementerio
-            Destroy(carta);
-        }
-        
-    }
 
     public void ChangeTurn()
     {
@@ -49,16 +36,17 @@ public class GameManager : MonoBehaviour
         if (GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().powerPlayer1 > GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().powerPlayer2) 
         {
             //Player 1 Wins!
+            player1StartTheRound = true;
             player1WinedRounds ++;
         }
         else if (GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().powerPlayer1 < GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().powerPlayer2)
         {
-            //Player 2 wins!
+            player1StartTheRound = false;
             player2WinedRounds ++;
         }
         else 
         {
-            //Draw
+            player1StartTheRound = false;
             player1WinedRounds ++;
             player2WinedRounds ++;
         }
@@ -95,15 +83,15 @@ public class GameManager : MonoBehaviour
     {
         if (player1WinedRounds > player2WinedRounds)
         {
-            //Player1 wins!
+            Debug.Log("Player 1 WINS");
         }
         else if (player1WinedRounds < player2WinedRounds)
         {
-            //Player2  wins!
+            Debug.Log("Player 2 WINS");
         }
         else 
         {
-            //Draw
+            Debug.Log("DRAW!!!!");
         }
     }
 
@@ -124,7 +112,10 @@ public class GameManager : MonoBehaviour
 
             case gameTracker.StartingRound:
                 player1pass = false;
-                player2pass = false;
+                player2pass = false;              
+                GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().powerPlayer1 = 0;
+                GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().powerPlayer2 = 0;
+
                 if (numberOfRounds == 1)
                 {
                     GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().DrawCard(10);
@@ -132,12 +123,21 @@ public class GameManager : MonoBehaviour
                 } 
                 else 
                 { 
-                    CleanField();                    
+                    GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().CleanField();
+                    GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().CleanField();                  
                     GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().DrawCard(2);
                     GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().DrawCard(2);
                 }
 
-                state = gameTracker.Player1Turn;
+                if (player1StartTheRound == true)
+                {
+                    state = gameTracker.Player1Turn;
+                }
+                else
+                {
+                    state = gameTracker.Player2Turn;
+                }
+                
                 break;
 
             case gameTracker.Player1Turn:
@@ -155,6 +155,8 @@ public class GameManager : MonoBehaviour
                 state = gameTracker.StartingRound;
                 if (player1WinedRounds == 2 || player2WinedRounds == 2) 
                 {
+                    GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().CleanField();
+                    GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().CleanField();
                     WhoWinsTheGame();
                     state = gameTracker.GameOver;
                 }
