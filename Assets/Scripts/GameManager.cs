@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
         numberOfActionsAvailable = 1;
     }
 
-    public void whoWinsRound()
+    public void WhoWinsRound()
     {
         if (GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().powerPlayer1 > GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().powerPlayer2) 
         {
@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
         GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().CountAttackOnField();
         GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().CountAttackOnField();
         state = gameTracker.FinalOfRound;
-        whoWinsRound();
+        WhoWinsRound();
     }
 
     public void PassTurn()
