@@ -365,7 +365,7 @@ GameObject:
   - component: {fileID: 3874239343401358296}
   m_Layer: 5
   m_Name: Card
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -473,7 +473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 268da6a66f4d6e24383222d910237ca7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardData: {fileID: 11400000, guid: 349f3f609857e4f46bdc22b4d6f8ce5d, type: 2}
+  cardData: {fileID: 0}
   cardDescText: {fileID: 2050434192302956749}
   cardTypeText: {fileID: 5607479977113299648}
   cardAttack: {fileID: 1911395282554155704}

@@ -6,8 +6,9 @@ using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Animations;
+using System.Threading;
 
-public class Player1CardManager : MonoBehaviour
+public class Player1Manager : MonoBehaviour
 {
     #region Variables
     public int powerPlayer1;
@@ -31,20 +32,24 @@ public class Player1CardManager : MonoBehaviour
     public TextMeshProUGUI discardTextPlayer1;
     #endregion
 
-    public void DrawCard(int amount)
+    //Robar Carta del Deck
+    public void DrawCard(int amount)       
     {
-        for (int i = 0; i < amount; i++)
+        for (int i = 0; i < amount; i++)     
         {           
-            GameObject g = Instantiate(cardPrefab1, handPlayer1.transform);
-            //set the Card to the CardData or the cloned prefav
+            //Instanciando la carta con el prefab y en la posicion de la mano
+            GameObject g = Instantiate(cardPrefab1, handPlayer1.transform);                         
+            //Dandole a cada prefab de carta los datos de los scriptable objects
             g.GetComponent<Card>().cardData = deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck[i];
-            deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck.RemoveAt(i);
-            //set the cards name in hierarchy
-            g.name = g.GetComponent<Card>().cardData.cardName;            
+            //Eliminando la carta robada
+            deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck.RemoveAt(i);                          
+            //Dandole un nombre a la carta en el inspector
+            g.name = g.GetComponent<Card>().cardData.cardName;                         
         }
     }
 
-    static void ShuffleDeck(List<CardData> deck)
+    //Barajear el Deck
+    static void ShuffleDeck(List<CardData> deck)    
     {
         System.Random rng = new System.Random();  
         int n = deck.Count;  
@@ -57,6 +62,8 @@ public class Player1CardManager : MonoBehaviour
             deck[n] = value;
         }
     }
+
+    //Contar la cantidad de ataque que existe en el campo
     public void CountAttackOnField()
     {
         foreach (Transform child in meleeZonePlayer1.transform)
@@ -73,13 +80,14 @@ public class Player1CardManager : MonoBehaviour
         }
     }
 
-     public void Start()
-     {
-        ShuffleDeck(deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck);
-        DrawCard(10);
-     }
-     public void Update()
-     {
-        deckTextPlayer1.text = deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck.Count.ToString();
-     }
+    public void Start()
+    {
+       ShuffleDeck(deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck);
+    }
+
+    
+    public void Update()
+    {
+       deckTextPlayer1.text = deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck.Count.ToString();
+    }
  }

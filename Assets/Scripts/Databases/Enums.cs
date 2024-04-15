@@ -7,14 +7,14 @@ namespace Enums
 {
     public enum slot 
     {
-        M, // Melee
-        R, // Range
-        S, // Siege
-        MR, // Melee & Range
-        MS, // Melee & Siege
-        RS, // Range & Siege
+        M,   // Melee
+        R,   // Range
+        S,   // Siege
+        MR,  // Melee & Range
+        MS,  // Melee & Siege
+        RS,  // Range & Siege
         MRS, // Melee & Range & Siege
-        X // Special Cards
+        X    // Special Cards
     }
     public enum faction
     {
@@ -29,17 +29,13 @@ namespace Enums
         Despeje,
         Señuelo
     }
-    //public enum turn
-    //{
-     //   Player1,
-    //    Player2
-   // }
+    
     public enum gameTracker
     {
-        Starting, 
-        Playing, 
-        Turn1, 
-        Turn2,
+        StartingTheGame, 
+        StartingRound, 
+        Player1Turn, 
+        Player2Turn,
         FinalOfRound, 
         GameOver
     }

@@ -6,8 +6,9 @@ using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Animations;
+using System.Threading;
 
-public class Player2CardManager : MonoBehaviour
+public class Player2Manager : MonoBehaviour
 {
     #region Variables
     public int powerPlayer2;
@@ -31,19 +32,23 @@ public class Player2CardManager : MonoBehaviour
     public TextMeshProUGUI discardTextPlayer2;
     #endregion
 
+    //Robar carta del Deck
     public void DrawCard(int amount)
     {
         for (int i = 0; i < amount; i++)
-        {           
+        {   
+            //Instanciando la carta con el prefab y en la posicion de la mano        
             GameObject g = Instantiate(cardPrefab2, handPlayer2.transform);
-            //set the Card to the CardData or the cloned prefav
+            //Dandole a cada prefab de carta los datos de los scriptable objects
             g.GetComponent<Card>().cardData = deckPlayer2.GetComponent<ArthasDeck>().arthasDeck[i];
+            //Eliminando la carta robada
             deckPlayer2.GetComponent<ArthasDeck>().arthasDeck.RemoveAt(i);
-            //set the cards name in hierarchy
-            g.name = g.GetComponent<Card>().cardData.cardName;            
+            //Dandole un nombre a la carta en el inspector
+            g.name = g.GetComponent<Card>().cardData.cardName;      
         }
     }
 
+    //Barajear el Deck
     static void ShuffleDeck(List<CardData> deck)
     {
         System.Random rng = new System.Random();  
@@ -57,6 +62,8 @@ public class Player2CardManager : MonoBehaviour
             deck[n] = value;
         }
     }
+
+    //Contar la cantidad de ataque que existe en el campo
     public void CountAttackOnField()
     {
         foreach (Transform child in meleeZonePlayer2.transform)
@@ -72,12 +79,12 @@ public class Player2CardManager : MonoBehaviour
             powerPlayer2 += child.GetComponent<Card>().attackPower;
         }
     }
-
+    
      public void Start()
      {
         ShuffleDeck(deckPlayer2.GetComponent<ArthasDeck>().arthasDeck);
-        DrawCard(10);
      }
+
      public void Update()
      {
         deckTextPlayer2.text = deckPlayer2.GetComponent<ArthasDeck>().arthasDeck.Count.ToString();
