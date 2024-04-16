@@ -7,11 +7,13 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Animations;
 using System.Threading;
+using UnityEngine.Assertions.Must;
 
 public class Player1Manager : MonoBehaviour
 {
     #region Variables
     public int powerPlayer1;
+    private GameObject lastClickedCard = null;
 
     public GameObject cardPrefab1;
     
@@ -48,12 +50,65 @@ public class Player1Manager : MonoBehaviour
         
     }
 
-    //Retorna una carta seleccionada al deck
-    public void ReturnCardToDeck(GameObject card)  //Funciona???? to be continued
+    //Cambiar Cartas
+    public void SwapCards() //Aqui en algun momento pondre la cantidad de cartas a Swapear, no es por gusto el metodo
     {
+        for (int i = 0; i < 2; i++)
+        {
+            StartingTheCardSwap();
+        }
+    }
+    
+    //Metodo para iniciar el cambio de cartas en la mano
+    public void StartingTheCardSwap()       //Lo acciona un botton, aqui se dan las condiciones previas para el intercambio
+    {
+        //Añadir un Listener a los Eventos
+        EventManager.OnCardClicked += SetCardClicked;
+        //Inicio del metodo para cambiar cartas
+        StartCoroutine(SwapCardsInHands());      
+    }
+    
+    //Coroutine para Cambiar las cartas en la mano
+    IEnumerator SwapCardsInHands()
+    {
+            //WaitUntil es usado aqui para pausar el juego hasta que el usuario toque una carta
+            yield return new WaitUntil(() => lastClickedCard != null);
+            //Una vez tengamos alguna carta en "lastClikedCard" podemos empezar el intercambio
+            ReturnCardToDeck(lastClickedCard);
+            //Robamos una carta
+            DrawCard(1);
+            Debug.Log("Carta Devuelta al deck, seleccione otra por favor");
+            //Eliminamos el Event Listener ya que no queremos que fuera de este metodo el click guarde informacion
+            EventManager.OnCardClicked -= SetCardClicked;      
+            lastClickedCard = null; 
+    }
+
+    //Guardamos la carta clickeada en la variable lastClickedCard
+    public void SetCardClicked(GameObject card)
+    {   
+        //Si no esta en la mano no guardamos la informacion, solo queremos cartas de la mano
+        if (card.transform.IsChildOf(handPlayer1.transform) != handPlayer1)
+        {
+            Debug.Log("Debe seleccionar una carta de la mano");
+        }
+        else
+        {
+            lastClickedCard = card;
+            Debug.Log(lastClickedCard.GetComponent<Card>().cardName);
+        }
+    }
+
+    //Retorna una carta seleccionada al deck
+    public void ReturnCardToDeck(GameObject card)
+    {   
+        //Tomamos el Nombre de la carta que vamos a eliminar
         string name = card.GetComponent<Card>().cardName;
+        //Eliminamos la carta de la mano
         Destroy(card);
-        deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck.Add(Resources.Load<CardData>("Scriptable Objects/Aspectos Deck" + name));
+        //Añadimos el scriptable object con el nombre de la carta a la lista de cartas del deck
+        deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck.Add(Resources.Load<CardData>("Scriptable Objects/Aspectos Deck/" + name));
+        //Barajeamos el deck
+        ShuffleDeck(deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck);
     }
 
     //Robar Carta del Deck
@@ -61,7 +116,7 @@ public class Player1Manager : MonoBehaviour
     {
         for (int i = 0; i < amount; i++)     
         {   
-            if (handPlayer1.transform.childCount < 10)
+            if (handPlayer1.transform.childCount <= 10)
             {       
                 //Instanciando la carta con el prefab y en la posicion de la mano
                 GameObject g = Instantiate(cardPrefab1, handPlayer1.transform);                         

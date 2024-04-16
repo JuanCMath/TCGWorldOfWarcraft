@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\Manager\Player 2 Manager.cs" />
     <Compile Include="Assets\Scripts\Panels Scripts\DropZone S P1.cs" />
     <Compile Include="Assets\Scripts\Panels Scripts\DropZone M P1.cs" />
+    <Compile Include="Assets\Scripts\Events\Card Click Event.cs" />
     <Compile Include="Assets\Scripts\Databases\Aspectos Deck.cs" />
     <Compile Include="Assets\Scripts\Panels Scripts\DropZone R P2.cs" />
     <Compile Include="Assets\Scripts\Panels Scripts\DropZone A P2.cs" />
@@ -75,6 +76,8 @@
     <Compile Include="Assets\Scripts\Panels Scripts\DropZone M P2.cs" />
     <Compile Include="Assets\Scripts\Card.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Events\Events Manager.cs" />
+    <Compile Include="Assets\Scripts\Events\Returns Cards.cs" />
     <Compile Include="Assets\Scripts\Draggable.cs" />
     <Compile Include="Assets\Scripts\Manager\Player 1 Manager.cs" />
     <Compile Include="Assets\Scripts\Panels Scripts\DropZone S P2.cs" />
