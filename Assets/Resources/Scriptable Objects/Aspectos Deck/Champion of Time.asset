@@ -15,7 +15,7 @@ MonoBehaviour:
   cardID: 18
   cardName: Champion of Time
   cardFaction: 0
-  cardDescription: 
+  cardDescription: Salva de la muerte a un dragon aliado
   isHero: 0
   cardSlot: 6
   cardType: 4

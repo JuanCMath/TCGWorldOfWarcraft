@@ -1,8 +1,16 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 using System;
+using UnityEditor.PackageManager;
+using UnityEngine.EventSystems;
+using UnityEditor.UI;
 
 public class EffectsManager : MonoBehaviour
 {
+    static GameObject selectedcard;
+    static GameObject panel;
+
     public static void ClimaEffect(GameObject panel, int number)
     {   
         GameObject[] cardsP1 = GameObject.FindGameObjectsWithTag("Card Player1");
@@ -34,7 +42,6 @@ public class EffectsManager : MonoBehaviour
         GameObject[] cardsP1 = GameObject.FindGameObjectsWithTag("Card Player1");
         GameObject[] cardsP2 = GameObject.FindGameObjectsWithTag("Card Player2");
 
-        Debug.Log("estoy aqui");
         if (ouputPanel.transform.parent.name == GameObject.Find("Panels p1").transform.name)
         {
             foreach (GameObject card in cardsP1)
@@ -62,17 +69,48 @@ public class EffectsManager : MonoBehaviour
 
     public static void DespejeEffect()
     {
-
-    }
-
-    public static void SeñueloEffect(Transform panel)
-    {
-
-    }
-
-    public static void ClickCard(Transform panel)
-    {
         
     }
-    
+
+    public void SeñueloEffect(GameObject panelOfTheDropedCard)
+    {
+        panel = panelOfTheDropedCard;
+        Debug.Log("aplicando efecto");
+        //Seleccionar una carta y devolverla a la mano
+        EventManager.OnCardClicked += SelectCard;
+        StartCoroutine(SendCardToHand());
+    }
+    public static void SelectCard(GameObject card)
+    {
+        if (card.transform.IsChildOf(panel.transform))
+        {
+            selectedcard = card;
+        }
+        else
+        {
+            Debug.Log("La carta debe estar en el mismo panel");
+        }
+    }
+
+    IEnumerator SendCardToHand()
+    {
+        yield return new WaitUntil(() => selectedcard != null);
+
+        ReturnCardToHand(selectedcard);
+
+        EventManager.OnCardClicked -= SelectCard;
+        selectedcard = null;
+    }
+
+    public void ReturnCardToHand(GameObject card)
+    {
+        if (GameManager.player1 == true)
+        {
+            selectedcard.transform.SetParent(GameObject.Find("Game Manager").GetComponent<GameManager>().handp1.transform);
+        }
+        else if (GameManager.player2 == true)
+        {
+            selectedcard.transform.SetParent(GameObject.Find("Game Manager").GetComponent<GameManager>().handp2.transform);
+        } 
+    }
 }

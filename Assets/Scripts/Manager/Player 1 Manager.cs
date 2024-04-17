@@ -68,7 +68,7 @@ public class Player1Manager : MonoBehaviour
     public void StartingTheCardSwap()       //Lo acciona un botton, aqui se dan las condiciones previas para el intercambio
     {
         //Añadir un Subscriber a los Eventos
-        EventManager.OnCardClicked += SetCardClicked;
+        EventManager.OnCardClicked += SelectCardNotinHand;
         //Inicio del metodo para cambiar cartas
         StartCoroutine(SwapCardsInHands());      
     }
@@ -82,14 +82,13 @@ public class Player1Manager : MonoBehaviour
             ReturnCardToDeck(lastClickedCard);
             //Robamos una carta
             DrawCard(1);
-            Debug.Log("Carta Devuelta al deck, seleccione otra por favor");
             //Eliminamos el Event Subscriber ya que no queremos que fuera de este metodo el click guarde informacion
-            EventManager.OnCardClicked -= SetCardClicked;      
+            EventManager.OnCardClicked -= SelectCardNotinHand;      
             lastClickedCard = null; 
     }
 
     //Guardamos la carta clickeada en la variable lastClickedCard
-    public void SetCardClicked(GameObject card)
+    public void SelectCardNotinHand(GameObject card)
     {   
         //Si no esta en la mano no guardamos la informacion, solo queremos cartas de la mano
         if (card.transform.IsChildOf(handPlayer1.transform) != handPlayer1)
@@ -99,7 +98,6 @@ public class Player1Manager : MonoBehaviour
         else
         {
             lastClickedCard = card;
-            Debug.Log(lastClickedCard.GetComponent<Card>().cardName);
         }
     }
 
@@ -165,6 +163,7 @@ public class Player1Manager : MonoBehaviour
     //Contar la cantidad de ataque que existe en el campo
     public void CountAttackOnField()
     {   
+        applyAumento();
         applyClima();
         foreach (Transform child in meleeZonePlayer1.transform)
         {
@@ -179,6 +178,7 @@ public class Player1Manager : MonoBehaviour
             powerPlayer1 += child.GetComponent<Card>().attackPower;
         }
     }
+
     public void applyClima()
     {
         int amountOfChange;
@@ -190,6 +190,7 @@ public class Player1Manager : MonoBehaviour
             EffectsManager.ClimaEffect(climaZonePlayer1, amountOfChange);
         }
     }
+
     public void applyAumento()
     {
         int amountOfChangeM;

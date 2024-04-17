@@ -9,8 +9,9 @@ using UnityEngine.XR;
 
 public class DropZoneMP1 : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
-        
-        private int maxCards = 5;                              // Numero de cartas maximo por panel
+        // Numero de cartas maximo por panel
+        private int maxCards = 5;  
+                                    
         public void OnPointerEnter(PointerEventData eventData) //Metodo que se inicia cuando el puntero entra en la zona, evenData almacena los datos de mi puntero de clase PointerEventData
         {
             if (eventData.pointerDrag == null)                 //Si no tengo nada agarrado
@@ -23,6 +24,7 @@ public class DropZoneMP1 : MonoBehaviour, IDropHandler, IPointerEnterHandler, IP
                 draggedComponent.placeholderParent = this.transform;
             }
         }
+
         public void OnPointerExit(PointerEventData eventData) //Metodo que se inicia cuando el puntero sale de la zona
         {
             if (eventData.pointerDrag == null)
@@ -35,28 +37,31 @@ public class DropZoneMP1 : MonoBehaviour, IDropHandler, IPointerEnterHandler, IP
                 draggedComponent.placeholderParent = draggedComponent.parentToReturnTo;
             }
         }
+
         public void OnDrop(PointerEventData eventData) //Metodo que se inicia cuando un onjeto se dropea en la zona
         {
             Debug.Log(eventData.pointerDrag.name + "OnDrop to " + gameObject.name);
+            
+            GameObject dropedCard = eventData.pointerDrag;
 
-            Draggable  draggedComponent = eventData.pointerDrag.GetComponent<Draggable>();
+            Draggable draggedComponentOfDropedCard = dropedCard.GetComponent<Draggable>();
             //Si tienes algo agarrado y Si el panel no esta lleno y Si la carta es del mismo tipo del panel entonces dropear
-            if (draggedComponent != null && GameManager.player1 == true && maxCards >= this.transform.childCount)
+            if (draggedComponentOfDropedCard != null && GameManager.player1 == true && maxCards >= this.transform.childCount)
             {
                 if (GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable > 0)
                 {
                     if (GameManager.player1 == true)
                     {
-                        if (eventData.pointerDrag.GetComponent<Card>().cardSlot == slot.M || eventData.pointerDrag.GetComponent<Card>().cardSlot == slot.MR || eventData.pointerDrag.GetComponent<Card>().cardSlot == slot.MS || eventData.pointerDrag.GetComponent<Card>().cardSlot == slot.MRS)
+                        if (dropedCard.GetComponent<Card>().cardSlot == slot.M || dropedCard.GetComponent<Card>().cardSlot == slot.MR || dropedCard.GetComponent<Card>().cardSlot == slot.MS || dropedCard.GetComponent<Card>().cardSlot == slot.MRS)
                         {
-                            draggedComponent.parentToReturnTo = this.transform;
+                            draggedComponentOfDropedCard.parentToReturnTo = this.transform;
                             GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable --;
 
-                            if (gameObject.GetComponent<Card>().cardType == type.Señuelo)
+                            if (dropedCard.GetComponent<Card>().cardType == type.Señuelo)
                             {
-                                EffectsManager.SeñueloEffect(this.transform);
+                                GameObject.Find("Effect Manager").GetComponent<EffectsManager>().SeñueloEffect(gameObject);
                             }
-                            else if (gameObject.GetComponent<Card>().cardType == type.Unidad && gameObject.GetComponent<Card>().isHero == false)
+                            else if (dropedCard.GetComponent<Card>().cardType == type.Unidad && dropedCard.GetComponent<Card>().isHero == false)
                             {
 
                             }

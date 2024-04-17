@@ -76,8 +76,7 @@
     <Compile Include="Assets\Scripts\Panels Scripts\DropZone M P2.cs" />
     <Compile Include="Assets\Scripts\Card.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scripts\Events\Events Manager.cs" />
-    <Compile Include="Assets\Scripts\Events\Returns Cards.cs" />
+    <Compile Include="Assets\Scripts\Events\Event Manager.cs" />
     <Compile Include="Assets\Scripts\Draggable.cs" />
     <Compile Include="Assets\Scripts\Manager\Player 1 Manager.cs" />
     <Compile Include="Assets\Scripts\Panels Scripts\DropZone S P2.cs" />
