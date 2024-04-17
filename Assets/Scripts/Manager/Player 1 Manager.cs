@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using UnityEditor.Animations;
 using System.Threading;
 using UnityEngine.Assertions.Must;
+using System.Linq;
 
 public class Player1Manager : MonoBehaviour
 {
@@ -19,8 +20,12 @@ public class Player1Manager : MonoBehaviour
     
     public GameObject deckPlayer1;
     public GameObject graveyardPlayer1;
-    public GameObject handPlayer1;
+    public GameObject handPlayer1; 
 
+    public GameObject aumentoMZonePlayer1;
+    public GameObject aumentoRZonePlayer1; 
+    public GameObject aumentoSZonePlayer1;
+    public GameObject climaZonePlayer1;
     public GameObject meleeZonePlayer1;
     public GameObject rangeZonePlayer1;
     public GameObject siegeZonePlayer1;
@@ -62,7 +67,7 @@ public class Player1Manager : MonoBehaviour
     //Metodo para iniciar el cambio de cartas en la mano
     public void StartingTheCardSwap()       //Lo acciona un botton, aqui se dan las condiciones previas para el intercambio
     {
-        //Añadir un Listener a los Eventos
+        //Añadir un Subscriber a los Eventos
         EventManager.OnCardClicked += SetCardClicked;
         //Inicio del metodo para cambiar cartas
         StartCoroutine(SwapCardsInHands());      
@@ -78,7 +83,7 @@ public class Player1Manager : MonoBehaviour
             //Robamos una carta
             DrawCard(1);
             Debug.Log("Carta Devuelta al deck, seleccione otra por favor");
-            //Eliminamos el Event Listener ya que no queremos que fuera de este metodo el click guarde informacion
+            //Eliminamos el Event Subscriber ya que no queremos que fuera de este metodo el click guarde informacion
             EventManager.OnCardClicked -= SetCardClicked;      
             lastClickedCard = null; 
     }
@@ -159,7 +164,8 @@ public class Player1Manager : MonoBehaviour
 
     //Contar la cantidad de ataque que existe en el campo
     public void CountAttackOnField()
-    {
+    {   
+        applyClima();
         foreach (Transform child in meleeZonePlayer1.transform)
         {
             powerPlayer1 += child.GetComponent<Card>().attackPower;
@@ -171,6 +177,39 @@ public class Player1Manager : MonoBehaviour
         foreach (Transform child in siegeZonePlayer1.transform)
         {
             powerPlayer1 += child.GetComponent<Card>().attackPower;
+        }
+    }
+    public void applyClima()
+    {
+        int amountOfChange;
+        int amounOfClimas = climaZonePlayer1.transform.childCount;
+        
+        for (int i = 0; i < amounOfClimas; i ++)
+        {
+            amountOfChange = climaZonePlayer1.transform.GetChild(i).GetComponent<Card>().effectNumber;
+            EffectsManager.ClimaEffect(climaZonePlayer1, amountOfChange);
+        }
+    }
+    public void applyAumento()
+    {
+        int amountOfChangeM;
+        if (aumentoMZonePlayer1.transform.childCount != 0) 
+        {
+            amountOfChangeM = aumentoMZonePlayer1.transform.GetChild(0).GetComponent<Card>().effectNumber;
+            EffectsManager.AumentoEffec(meleeZonePlayer1, amountOfChangeM);
+        }
+        int amountOfChangeR;
+        if (aumentoRZonePlayer1.transform.childCount != 0) 
+        {
+            amountOfChangeR = aumentoRZonePlayer1.transform.GetChild(0).GetComponent<Card>().effectNumber;
+            EffectsManager.AumentoEffec(rangeZonePlayer1, amountOfChangeR);
+        }
+
+        int amountOfChangeS;
+        if (aumentoSZonePlayer1.transform.childCount != 0) 
+        {
+            amountOfChangeS = aumentoSZonePlayer1.transform.GetChild(0).GetComponent<Card>().effectNumber;
+            EffectsManager.AumentoEffec(siegeZonePlayer1, amountOfChangeS);
         }
     }
 

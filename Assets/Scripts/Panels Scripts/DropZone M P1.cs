@@ -51,6 +51,15 @@ public class DropZoneMP1 : MonoBehaviour, IDropHandler, IPointerEnterHandler, IP
                         {
                             draggedComponent.parentToReturnTo = this.transform;
                             GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable --;
+
+                            if (gameObject.GetComponent<Card>().cardType == type.Señuelo)
+                            {
+                                EffectsManager.SeñueloEffect(this.transform);
+                            }
+                            else if (gameObject.GetComponent<Card>().cardType == type.Unidad && gameObject.GetComponent<Card>().isHero == false)
+                            {
+
+                            }
                         }      
                     } 
                 }

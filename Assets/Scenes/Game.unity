@@ -1044,6 +1044,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 230203697}
   m_CullTransparentMesh: 1
+--- !u!1 &258356233
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 258356234}
+  - component: {fileID: 258356235}
+  m_Layer: 0
+  m_Name: Effect Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &258356234
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 258356233}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -72.08032, y: 270.29828, z: 15.764204}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1681513803}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &258356235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 258356233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0695d706b7748154c972e98a877ab376, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &322155612
 GameObject:
   m_ObjectHideFlags: 0
@@ -2098,6 +2142,10 @@ MonoBehaviour:
   deckPlayer1: {fileID: 1438966709}
   graveyardPlayer1: {fileID: 843968476}
   handPlayer1: {fileID: 216967025}
+  aumentoMZonePlayer1: {fileID: 1217779657}
+  aumentoRZonePlayer1: {fileID: 737718819}
+  aumentoSZonePlayer1: {fileID: 1331299080}
+  climaZonePlayer1: {fileID: 1988740573}
   meleeZonePlayer1: {fileID: 2009433856}
   rangeZonePlayer1: {fileID: 171783803}
   siegeZonePlayer1: {fileID: 2025033406}
@@ -2450,7 +2498,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 858685630}
         m_TargetAssemblyTypeName: Player1Manager, Assembly-CSharp
-        m_MethodName: SwapCards
+        m_MethodName: applyAumento
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3443,6 +3491,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 258356234}
   - {fileID: 2018725610}
   - {fileID: 180033779}
   - {fileID: 1742807367}

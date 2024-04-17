@@ -15,7 +15,7 @@ MonoBehaviour:
   cardID: 14
   cardName: Arcane Reflexion
   cardFaction: 0
-  cardDescription: 
+  cardDescription: Aumenta 2 puntos de ataque a los dragones aliados
   isHero: 0
   cardSlot: 7
   cardType: 2

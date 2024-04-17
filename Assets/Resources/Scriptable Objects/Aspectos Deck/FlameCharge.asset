@@ -15,7 +15,8 @@ MonoBehaviour:
   cardID: 11
   cardName: FlameCharge
   cardFaction: 0
-  cardDescription: 
+  cardDescription: Reduce 2 puntos de ataque a toda carta en el campo que no sea
+    dragon
   isHero: 0
   cardSlot: 7
   cardType: 1

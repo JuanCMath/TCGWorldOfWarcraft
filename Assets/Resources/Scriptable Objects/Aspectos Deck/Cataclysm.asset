@@ -15,7 +15,7 @@ MonoBehaviour:
   cardID: 12
   cardName: Cataclysm
   cardFaction: 0
-  cardDescription: 
+  cardDescription: Aumenta 3 puntos de ataque a los dragones aliados
   isHero: 0
   cardSlot: 7
   cardType: 2

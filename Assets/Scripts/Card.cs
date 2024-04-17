@@ -5,11 +5,15 @@ using JetBrains.Annotations;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
+using System.Text.RegularExpressions;
 
 public class Card : MonoBehaviour
 {
     public CardData cardData;
+
+    public int effectNumber;
 
     [Header("Card Info")]
     //public TextMeshProUGUI carNametext;
@@ -32,6 +36,7 @@ public class Card : MonoBehaviour
     private void Start()
     {
         CollectInfoFromSO();
+        ProcesDescription();
     }
 
     private void CollectInfoFromSO()
@@ -61,4 +66,13 @@ public class Card : MonoBehaviour
         cardAttack.text = attackPower.ToString();
         art.sprite = cardData.art;
     }
+    public void ProcesDescription()
+    {
+        Regex regex = new Regex(@"\b\d\b");
+        Match match = regex.Match(cardDescription);
+
+        if (match.Success)
+            effectNumber = int.Parse(match.Value);
+    }
+    
 }

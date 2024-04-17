@@ -15,7 +15,7 @@ MonoBehaviour:
   cardID: 13
   cardName: Subdue
   cardFaction: 0
-  cardDescription: 
+  cardDescription: Aumenta 1 punto de ataque a los dragones aliados
   isHero: 0
   cardSlot: 7
   cardType: 2

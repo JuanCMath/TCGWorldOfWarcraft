@@ -366,7 +366,7 @@ GameObject:
   - component: {fileID: 2366319011117890244}
   m_Layer: 5
   m_Name: Card Player1
-  m_TagString: Card
+  m_TagString: Card Player1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -475,6 +475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardData: {fileID: 0}
+  effectNumber: 0
   cardDescText: {fileID: 2050434192302956749}
   cardTypeText: {fileID: 5607479977113299648}
   cardAttack: {fileID: 1911395282554155704}
