@@ -12,6 +12,7 @@ public class Player2Manager : MonoBehaviour
 {
     #region Variables
     public int powerPlayer2;
+    private GameObject lastClickedCard = null;
 
     public GameObject cardPrefab2;
     
@@ -19,6 +20,10 @@ public class Player2Manager : MonoBehaviour
     public GameObject graveyardPlayer2;
     public GameObject handPlayer2;
 
+    public GameObject aumentoMZonePlayer2;
+    public GameObject aumentoRZonePlayer2; 
+    public GameObject aumentoSZonePlayer2;
+    public GameObject climaZonePlayer2;
     public GameObject meleeZonePlayer2;
     public GameObject rangeZonePlayer2;
     public GameObject siegeZonePlayer2;
@@ -47,12 +52,65 @@ public class Player2Manager : MonoBehaviour
         }       
     }
 
-    //Retorna una carta seleccionada al deck
-    public void ReturnCardToDeck(GameObject card)  //Funciona???? to be continued
+    //Cambiar Cartas
+    public void SwapCards() //Aqui en algun momento pondre la cantidad de cartas a Swapear, no es por gusto el metodo
     {
+        if (GameManager.firstTurnOfTheRoundPlayer2 == true)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                StartingTheCardSwap();
+            }
+        }
+    }
+
+    //Metodo para iniciar el cambio de cartas en la mano
+    public void StartingTheCardSwap()       //Lo acciona un botton, aqui se dan las condiciones previas para el intercambio
+    {
+        //Añadir un Subscriber a los Eventos
+        EventManager.OnCardClicked += SelectCardNotinHand;
+        //Inicio del metodo para cambiar cartas
+        StartCoroutine(SwapCardsInHands());      
+    }
+
+    //Coroutine para Cambiar las cartas en la mano
+    IEnumerator SwapCardsInHands()
+    {
+            //WaitUntil es usado aqui para pausar el juego hasta que el usuario toque una carta
+            yield return new WaitUntil(() => lastClickedCard != null);
+            //Una vez tengamos alguna carta en "lastClikedCard" podemos empezar el intercambio
+            ReturnCardToDeck(lastClickedCard);
+            //Robamos una carta
+            DrawCard(1);
+            //Eliminamos el Event Subscriber ya que no queremos que fuera de este metodo el click guarde informacion
+            EventManager.OnCardClicked -= SelectCardNotinHand;      
+            lastClickedCard = null; 
+    }
+    //Guardamos la carta clickeada en la variable lastClickedCard
+    public void SelectCardNotinHand(GameObject card)
+    {   
+        //Si no esta en la mano no guardamos la informacion, solo queremos cartas de la mano
+        if (card.transform.IsChildOf(handPlayer2.transform) != handPlayer2)
+        {
+            Debug.Log("Debe seleccionar una carta de la mano");
+        }
+        else
+        {
+            lastClickedCard = card;
+        }
+    }
+
+    //Retorna una carta seleccionada al deck
+    public void ReturnCardToDeck(GameObject card)
+    {   
+        //Tomamos el Nombre de la carta que vamos a eliminar
         string name = card.GetComponent<Card>().cardName;
+        //Eliminamos la carta de la mano
         Destroy(card);
-        deckPlayer2.GetComponent<ArthasDeck>().arthasDeck.Add(Resources.Load<CardData>("Scriptable Objects/Arthas Deck" + name));
+        //Añadimos el scriptable object con el nombre de la carta a la lista de cartas del deck
+        deckPlayer2.GetComponent<AspectosDeck>().aspectosDeck.Add(Resources.Load<CardData>("Scriptable Objects/Aspectos Deck/" + name));
+        //Barajeamos el deck
+        ShuffleDeck(deckPlayer2.GetComponent<AspectosDeck>().aspectosDeck);
     }
 
     //Robar carta del Deck
@@ -104,6 +162,8 @@ public class Player2Manager : MonoBehaviour
     //Contar la cantidad de ataque que existe en el campo
     public void CountAttackOnField()
     {
+        applyAumento();
+        applyClima();
         foreach (Transform child in meleeZonePlayer2.transform)
         {
             powerPlayer2 += child.GetComponent<Card>().attackPower;
@@ -115,6 +175,41 @@ public class Player2Manager : MonoBehaviour
         foreach (Transform child in siegeZonePlayer2.transform)
         {
             powerPlayer2 += child.GetComponent<Card>().attackPower;
+        }
+    }
+
+    public void applyClima()
+    {
+        int amountOfChange;
+        int amounOfClimas = climaZonePlayer2.transform.childCount;
+        
+        for (int i = 0; i < amounOfClimas; i ++)
+        {
+            amountOfChange = climaZonePlayer2.transform.GetChild(i).GetComponent<Card>().effectNumber;
+            EffectsManager.ClimaEffect(climaZonePlayer2, amountOfChange);
+        }
+    }
+
+    public void applyAumento()
+    {
+        int amountOfChangeM;
+        if (aumentoMZonePlayer2.transform.childCount != 0) 
+        {
+            amountOfChangeM = aumentoMZonePlayer2.transform.GetChild(0).GetComponent<Card>().effectNumber;
+            EffectsManager.AumentoEffec(meleeZonePlayer2, amountOfChangeM);
+        }
+        int amountOfChangeR;
+        if (aumentoRZonePlayer2.transform.childCount != 0) 
+        {
+            amountOfChangeR = aumentoRZonePlayer2.transform.GetChild(0).GetComponent<Card>().effectNumber;
+            EffectsManager.AumentoEffec(rangeZonePlayer2, amountOfChangeR);
+        }
+
+        int amountOfChangeS;
+        if (aumentoSZonePlayer2.transform.childCount != 0) 
+        {
+            amountOfChangeS = aumentoSZonePlayer2.transform.GetChild(0).GetComponent<Card>().effectNumber;
+            EffectsManager.AumentoEffec(siegeZonePlayer2, amountOfChangeS);
         }
     }
     

@@ -15,7 +15,7 @@ MonoBehaviour:
   cardID: 31
   cardName: Helm of Domination
   cardFaction: 1
-  cardDescription: 
+  cardDescription: Aumenta 1 punto de ataque a los aliados
   isHero: 0
   cardSlot: 7
   cardType: 2

@@ -15,7 +15,8 @@ MonoBehaviour:
   cardID: 30
   cardName: Favor of Archeus
   cardFaction: 1
-  cardDescription: 
+  cardDescription: Reduce 2 puntos de ataque a toda carta en el campo que no sea
+    servil a la plaga
   isHero: 0
   cardSlot: 7
   cardType: 1

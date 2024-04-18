@@ -15,9 +15,9 @@ MonoBehaviour:
   cardID: 35
   cardName: Servants
   cardFaction: 1
-  cardDescription: 
+  cardDescription: Despeja un Clima haciendo favorable la batalla contra los dragones
   isHero: 0
-  cardSlot: 0
-  cardType: 0
+  cardSlot: 7
+  cardType: 3
   attackPower: 0
   art: {fileID: 21300000, guid: d81ca15a3c92bce4193e1f1661e9b860, type: 3}

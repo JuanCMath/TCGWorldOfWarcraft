@@ -15,7 +15,7 @@ MonoBehaviour:
   cardID: 36
   cardName: Vile Spirit
   cardFaction: 1
-  cardDescription: 
+  cardDescription: Salva de la vida a un No-Muerto aliado
   isHero: 0
   cardSlot: 6
   cardType: 4

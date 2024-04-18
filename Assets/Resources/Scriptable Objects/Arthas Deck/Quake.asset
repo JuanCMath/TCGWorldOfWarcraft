@@ -15,7 +15,7 @@ MonoBehaviour:
   cardID: 34
   cardName: Quake
   cardFaction: 1
-  cardDescription: 
+  cardDescription: Despeja un Clima haciendo favorable la batalla contra los dragones
   isHero: 0
   cardSlot: 7
   cardType: 3

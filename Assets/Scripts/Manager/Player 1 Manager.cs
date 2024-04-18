@@ -58,9 +58,12 @@ public class Player1Manager : MonoBehaviour
     //Cambiar Cartas
     public void SwapCards() //Aqui en algun momento pondre la cantidad de cartas a Swapear, no es por gusto el metodo
     {
-        for (int i = 0; i < 2; i++)
+        if (GameManager.firstTurnOfTheRoundPlayer1 == true)
         {
-            StartingTheCardSwap();
+            for (int i = 0; i < 2; i++)
+            {
+                StartingTheCardSwap();
+            }
         }
     }
     
@@ -132,7 +135,7 @@ public class Player1Manager : MonoBehaviour
             }
             else
             {
-                //Instanciando la carta con el prefab y en la posicion de la mano
+                //Instanciando la carta con el prefab y en la posicion del cementerio
                 GameObject g = Instantiate(cardPrefab1, graveyardPlayer1.transform);           
                 g.transform.localPosition = new Vector3(0,0,0);              
                 //Dandole a cada prefab de carta los datos de los scriptable objects

@@ -20,6 +20,7 @@ public class EffectsManager : MonoBehaviour
             foreach (GameObject card in cardsP2)
             {   
                 if (card.transform.parent.ToString() == "Hand p2") continue;
+                else if (card.GetComponent<Card>().isHero == true) continue;
                 else 
                 {
                     card.GetComponent<Card>().attackPower -= number;
@@ -31,6 +32,7 @@ public class EffectsManager : MonoBehaviour
             foreach (GameObject card in cardsP1)
             {
                 if (card.transform.parent.ToString() == "Hand p1") continue;
+                else if (card.GetComponent<Card>().isHero == true) continue;
                 else card.GetComponent<Card>().attackPower -= number;
 
                 if (card.GetComponent<Card>().attackPower < 0) card.GetComponent<Card>().attackPower = 0;
@@ -46,7 +48,6 @@ public class EffectsManager : MonoBehaviour
         {
             foreach (GameObject card in cardsP1)
             {
-                Debug.Log(card.transform.IsChildOf(ouputPanel.transform));
                 if (card.transform.IsChildOf(ouputPanel.transform))
                 {
                     card.GetComponent<Card>().attackPower += number;
@@ -57,7 +58,6 @@ public class EffectsManager : MonoBehaviour
         {
             foreach (GameObject card in cardsP2)
             {
-                Debug.Log(card.transform.IsChildOf(ouputPanel.transform));
                 if (card.transform.IsChildOf(ouputPanel.transform))
                 {
                     card.GetComponent<Card>().attackPower += number;
@@ -67,19 +67,28 @@ public class EffectsManager : MonoBehaviour
 
     }
 
-    public static void DespejeEffect()
+    public void DespejeEffect(GameObject panelOfTheDropedCard)
     {
+        panel = panelOfTheDropedCard;
+        Debug.Log("aplicando efecto señuelo");
+        //Seleccionar una carta y devolverla a la mano
+        EventManager.OnCardClicked += SelectCard;
+        StartCoroutine(SendCardToHand());
+        Debug.Log("listo para enviar el despeje al cementerio");
         
     }
 
     public void SeñueloEffect(GameObject panelOfTheDropedCard)
     {
         panel = panelOfTheDropedCard;
-        Debug.Log("aplicando efecto");
+        Debug.Log("aplicando efecto señuelo");
         //Seleccionar una carta y devolverla a la mano
         EventManager.OnCardClicked += SelectCard;
         StartCoroutine(SendCardToHand());
+
     }
+
+    #region Utilidades
     public static void SelectCard(GameObject card)
     {
         if (card.transform.IsChildOf(panel.transform))
@@ -106,11 +115,12 @@ public class EffectsManager : MonoBehaviour
     {
         if (GameManager.player1 == true)
         {
-            selectedcard.transform.SetParent(GameObject.Find("Game Manager").GetComponent<GameManager>().handp1.transform);
+            selectedcard.transform.SetParent(GameObject.Find("Game Manager").GetComponent<GameManager>().handP1.transform);
         }
         else if (GameManager.player2 == true)
         {
-            selectedcard.transform.SetParent(GameObject.Find("Game Manager").GetComponent<GameManager>().handp2.transform);
+            selectedcard.transform.SetParent(GameObject.Find("Game Manager").GetComponent<GameManager>().handP2.transform);
         } 
     }
+    #endregion
 }

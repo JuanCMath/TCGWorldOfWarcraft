@@ -1258,6 +1258,10 @@ MonoBehaviour:
   deckPlayer2: {fileID: 1222444520}
   graveyardPlayer2: {fileID: 170981884}
   handPlayer2: {fileID: 1453628168}
+  aumentoMZonePlayer2: {fileID: 1018325244}
+  aumentoRZonePlayer2: {fileID: 1201730848}
+  aumentoSZonePlayer2: {fileID: 1219823143}
+  climaZonePlayer2: {fileID: 96004659}
   meleeZonePlayer2: {fileID: 2115632254}
   rangeZonePlayer2: {fileID: 403890434}
   siegeZonePlayer2: {fileID: 2117122873}
@@ -2498,7 +2502,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 858685630}
         m_TargetAssemblyTypeName: Player1Manager, Assembly-CSharp
-        m_MethodName: SwapCards
+        m_MethodName: applyAumento
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3514,10 +3518,10 @@ MonoBehaviour:
   player1WinedRounds: 0
   player2WinedRounds: 0
   player1StartTheRound: 1
-  player1pass: 0
-  player2pass: 0
-  handp1: {fileID: 216967025}
-  handp2: {fileID: 1453628168}
+  player1Pass: 0
+  player2Pass: 0
+  handP1: {fileID: 216967025}
+  handP2: {fileID: 1453628168}
   state: 2
 --- !u!1 &1710099802
 GameObject:

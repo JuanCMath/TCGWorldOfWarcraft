@@ -15,7 +15,7 @@ MonoBehaviour:
   cardID: 33
   cardName: Ashbringer
   cardFaction: 1
-  cardDescription: 
+  cardDescription: "Aumenta 2 puntos de ataque a los se\xF1ores de la plaga aliados"
   isHero: 0
   cardSlot: 7
   cardType: 2

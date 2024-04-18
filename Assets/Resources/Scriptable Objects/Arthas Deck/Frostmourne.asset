@@ -15,7 +15,7 @@ MonoBehaviour:
   cardID: 32
   cardName: Frostmourne
   cardFaction: 1
-  cardDescription: 
+  cardDescription: Aumenta 3 puntos de ataque a los No-Muertos aliados
   isHero: 0
   cardSlot: 7
   cardType: 2

@@ -8,16 +8,19 @@ public class GameManager : MonoBehaviour
     public int numberOfRounds = 1;
     public int numberOfActionsAvailable = 1;
 
+    public static bool firstTurnOfTheRoundPlayer1 = true;
+    public static bool firstTurnOfTheRoundPlayer2 = true;
+
     public int player1WinedRounds = 0;
     public int player2WinedRounds = 0;
 
     public bool player1StartTheRound = true;
 
-    public bool player1pass;
-    public bool player2pass;
+    public bool player1Pass;
+    public bool player2Pass;
 
-    public GameObject handp1;
-    public GameObject handp2;
+    public GameObject handP1;
+    public GameObject handP2;
 
     public gameTracker state;
     public static bool player1;
@@ -25,8 +28,20 @@ public class GameManager : MonoBehaviour
 
     public void ChangeTurn()
     {
-        if (state == gameTracker.Player1Turn) state = gameTracker.Player2Turn;
-        else if (state == gameTracker.Player2Turn) state = gameTracker.Player1Turn;
+        if (state == gameTracker.Player1Turn)
+        {
+            if (player2Pass == true) state = gameTracker.Player1Turn;
+            else state = gameTracker.Player2Turn;
+
+            firstTurnOfTheRoundPlayer1 = false;
+        } 
+        else if (state == gameTracker.Player2Turn)
+        {   
+            if (player1Pass == true) state = gameTracker.Player2Turn;
+            else state = gameTracker.Player1Turn;
+
+            firstTurnOfTheRoundPlayer2 = false;
+        }
 
         numberOfActionsAvailable = 1;
     }
@@ -64,16 +79,16 @@ public class GameManager : MonoBehaviour
     {
         if (state == gameTracker.Player1Turn)
         {   
-            player1pass = true;
-            if (player1pass == player2pass) EndRound();
+            player1Pass = true;
+            if (player1Pass == player2Pass) EndRound();
 
             ChangeTurn();
         }
          
         else if (state == gameTracker.Player2Turn) 
         {
-            player2pass = true;
-            if (player2pass == player1pass) EndRound();
+            player2Pass = true;
+            if (player2Pass == player1Pass) EndRound();
 
             ChangeTurn();
         }
@@ -111,8 +126,8 @@ public class GameManager : MonoBehaviour
                 break;
 
             case gameTracker.StartingRound:
-                player1pass = false;
-                player2pass = false;              
+                player1Pass = false;
+                player2Pass = false;              
                 GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().powerPlayer1 = 0;
                 GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().powerPlayer2 = 0;
 

@@ -65,24 +65,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Manager\Player 2 Manager.cs" />
-    <Compile Include="Assets\Scripts\Panels Scripts\DropZone S P1.cs" />
-    <Compile Include="Assets\Scripts\Panels Scripts\DropZone M P1.cs" />
     <Compile Include="Assets\Scripts\Events\Card Click Event.cs" />
+    <Compile Include="Assets\Scripts\Panels Scripts\Panles Player2\DropZone M P2.cs" />
+    <Compile Include="Assets\Scripts\Panels Scripts\Panels Player1\DropZone C P1.cs" />
+    <Compile Include="Assets\Scripts\Panels Scripts\Panles Player2\DropZone C P2.cs" />
     <Compile Include="Assets\Scripts\Databases\Aspectos Deck.cs" />
-    <Compile Include="Assets\Scripts\Panels Scripts\DropZone R P2.cs" />
-    <Compile Include="Assets\Scripts\Panels Scripts\DropZone A P2.cs" />
+    <Compile Include="Assets\Scripts\Panels Scripts\Panles Player2\DropZone R P2.cs" />
     <Compile Include="Assets\Scripts\Panels Scripts\DropZoneHand.cs" />
-    <Compile Include="Assets\Scripts\Panels Scripts\DropZone R P1.cs" />
-    <Compile Include="Assets\Scripts\Panels Scripts\DropZone M P2.cs" />
+    <Compile Include="Assets\Scripts\Panels Scripts\Panels Player1\DropZone A P1.cs" />
     <Compile Include="Assets\Scripts\Card.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Events\Event Manager.cs" />
+    <Compile Include="Assets\Scripts\Panels Scripts\Panels Player1\DropZone R P1.cs" />
+    <Compile Include="Assets\Scripts\Panels Scripts\Panels Player1\DropZone S P1.cs" />
     <Compile Include="Assets\Scripts\Draggable.cs" />
+    <Compile Include="Assets\Scripts\Panels Scripts\Panles Player2\DropZone S P2.cs" />
     <Compile Include="Assets\Scripts\Manager\Player 1 Manager.cs" />
-    <Compile Include="Assets\Scripts\Panels Scripts\DropZone S P2.cs" />
-    <Compile Include="Assets\Scripts\Panels Scripts\DropZone C P1.cs" />
-    <Compile Include="Assets\Scripts\Panels Scripts\DropZone A P1.cs" />
-    <Compile Include="Assets\Scripts\Panels Scripts\DropZone C P2.cs" />
+    <Compile Include="Assets\Scripts\Panels Scripts\Panles Player2\DropZone A P2.cs" />
+    <Compile Include="Assets\Scripts\Panels Scripts\Panels Player1\DropZone M P1.cs" />
     <Compile Include="Assets\Scripts\CardData.cs" />
     <Compile Include="Assets\Scripts\Events\Effect Manager.cs" />
     <Compile Include="Assets\Scripts\Databases\Arthas Deck.cs" />
