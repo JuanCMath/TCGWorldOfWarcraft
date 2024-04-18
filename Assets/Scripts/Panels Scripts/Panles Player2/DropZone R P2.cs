@@ -62,7 +62,22 @@ public class DropZoneRP2 : MonoBehaviour, IDropHandler, IPointerEnterHandler, IP
                             }
                             else if (dropedCard.GetComponent<Card>().cardType == type.Unidad && dropedCard.GetComponent<Card>().isHero == false)
                             {
-
+                                if (dropedCard.GetComponent<Card>().cardDescription == "Roba una Carta")
+                                {
+                                    EffectsManager.DrawACard();
+                                }
+                                else if (dropedCard.GetComponent<Card>().cardDescription == "Destruye la carta con menor poder del enemigo")
+                                {
+                                    EffectsManager.DestroyLowerPowerCardOnOponent();
+                                }
+                                else if (dropedCard.GetComponent<Card>().cardDescription == "Destruye la criatura con mas poder en el campo")
+                                {
+                                    EffectsManager.DestroyHighestPowerCardOnField();
+                                }
+                                else if (dropedCard.GetComponent<Card>().cardDescription == "Esta criatura es mas fuerte en manada, multiplica su ataque por la cantidad de critaturas iguales en el campo")
+                                {
+                                    EffectsManager.MultAttackPower(dropedCard);
+                                }
                             }
                         }   
                     }    

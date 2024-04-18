@@ -66,6 +66,10 @@ public class DropZoneMP1 : MonoBehaviour, IDropHandler, IPointerEnterHandler, IP
                                 {
                                     EffectsManager.DrawACard();
                                 }
+                                else if (dropedCard.GetComponent<Card>().cardDescription == "Destruye la carta con menor poder del enemigo")
+                                {
+                                    EffectsManager.DestroyLowerPowerCardOnOponent();
+                                }
                                 else if (dropedCard.GetComponent<Card>().cardDescription == "Destruye la criatura con mas poder en el campo")
                                 {
                                     EffectsManager.DestroyHighestPowerCardOnField();

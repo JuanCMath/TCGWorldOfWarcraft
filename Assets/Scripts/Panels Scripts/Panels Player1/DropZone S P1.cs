@@ -54,7 +54,7 @@ public class DropZoneSP1 : MonoBehaviour, IDropHandler, IPointerEnterHandler, IP
                         if (dropedCard.GetComponent<Card>().cardSlot == slot.S || dropedCard.GetComponent<Card>().cardSlot == slot.MS || dropedCard.GetComponent<Card>().cardSlot == slot.RS || dropedCard.GetComponent<Card>().cardSlot == slot.MRS)
                         {
                             draggedComponent.parentToReturnTo = this.transform;
-                            GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable --;     
+                            GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable --;
 
                             if (dropedCard.GetComponent<Card>().cardType == type.Señuelo)
                             {
@@ -74,7 +74,11 @@ public class DropZoneSP1 : MonoBehaviour, IDropHandler, IPointerEnterHandler, IP
                                 {
                                     EffectsManager.DestroyHighestPowerCardOnField();
                                 }
-                            }                
+                                else if (dropedCard.GetComponent<Card>().cardDescription == "Esta criatura es mas fuerte en manada, multiplica su ataque por la cantidad de critaturas iguales en el campo")
+                                {
+                                    EffectsManager.MultAttackPower(dropedCard);
+                                }
+                            }               
                         }
                     }      
                 }                                     
