@@ -15,7 +15,8 @@ MonoBehaviour:
   cardID: 6
   cardName: Zon ooz
   cardFaction: 0
-  cardDescription: 
+  cardDescription: Esta criatura es mas fuerte en manada, multiplica su ataque por
+    la cantidad de critaturas iguales en el campo
   isHero: 0
   cardSlot: 0
   cardType: 0

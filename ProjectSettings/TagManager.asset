@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Card Player1
   - Card Player2
+  - Lead
   layers:
   - Default
   - TransparentFX

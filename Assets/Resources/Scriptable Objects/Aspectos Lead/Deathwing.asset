@@ -10,15 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8c1f942be106da43a70bea6d0ee3aa2, type: 3}
-  m_Name: Zon ooz 2
+  m_Name: Deathwing
   m_EditorClassIdentifier: 
-  cardID: 6
-  cardName: Zon ooz
+  cardID: 999
+  cardName: Deathwing
   cardFaction: 0
-  cardDescription: Esta criatura es mas fuerte en manada, multiplica su ataque por
-    la cantidad de critaturas iguales en el campo
-  isHero: 0
+  cardDescription: 'Con su infinito poder sobre la tierra de los dragones les da
+    una oportunidad mas para la vicoria robando una carta al inicio de cada ronda
+
+'
+  isHero: 1
   cardSlot: 0
   cardType: 0
-  attackPower: 7
-  art: {fileID: 21300000, guid: 90d022d37cb6adc42bafc1c17531ca1f, type: 3}
+  attackPower: 999
+  art: {fileID: 21300000, guid: 4345f7c07fac0fe4baf9b3004bedd5e1, type: 3}

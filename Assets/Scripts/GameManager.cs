@@ -18,7 +18,9 @@ public class GameManager : MonoBehaviour
 
     public bool player1Pass;
     public bool player2Pass;
-
+    
+    public GameObject leadP1;
+    public GameObject leadP2;
     public GameObject handP1;
     public GameObject handP2;
 
@@ -59,16 +61,31 @@ public class GameManager : MonoBehaviour
             player1StartTheRound = false;
             player2WinedRounds ++;
         }
-        else 
+        else //Esto significa que quedo en empate
         {
             player1StartTheRound = false;
-            player1WinedRounds ++;
-            player2WinedRounds ++;
+            //Revisamos si algun lider es The Lich King, si lo es entonces el dueño de el gana la ronda
+            if (leadP1.transform.GetChild(0).GetComponent<Card>().cardName == "The Lick King")
+            {
+                player1WinedRounds ++;
+            }
+            else if (leadP2.transform.GetChild(0).GetComponent<Card>().cardName == "The Lick King")
+            {
+                player2WinedRounds ++;
+            }
+            //Si nadie lo tiene entonces empate 
+            else
+            {
+                player1WinedRounds ++;
+                player2WinedRounds ++;
+            }       
         }
     }
 
     public void EndRound()
     {
+        GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().applyClima();
+        GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().applyClima();
         GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().CountAttackOnField();
         GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().CountAttackOnField();
         state = gameTracker.FinalOfRound;
@@ -137,7 +154,17 @@ public class GameManager : MonoBehaviour
                     GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().DrawCard(10);
                 } 
                 else 
-                { 
+                {
+                    
+                    if (leadP1.transform.GetChild(0).GetComponent<Card>().cardName == "Deathwing")
+                    {
+                        GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().DrawCard(1);
+                    }
+                    else if (leadP2.transform.GetChild(0).GetComponent<Card>().cardName == "Deathwing")
+                    {
+                        GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().DrawCard(1);
+                    }
+
                     GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().CleanField();
                     GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().CleanField();                  
                     GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().DrawCard(2);
@@ -177,7 +204,7 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case gameTracker.GameOver:
-                //
+                //Se acabo jejeje
                 break;
         }
     }

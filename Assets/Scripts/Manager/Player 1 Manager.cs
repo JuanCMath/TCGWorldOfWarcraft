@@ -17,6 +17,7 @@ public class Player1Manager : MonoBehaviour
     private GameObject lastClickedCard = null;
 
     public GameObject cardPrefab1;
+    public GameObject cardLeadPrefab;
     
     public GameObject deckPlayer1;
     public GameObject graveyardPlayer1;
@@ -29,6 +30,8 @@ public class Player1Manager : MonoBehaviour
     public GameObject meleeZonePlayer1;
     public GameObject rangeZonePlayer1;
     public GameObject siegeZonePlayer1;
+
+    public GameObject leadSpotPlayer1;
 
     [Header ("Hand Counter")]
     public int startingHandSize = 10;
@@ -47,6 +50,7 @@ public class Player1Manager : MonoBehaviour
         {
             //Si esta en la mano no la destruyas
             if (carta.transform.IsChildOf(handPlayer1.transform)) continue;
+            else if (carta.transform.IsChildOf(leadSpotPlayer1.transform)) continue;
 
             //Si no esta en la mano destruyela, Aqui podriamos poner despues que se vayan al cementerio
             carta.transform.SetParent(graveyardPlayer1.transform);
@@ -116,13 +120,18 @@ public class Player1Manager : MonoBehaviour
         //Barajeamos el deck
         ShuffleDeck(deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck);
     }
-
+    public void SetLead()
+    {
+        GameObject g = Instantiate(cardLeadPrefab, leadSpotPlayer1.transform);
+        g.GetComponent<Card>().cardData = deckPlayer1.GetComponent<AspectosDeck>().aspectosLeadCard;
+        g.name = g.GetComponent<Card>().cardData.cardName;
+    }
     //Robar Carta del Deck
     public void DrawCard(int amount)       
     {
         for (int i = 0; i < amount; i++)     
         {   
-            if (handPlayer1.transform.childCount <= 10)
+            if (handPlayer1.transform.childCount < 10)
             {       
                 //Instanciando la carta con el prefab y en la posicion de la mano
                 GameObject g = Instantiate(cardPrefab1, handPlayer1.transform);                         
@@ -167,7 +176,6 @@ public class Player1Manager : MonoBehaviour
     public void CountAttackOnField()
     {   
         applyAumento();
-        applyClima();
         foreach (Transform child in meleeZonePlayer1.transform)
         {
             powerPlayer1 += child.GetComponent<Card>().attackPower;
@@ -220,6 +228,7 @@ public class Player1Manager : MonoBehaviour
     public void Start()
     {
        ShuffleDeck(deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck);
+       SetLead();
     }
 
     

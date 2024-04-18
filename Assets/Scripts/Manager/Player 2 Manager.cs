@@ -15,6 +15,7 @@ public class Player2Manager : MonoBehaviour
     private GameObject lastClickedCard = null;
 
     public GameObject cardPrefab2;
+    public GameObject cardLeadPrefab;
     
     public GameObject deckPlayer2;
     public GameObject graveyardPlayer2;
@@ -27,6 +28,8 @@ public class Player2Manager : MonoBehaviour
     public GameObject meleeZonePlayer2;
     public GameObject rangeZonePlayer2;
     public GameObject siegeZonePlayer2;
+
+    public GameObject leadSpotPlayer2;
 
     [Header ("Hand Counter")]
     public int startingHandSize = 10;
@@ -45,6 +48,7 @@ public class Player2Manager : MonoBehaviour
         {
             //Si esta en la mano no la destruyas
             if (carta.transform.IsChildOf(handPlayer2.transform)) continue;
+            else if (carta.transform.IsChildOf(leadSpotPlayer2.transform)) continue;
 
             //Si no esta en la mano destruyela, Aqui podriamos poner despues que se vayan al cementerio
             carta.transform.SetParent(graveyardPlayer2.transform);
@@ -113,6 +117,13 @@ public class Player2Manager : MonoBehaviour
         ShuffleDeck(deckPlayer2.GetComponent<AspectosDeck>().aspectosDeck);
     }
 
+    public void SetLead()
+    {
+        GameObject g = Instantiate(cardLeadPrefab, leadSpotPlayer2.transform);
+        g.GetComponent<Card>().cardData = deckPlayer2.GetComponent<ArthasDeck>().arthasLeadCard;
+        g.name = g.GetComponent<Card>().cardData.cardName;
+    }
+
     //Robar carta del Deck
     public void DrawCard(int amount)
     {
@@ -163,7 +174,6 @@ public class Player2Manager : MonoBehaviour
     public void CountAttackOnField()
     {
         applyAumento();
-        applyClima();
         foreach (Transform child in meleeZonePlayer2.transform)
         {
             powerPlayer2 += child.GetComponent<Card>().attackPower;
@@ -216,6 +226,7 @@ public class Player2Manager : MonoBehaviour
      public void Start()
      {
         ShuffleDeck(deckPlayer2.GetComponent<ArthasDeck>().arthasDeck);
+        SetLead();
      }
 
      public void Update()

@@ -37,9 +37,11 @@ public class EffectsManager : MonoBehaviour
             {
                 if (card.transform.parent.ToString() == "Hand p1") continue;
                 else if (card.GetComponent<Card>().isHero == true) continue;
-                else card.GetComponent<Card>().attackPower -= number;
-
-                if (card.GetComponent<Card>().attackPower < 0) card.GetComponent<Card>().attackPower = 0;
+                else 
+                {
+                    card.GetComponent<Card>().attackPower -= number;
+                    if (card.GetComponent<Card>().attackPower < 0) card.GetComponent<Card>().attackPower = 0;
+                }   
             }
     }
 
@@ -68,7 +70,6 @@ public class EffectsManager : MonoBehaviour
                 }
             }
         }
-
     }
 
     public void DespejeEffect(GameObject panelOfTheDropedCard)
@@ -89,7 +90,6 @@ public class EffectsManager : MonoBehaviour
         //Seleccionar una carta y devolverla a la mano
         EventManager.OnCardClicked += SelectCard;
         StartCoroutine(SendCardToHand());
-
     }
 
     public static void DrawACard()
@@ -128,6 +128,7 @@ public class EffectsManager : MonoBehaviour
                 {
                     if (card.transform.parent.name == "Hand p2") continue;
                     else if (card.transform.parent.name == "Graveyard p2") continue;
+                    else if (card.transform.parent.name == "Lider p2") continue;
                     else if (card.GetComponent<Card>().isHero == true) continue;
                     else if (card.GetComponent<Card>().cardType == type.Aumento) continue;
                     else if (card.GetComponent<Card>().cardType == type.Clima) continue;
@@ -153,6 +154,7 @@ public class EffectsManager : MonoBehaviour
                 {
                     if (card.transform.parent.name == "Hand p1") continue;
                     else if (card.transform.parent.name == "Graveyard p1") continue;
+                    else if (card.transform.parent.name == "Lider p1") continue;
                     else if (card.GetComponent<Card>().isHero == true) continue;
                     else if (card.GetComponent<Card>().cardType == type.Aumento) continue;
                     else if (card.GetComponent<Card>().cardType == type.Clima) continue;
@@ -191,7 +193,8 @@ public class EffectsManager : MonoBehaviour
         foreach (GameObject card in cards)
         {
             if (card.transform.parent.name == "Hand p1" || card.transform.parent.name == "Hand p2") continue;
-            else if (card.transform.parent.name == "Graveyard p1") continue;
+            else if (card.transform.parent.name == "Graveyard p1" || card.transform.parent.name == "Graveyard p2") continue;
+            else if (card.transform.parent.name == "Lider p1" || card.transform.parent.name == "Lider p2") continue;
             else if (card.GetComponent<Card>().isHero == true) continue;
             else if (card.GetComponent<Card>().cardType == type.Aumento) continue;
             else if (card.GetComponent<Card>().cardType == type.Clima) continue;
@@ -206,8 +209,43 @@ public class EffectsManager : MonoBehaviour
                 }
             }
         }
-        Debug.Log("Destruyendo" + cardToDestroy.name);
         SendCardToGraveyard(cardToDestroy);        
+    }
+
+    public static void MultAttackPower(GameObject dropedcard)
+    {
+        string multCardName = dropedcard.GetComponent<Card>().cardName;
+        int amountOfCardsWithTheSameName = 0;
+
+        GameObject[] cardsP1 = GameObject.FindGameObjectsWithTag("Card Player1");
+        GameObject[] cardsP2 = GameObject.FindGameObjectsWithTag("Card Player2");
+
+        if (GameManager.player1 == true)
+        {
+            foreach (GameObject card in cardsP1)
+            {
+                if (card.transform.parent.name == "Hand p1") continue;
+
+                else if (card.GetComponent<Card>().cardName == multCardName)
+                    {
+                        amountOfCardsWithTheSameName += 1;
+                    }
+            }
+            dropedcard.GetComponent<Card>().attackPower *= amountOfCardsWithTheSameName;     
+        }
+        else if (GameManager.player2 == true)
+        {
+            foreach (GameObject card in cardsP2)
+            {
+                if (card.transform.parent.name == "Hand p1") continue;
+
+                else if (card.GetComponent<Card>().cardName == multCardName)
+                {
+                    amountOfCardsWithTheSameName += 1;
+                }
+            }
+            dropedcard.GetComponent<Card>().attackPower *= amountOfCardsWithTheSameName;          
+        }
     }
 
     #region Utilidades

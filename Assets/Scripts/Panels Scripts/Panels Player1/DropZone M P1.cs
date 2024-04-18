@@ -70,6 +70,10 @@ public class DropZoneMP1 : MonoBehaviour, IDropHandler, IPointerEnterHandler, IP
                                 {
                                     EffectsManager.DestroyHighestPowerCardOnField();
                                 }
+                                else if (dropedCard.GetComponent<Card>().cardDescription == "Esta criatura es mas fuerte en manada, multiplica su ataque por la cantidad de critaturas iguales en el campo")
+                                {
+                                    EffectsManager.MultAttackPower(dropedCard);
+                                }
                             }
                         }      
                     } 

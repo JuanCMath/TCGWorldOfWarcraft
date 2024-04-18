@@ -158,8 +158,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 91.39966, y: 3.1331787}
-  m_SizeDelta: {x: -982.324, y: 0}
+  m_AnchoredPosition: {x: 95.220215, y: 2.3690186}
+  m_SizeDelta: {x: -974.6828, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &69520768
 MonoBehaviour:
@@ -504,16 +504,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 170981884}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2.6540422}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 137599600}
-  m_Father: {fileID: 334112063}
+  m_Father: {fileID: 376274186}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 308.08395, y: 427.31}
+  m_AnchoredPosition: {x: 486.43967, y: 156.08289}
   m_SizeDelta: {x: 78.449, y: 118.3381}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &170981886
@@ -1116,16 +1116,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 322155612}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -10.584203}
   m_LocalScale: {x: 1.056, y: 1.12, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1651074406}
+  m_Father: {fileID: 858685629}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -389.89493, y: -345.26007}
-  m_SizeDelta: {x: -35.361206, y: 0}
+  m_AnchoredPosition: {x: -423.30557, y: -348}
+  m_SizeDelta: {x: 64.638794, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &322155614
 MonoBehaviour:
@@ -1236,7 +1236,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 376274186}
-  - {fileID: 170981885}
+  - {fileID: 2046748996}
   - {fileID: 1453628169}
   - {fileID: 1222444521}
   m_Father: {fileID: 180033779}
@@ -1255,6 +1255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   powerPlayer2: 0
   cardPrefab2: {fileID: 5710362436332554621, guid: 193d7fa1a705c1c45b8de4c705e6f1d7, type: 3}
+  cardLeadPrefab: {fileID: 5710362436332554621, guid: 9e3de4bb9337a10458d2c77aa18d3001, type: 3}
   deckPlayer2: {fileID: 1222444520}
   graveyardPlayer2: {fileID: 170981884}
   handPlayer2: {fileID: 1453628168}
@@ -1265,6 +1266,7 @@ MonoBehaviour:
   meleeZonePlayer2: {fileID: 2115632254}
   rangeZonePlayer2: {fileID: 403890434}
   siegeZonePlayer2: {fileID: 2117122873}
+  leadSpotPlayer2: {fileID: 2046748995}
   startingHandSize: 10
   maxHandSize: 10
   deckTextPlayer2: {fileID: 833846007}
@@ -1297,7 +1299,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2046748996}
   - {fileID: 1219823144}
   - {fileID: 1201730849}
   - {fileID: 1018325245}
@@ -1305,6 +1306,7 @@ RectTransform:
   - {fileID: 403890435}
   - {fileID: 2117122874}
   - {fileID: 96004660}
+  - {fileID: 170981885}
   m_Father: {fileID: 334112063}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -2125,6 +2127,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1651074406}
+  - {fileID: 322155613}
   - {fileID: 216967026}
   - {fileID: 1438966710}
   m_Father: {fileID: 180033779}
@@ -2143,6 +2146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   powerPlayer1: 0
   cardPrefab1: {fileID: 5710362436332554621, guid: d85dbb108131e9941b6f1711e1d924a1, type: 3}
+  cardLeadPrefab: {fileID: 5710362436332554621, guid: 9e3de4bb9337a10458d2c77aa18d3001, type: 3}
   deckPlayer1: {fileID: 1438966709}
   graveyardPlayer1: {fileID: 843968476}
   handPlayer1: {fileID: 216967025}
@@ -2153,6 +2157,7 @@ MonoBehaviour:
   meleeZonePlayer1: {fileID: 2009433856}
   rangeZonePlayer1: {fileID: 171783803}
   siegeZonePlayer1: {fileID: 2025033406}
+  leadSpotPlayer1: {fileID: 322155612}
   startingHandSize: 10
   maxHandSize: 10
   deckTextPlayer1: {fileID: 1710099804}
@@ -2945,6 +2950,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arthasDeck: []
+  arthasLeadCard: {fileID: 0}
 --- !u!1 &1254979320
 GameObject:
   m_ObjectHideFlags: 0
@@ -3291,6 +3297,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aspectosDeck: []
+  aspectosLeadCard: {fileID: 0}
 --- !u!1 &1453628168
 GameObject:
   m_ObjectHideFlags: 0
@@ -3449,7 +3456,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 322155613}
   - {fileID: 1217779658}
   - {fileID: 737718820}
   - {fileID: 1331299081}
@@ -3520,6 +3526,8 @@ MonoBehaviour:
   player1StartTheRound: 1
   player1Pass: 0
   player2Pass: 0
+  leadP1: {fileID: 322155612}
+  leadP2: {fileID: 2046748995}
   handP1: {fileID: 216967025}
   handP2: {fileID: 1453628168}
   state: 2
@@ -4451,16 +4459,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2046748995}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 2.6540422}
   m_LocalScale: {x: 1.056, y: 1.12, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 376274186}
+  m_Father: {fileID: 334112063}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -298.49036, y: 351.23322}
-  m_SizeDelta: {x: -35.360962, y: 0}
+  m_AnchoredPosition: {x: -476.84607, y: 622.4603}
+  m_SizeDelta: {x: 64.63904, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2046748997
 MonoBehaviour:

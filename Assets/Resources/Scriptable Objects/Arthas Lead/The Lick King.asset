@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8c1f942be106da43a70bea6d0ee3aa2, type: 3}
-  m_Name: Zon ooz 2
+  m_Name: The Lick King
   m_EditorClassIdentifier: 
-  cardID: 6
-  cardName: Zon ooz
-  cardFaction: 0
-  cardDescription: Esta criatura es mas fuerte en manada, multiplica su ataque por
-    la cantidad de critaturas iguales en el campo
+  cardID: 999
+  cardName: The Lick King
+  cardFaction: 1
+  cardDescription: The Lich King despues de una poderoza batalla si no queda ninguna
+    criatura viva sobre el campo los no muertos se alzan para ganar la batalla
   isHero: 0
-  cardSlot: 0
+  cardSlot: 7
   cardType: 0
-  attackPower: 7
-  art: {fileID: 21300000, guid: 90d022d37cb6adc42bafc1c17531ca1f, type: 3}
+  attackPower: 999
+  art: {fileID: 21300000, guid: 263c7866310deab4b85a612f0ff3e34b, type: 3}
