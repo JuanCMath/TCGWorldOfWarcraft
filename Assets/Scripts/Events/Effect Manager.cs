@@ -5,6 +5,10 @@ using System;
 using UnityEditor.PackageManager;
 using UnityEngine.EventSystems;
 using UnityEditor.UI;
+using System.Runtime.CompilerServices;
+using System.Linq;
+using Unity.VisualScripting;
+using Enums;
 
 public class EffectsManager : MonoBehaviour
 {
@@ -88,6 +92,124 @@ public class EffectsManager : MonoBehaviour
 
     }
 
+    public static void DrawACard()
+    {
+        if (GameManager.player1 == true)  GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().DrawCard(1);  
+        else if (GameManager.player2 == true) GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().DrawCard(1);
+    }
+
+    public static void DestroyLowerPowerCardOnOponent()
+    {
+        GameObject[] cardsP1 = GameObject.FindGameObjectsWithTag("Card Player1");
+        GameObject[] cardsP2 = GameObject.FindGameObjectsWithTag("Card Player2");
+
+        GameObject cardToDestroy = null;
+        int attackPowerOfCardToDestroy = 1000;
+
+        int amountOfCardsInFieldP1 = 0;
+        int amountOfCardsInFieldP2 = 0;
+
+        foreach (GameObject card in cardsP1)
+        {
+            if (card.transform.parent.name == "Hand p1") continue;
+            else amountOfCardsInFieldP1 += 1;
+        }
+
+        foreach (GameObject card in cardsP2)
+        {
+            if (card.transform.parent.name == "Hand p2") continue;
+            else amountOfCardsInFieldP2 += 1;
+        }
+        if (GameManager.player1 == true)
+        {
+            if (amountOfCardsInFieldP2 != 0)
+            {
+                foreach (GameObject card in cardsP2)
+                {
+                    if (card.transform.parent.name == "Hand p2") continue;
+                    else if (card.transform.parent.name == "Graveyard p2") continue;
+                    else if (card.GetComponent<Card>().isHero == true) continue;
+                    else if (card.GetComponent<Card>().cardType == type.Aumento) continue;
+                    else if (card.GetComponent<Card>().cardType == type.Clima) continue;
+                    else if (card.GetComponent<Card>().cardType == type.Señuelo) continue;
+                    else if (card.GetComponent<Card>().cardType == type.Despeje) continue;
+                    else
+                    {
+                        if (card.GetComponent<Card>().attackPower < attackPowerOfCardToDestroy)
+                        {
+                            attackPowerOfCardToDestroy = card.GetComponent<Card>().attackPower;
+                            cardToDestroy = card;
+                        }
+                    }  
+                }
+                SendCardToGraveyard(cardToDestroy);
+            }    
+        }
+        else if (GameManager.player2 == true)
+        {
+            if (amountOfCardsInFieldP1 != 0)
+            {
+                foreach (GameObject card in cardsP1)
+                {
+                    if (card.transform.parent.name == "Hand p1") continue;
+                    else if (card.transform.parent.name == "Graveyard p1") continue;
+                    else if (card.GetComponent<Card>().isHero == true) continue;
+                    else if (card.GetComponent<Card>().cardType == type.Aumento) continue;
+                    else if (card.GetComponent<Card>().cardType == type.Clima) continue;
+                    else if (card.GetComponent<Card>().cardType == type.Señuelo) continue;
+                    else if (card.GetComponent<Card>().cardType == type.Despeje) continue;
+                    else
+                    {
+                        if (card.GetComponent<Card>().attackPower < attackPowerOfCardToDestroy)
+                        {
+                            attackPowerOfCardToDestroy = card.GetComponent<Card>().attackPower;
+                            cardToDestroy = card;
+                        }
+                    } 
+                }
+                Debug.Log("Destruyendo" + cardToDestroy.name);
+                SendCardToGraveyard(cardToDestroy);
+            }    
+        }
+    }
+
+    public static void DestroyHighestPowerCardOnField()
+    {
+        Card[] provisionalCards = FindObjectsOfType<Card>();
+
+        // Convierte el array de Card a GameObject[]
+        GameObject[] cards = new GameObject[provisionalCards.Length];
+
+        for (int i = 0; i < provisionalCards.Length; i++)
+        {
+            cards[i] = provisionalCards[i].gameObject;
+        }
+        
+        GameObject cardToDestroy = null;
+        int attackPowerOfCardToDestroy = 0;
+
+        foreach (GameObject card in cards)
+        {
+            if (card.transform.parent.name == "Hand p1" || card.transform.parent.name == "Hand p2") continue;
+            else if (card.transform.parent.name == "Graveyard p1") continue;
+            else if (card.GetComponent<Card>().isHero == true) continue;
+            else if (card.GetComponent<Card>().cardType == type.Aumento) continue;
+            else if (card.GetComponent<Card>().cardType == type.Clima) continue;
+            else if (card.GetComponent<Card>().cardType == type.Señuelo) continue;
+            else if (card.GetComponent<Card>().cardType == type.Despeje) continue;
+            else 
+            {
+                if (card.GetComponent<Card>().attackPower > attackPowerOfCardToDestroy)
+                {
+                    attackPowerOfCardToDestroy = card.GetComponent<Card>().attackPower;
+                    cardToDestroy = card;
+                }
+            }
+        }
+        Debug.Log("Destruyendo" + cardToDestroy.name);
+        SendCardToGraveyard(cardToDestroy);        
+    }
+
     #region Utilidades
     public static void SelectCard(GameObject card)
     {
@@ -109,6 +231,7 @@ public class EffectsManager : MonoBehaviour
 
         EventManager.OnCardClicked -= SelectCard;
         selectedcard = null;
+        panel = null;
     }
 
     public void ReturnCardToHand(GameObject card)
@@ -121,6 +244,20 @@ public class EffectsManager : MonoBehaviour
         {
             selectedcard.transform.SetParent(GameObject.Find("Game Manager").GetComponent<GameManager>().handP2.transform);
         } 
+    }
+
+    public static void SendCardToGraveyard(GameObject card)
+    {
+        if (card.transform.parent.parent.name == "Panels p1")
+        {
+            card.transform.SetParent(GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().graveyardPlayer1.transform);
+            card.transform.localPosition = new Vector3 (0,0,0);
+        }
+        else if (card.transform.parent.parent.name == "Panels p2")
+        {
+            card.transform.SetParent(GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().graveyardPlayer2.transform);
+            card.transform.localPosition = new Vector3 (0,0,0);
+        }
     }
     #endregion
 }

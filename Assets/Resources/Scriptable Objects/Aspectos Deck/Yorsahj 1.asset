@@ -15,7 +15,7 @@ MonoBehaviour:
   cardID: 7
   cardName: Yorsahj
   cardFaction: 0
-  cardDescription: 
+  cardDescription: Destruye la criatura con mas poder en el campo
   isHero: 0
   cardSlot: 2
   cardType: 0

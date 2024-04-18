@@ -62,7 +62,14 @@ public class DropZoneMP1 : MonoBehaviour, IDropHandler, IPointerEnterHandler, IP
                             }
                             else if (dropedCard.GetComponent<Card>().cardType == type.Unidad && dropedCard.GetComponent<Card>().isHero == false)
                             {
-
+                                if (dropedCard.GetComponent<Card>().cardDescription == "Roba una Carta")
+                                {
+                                    EffectsManager.DrawACard();
+                                }
+                                else if (dropedCard.GetComponent<Card>().cardDescription == "Destruye la criatura con mas poder en el campo")
+                                {
+                                    EffectsManager.DestroyHighestPowerCardOnField();
+                                }
                             }
                         }      
                     } 

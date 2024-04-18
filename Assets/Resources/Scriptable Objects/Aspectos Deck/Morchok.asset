@@ -15,7 +15,7 @@ MonoBehaviour:
   cardID: 5
   cardName: Morchok
   cardFaction: 0
-  cardDescription: 
+  cardDescription: Roba una Carta
   isHero: 0
   cardSlot: 0
   cardType: 0

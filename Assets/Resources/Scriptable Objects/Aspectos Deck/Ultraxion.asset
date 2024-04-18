@@ -15,7 +15,7 @@ MonoBehaviour:
   cardID: 8
   cardName: Ultraxion
   cardFaction: 0
-  cardDescription: 
+  cardDescription: Destruye la carta con menor poder del enemigo
   isHero: 0
   cardSlot: 1
   cardType: 0

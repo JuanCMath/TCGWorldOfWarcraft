@@ -61,7 +61,7 @@ public class DropZoneCP1 : MonoBehaviour, IDropHandler, IPointerEnterHandler, IP
                             {
                                 Destroy(dropedCard); //Dejare el señuelo destruyendose, deberia ir al cementerio pero me da un error raro            
                                 GameObject.Find("Effect Manager").GetComponent<EffectsManager>().DespejeEffect(dropedPanel);
-                                 GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable --;
+                                GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable --;
                             }
                            
                         }   
