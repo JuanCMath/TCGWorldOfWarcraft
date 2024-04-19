@@ -9,13 +9,15 @@ using System.Runtime.CompilerServices;
 using System.Linq;
 using Unity.VisualScripting;
 using Enums;
+using JetBrains.Annotations;
+using UnityEngine.UIElements;
 
 public class EffectsManager : MonoBehaviour
 {
     static GameObject selectedcard;
     static GameObject panel;
 
-    public static void ClimaEffect(GameObject panel, int number)
+    public static void ClimateEffect(GameObject panel, int number)
     {   
         GameObject[] cardsP1 = GameObject.FindGameObjectsWithTag("Card Player1");
         GameObject[] cardsP2 = GameObject.FindGameObjectsWithTag("Card Player2");
@@ -45,7 +47,7 @@ public class EffectsManager : MonoBehaviour
             }
     }
 
-    public static void AumentoEffec(GameObject ouputPanel, int number)
+    public static void IncreaseEffect(GameObject ouputPanel, int number)
     {
         GameObject[] cardsP1 = GameObject.FindGameObjectsWithTag("Card Player1");
         GameObject[] cardsP2 = GameObject.FindGameObjectsWithTag("Card Player2");
@@ -72,7 +74,7 @@ public class EffectsManager : MonoBehaviour
         }
     }
 
-    public void DespejeEffect(GameObject panelOfTheDropedCard)
+    public void ClearanceEffect(GameObject panelOfTheDropedCard)
     {
         panel = panelOfTheDropedCard;
         Debug.Log("aplicando efecto señuelo");
@@ -83,7 +85,7 @@ public class EffectsManager : MonoBehaviour
         
     }
 
-    public void SeñueloEffect(GameObject panelOfTheDropedCard)
+    public void BaitEffect(GameObject panelOfTheDropedCard)
     {
         panel = panelOfTheDropedCard;
         Debug.Log("aplicando efecto señuelo");
@@ -252,6 +254,88 @@ public class EffectsManager : MonoBehaviour
         }
     }
 
+    public static void DestoyFieldSpotWithLowerAmountOfCards()
+    {
+        int amountOfCardsInPanelToDestroyedPanel = 0;
+        GameObject panelToDestroyed = null;
+
+        GameObject meleePlayer1 = GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().meleeZonePlayer1;
+        GameObject rangePlayer1 = GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().rangeZonePlayer1;
+        GameObject siegePlayer1 = GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().siegeZonePlayer1;
+        
+        GameObject meleePlayer2 = GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().meleeZonePlayer2;
+        GameObject rangePlayer2 = GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().meleeZonePlayer2;
+        GameObject siegePlayer2 = GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().meleeZonePlayer2;
+
+        GameObject[] panels = new GameObject[] {meleePlayer1, rangePlayer1, siegePlayer1, meleePlayer2, rangePlayer2, siegePlayer2};
+
+        foreach (GameObject panel in panels)
+        {
+            if (panel.transform.childCount > amountOfCardsInPanelToDestroyedPanel)
+            {
+                panelToDestroyed = panel;
+                amountOfCardsInPanelToDestroyedPanel = panel.transform.childCount;
+            }
+        }
+        for (int i = 0; i < amountOfCardsInPanelToDestroyedPanel; i++)
+        {
+            SendCardToGraveyard(panelToDestroyed.transform.GetChild(i).gameObject);
+        }
+    }
+
+    public static void SetAttackPowerOfAllCardsToAverageAtackPower()
+    {
+        Card[] provisionalCards = FindObjectsOfType<Card>();
+
+        // Convierte el array de Card a GameObject[]
+        GameObject[] cards = new GameObject[provisionalCards.Length];
+
+        for (int i = 0; i < provisionalCards.Length; i++)
+        {
+            cards[i] = provisionalCards[i].gameObject;
+        }
+
+        int amountOfCardsInField = 0;
+        int sumOfAllAttackPower = 0;
+        int averageAtackPower = 0;
+
+        foreach (GameObject card in cards)
+        {
+            if (card.transform.parent.name == "Hand p1" || card.transform.parent.name == "Hand p2") continue;
+            else if (card.transform.parent.name == "Graveyard p1" || card.transform.parent.name == "Graveyard p2") continue;
+            else if (card.transform.parent.name == "Lider p1" || card.transform.parent.name == "Lider p2") continue;
+            else if (card.GetComponent<Card>().isHero == true) continue;
+            else if (card.GetComponent<Card>().cardType == type.Aumento) continue;
+            else if (card.GetComponent<Card>().cardType == type.Clima) continue;
+            else if (card.GetComponent<Card>().cardType == type.Señuelo) continue;
+            else if (card.GetComponent<Card>().cardType == type.Despeje) continue;
+            else
+            {
+                amountOfCardsInField += 1;
+                sumOfAllAttackPower += card.GetComponent<Card>().attackPower;
+            }
+        }
+        averageAtackPower = sumOfAllAttackPower % sumOfAllAttackPower;
+
+        foreach (GameObject card in cards)
+        {
+            if (card.transform.parent.name == "Hand p1" || card.transform.parent.name == "Hand p2") continue;
+            else if (card.transform.parent.name == "Graveyard p1" || card.transform.parent.name == "Graveyard p2") continue;
+            else if (card.transform.parent.name == "Lider p1" || card.transform.parent.name == "Lider p2") continue;
+            else if (card.GetComponent<Card>().isHero == true) continue;
+            else if (card.GetComponent<Card>().cardType == type.Aumento) continue;
+            else if (card.GetComponent<Card>().cardType == type.Clima) continue;
+            else if (card.GetComponent<Card>().cardType == type.Señuelo) continue;
+            else if (card.GetComponent<Card>().cardType == type.Despeje) continue;
+            else
+            {
+                card.GetComponent<Card>().attackPower = averageAtackPower;
+            }
+        }
+
+
+    }
+
     #region Utilidades
     public static void SelectCard(GameObject card)
     {
@@ -290,16 +374,24 @@ public class EffectsManager : MonoBehaviour
 
     public static void SendCardToGraveyard(GameObject card)
     {
-        if (card.transform.parent.parent.name == "Panels p1")
+        if (card != null)
         {
-            card.transform.SetParent(GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().graveyardPlayer1.transform);
-            card.transform.localPosition = new Vector3 (0,0,0);
+            if (card.transform.parent.parent.name == "Panels p1")
+            {
+                card.transform.SetParent(GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().graveyardPlayer1.transform);
+                card.transform.localPosition = new Vector3 (0,0,0);
+            }
+            else if (card.transform.parent.parent.name == "Panels p2")
+            {
+                card.transform.SetParent(GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().graveyardPlayer2.transform);
+                card.transform.localPosition = new Vector3 (0,0,0);
+            }
         }
-        else if (card.transform.parent.parent.name == "Panels p2")
+        else
         {
-            card.transform.SetParent(GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().graveyardPlayer2.transform);
-            card.transform.localPosition = new Vector3 (0,0,0);
+            return;
         }
+        
     }
     #endregion
 }

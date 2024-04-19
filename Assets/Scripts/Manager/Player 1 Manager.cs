@@ -198,7 +198,7 @@ public class Player1Manager : MonoBehaviour
         for (int i = 0; i < amounOfClimas; i ++)
         {
             amountOfChange = climaZonePlayer1.transform.GetChild(i).GetComponent<Card>().effectNumber;
-            EffectsManager.ClimaEffect(climaZonePlayer1, amountOfChange);
+            EffectsManager.ClimateEffect(climaZonePlayer1, amountOfChange);
         }
     }
 
@@ -208,20 +208,20 @@ public class Player1Manager : MonoBehaviour
         if (aumentoMZonePlayer1.transform.childCount != 0) 
         {
             amountOfChangeM = aumentoMZonePlayer1.transform.GetChild(0).GetComponent<Card>().effectNumber;
-            EffectsManager.AumentoEffec(meleeZonePlayer1, amountOfChangeM);
+            EffectsManager.IncreaseEffect(meleeZonePlayer1, amountOfChangeM);
         }
         int amountOfChangeR;
         if (aumentoRZonePlayer1.transform.childCount != 0) 
         {
             amountOfChangeR = aumentoRZonePlayer1.transform.GetChild(0).GetComponent<Card>().effectNumber;
-            EffectsManager.AumentoEffec(rangeZonePlayer1, amountOfChangeR);
+            EffectsManager.IncreaseEffect(rangeZonePlayer1, amountOfChangeR);
         }
 
         int amountOfChangeS;
         if (aumentoSZonePlayer1.transform.childCount != 0) 
         {
             amountOfChangeS = aumentoSZonePlayer1.transform.GetChild(0).GetComponent<Card>().effectNumber;
-            EffectsManager.AumentoEffec(siegeZonePlayer1, amountOfChangeS);
+            EffectsManager.IncreaseEffect(siegeZonePlayer1, amountOfChangeS);
         }
     }
 

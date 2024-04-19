@@ -58,7 +58,7 @@ public class DropZoneSP2 : MonoBehaviour, IDropHandler, IPointerEnterHandler, IP
 
                             if (dropedCard.GetComponent<Card>().cardType == type.Señuelo)
                             {
-                                GameObject.Find("Effect Manager").GetComponent<EffectsManager>().SeñueloEffect(dropedPanel);
+                                GameObject.Find("Effect Manager").GetComponent<EffectsManager>().BaitEffect(dropedPanel);
                             }
                             else if (dropedCard.GetComponent<Card>().cardType == type.Unidad && dropedCard.GetComponent<Card>().isHero == false)
                             {
