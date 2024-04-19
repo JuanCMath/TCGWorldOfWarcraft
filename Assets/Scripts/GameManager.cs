@@ -5,6 +5,9 @@ using Enums;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject cardDisplayPrefab;
+    public GameObject panelCardDsiplay;
+    
     public int numberOfRounds = 1;
     public int numberOfActionsAvailable = 1;
 

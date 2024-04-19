@@ -171,6 +171,8 @@ public class EffectsManager : MonoBehaviour
                 }
                 Debug.Log("Destruyendo" + cardToDestroy.name);
                 SendCardToGraveyard(cardToDestroy);
+                selectedcard = null;
+                panel = null;
             }    
         }
     }
@@ -209,7 +211,9 @@ public class EffectsManager : MonoBehaviour
                 }
             }
         }
-        SendCardToGraveyard(cardToDestroy);        
+        SendCardToGraveyard(cardToDestroy);   
+        selectedcard = null;
+        panel = null;     
     }
 
     public static void MultAttackPower(GameObject dropedcard)
@@ -237,7 +241,7 @@ public class EffectsManager : MonoBehaviour
         {
             foreach (GameObject card in cardsP2)
             {
-                if (card.transform.parent.name == "Hand p1") continue;
+                if (card.transform.parent.name == "Hand p2") continue;
 
                 else if (card.GetComponent<Card>().cardName == multCardName)
                 {

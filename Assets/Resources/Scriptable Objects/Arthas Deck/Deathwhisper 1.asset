@@ -15,7 +15,7 @@ MonoBehaviour:
   cardID: 27
   cardName: Deathwhisper
   cardFaction: 1
-  cardDescription: 
+  cardDescription: Roba una Carta
   isHero: 0
   cardSlot: 1
   cardType: 0

@@ -15,7 +15,7 @@ MonoBehaviour:
   cardID: 26
   cardName: Sindragosa
   cardFaction: 1
-  cardDescription: 
+  cardDescription: Destruye la carta con menor poder del enemigo
   isHero: 0
   cardSlot: 2
   cardType: 0

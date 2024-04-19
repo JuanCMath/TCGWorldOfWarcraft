@@ -15,7 +15,7 @@ MonoBehaviour:
   cardID: 24
   cardName: Putricide
   cardFaction: 1
-  cardDescription: 
+  cardDescription: Destruye la criatura con mas poder en el campo
   isHero: 0
   cardSlot: 0
   cardType: 0

@@ -15,7 +15,8 @@ MonoBehaviour:
   cardID: 25
   cardName: Blood Queen
   cardFaction: 1
-  cardDescription: 
+  cardDescription: Esta criatura es mas fuerte en manada, multiplica su ataque por
+    la cantidad de critaturas iguales en el campo
   isHero: 0
   cardSlot: 1
   cardType: 0

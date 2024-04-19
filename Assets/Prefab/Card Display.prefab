@@ -359,15 +359,12 @@ GameObject:
   - component: {fileID: 1475975841644652971}
   - component: {fileID: 1081025277643026367}
   - component: {fileID: 8814322918774352366}
-  - component: {fileID: 5978975913521691394}
   - component: {fileID: 3596144090589572897}
   - component: {fileID: 5365391876382984737}
-  - component: {fileID: 3874239343401358296}
-  - component: {fileID: 2366319011117890244}
-  - component: {fileID: 2057819604477902181}
+  - component: {fileID: 6664712970646365826}
   m_Layer: 5
-  m_Name: Card Player1
-  m_TagString: Card Player1
+  m_Name: Card Display
+  m_TagString: Card Display
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -391,7 +388,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 80, y: 120}
+  m_SizeDelta: {x: 320, y: 480}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1081025277643026367
 CanvasRenderer:
@@ -431,26 +428,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5978975913521691394
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5710362436332554621}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: 80
-  m_PreferredHeight: 120
-  m_FlexibleWidth: 0
-  m_FlexibleHeight: 0
-  m_LayoutPriority: 1
 --- !u!225 &3596144090589572897
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -489,33 +466,7 @@ MonoBehaviour:
   cardType: 0
   attackPower: 0
   art: {fileID: 9161095751068518372}
---- !u!114 &3874239343401358296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5710362436332554621}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca8369a77dac1694b9ad7d4d38fa32d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentToReturnTo: {fileID: 0}
-  placeholderParent: {fileID: 0}
---- !u!114 &2366319011117890244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5710362436332554621}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9686ee6918403d4ab808e4c753aa2a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2057819604477902181
+--- !u!114 &6664712970646365826
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -636,8 +587,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -34.9, y: -15.6}
-  m_SizeDelta: {x: 75.5541, y: 80.8297}
+  m_AnchoredPosition: {x: -35, y: -15}
+  m_SizeDelta: {x: 104.255, y: 89.4777}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &124528389641394053
 CanvasRenderer:
@@ -667,7 +618,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: 10
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -676,8 +627,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278218495
-  m_fontColor: {r: 1, g: 0.42971516, b: 0, a: 1}
+    rgba: 4280832511
+  m_fontColor: {r: 1, g: 0.31658822, b: 0.1566037, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -730,7 +681,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0.65902704, w: -0.8822145}
+  m_margin: {x: 0, y: 0, z: 0.31986627, w: 1.2046127}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

@@ -74,5 +74,8 @@ public class Card : MonoBehaviour
         if (match.Success)
             effectNumber = int.Parse(match.Value);
     }
-    
+    public void Update()
+    {
+        UpdateDisplay();
+    }
 }
