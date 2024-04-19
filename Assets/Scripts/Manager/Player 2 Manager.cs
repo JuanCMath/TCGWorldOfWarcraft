@@ -59,11 +59,15 @@ public class Player2Manager : MonoBehaviour
     //Cambiar Cartas
     public void SwapCards() //Aqui en algun momento pondre la cantidad de cartas a Swapear, no es por gusto el metodo
     {
-        if (GameManager.firstTurnOfTheRoundPlayer2 == true)
+        if (GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable == 1)
         {
-            for (int i = 0; i < 2; i++)
+            if (GameManager.player2CanSwapCards == true)
             {
-                StartingTheCardSwap();
+                for (int i = 0; i < 2; i++)
+                {
+                    StartingTheCardSwap();
+                    GameManager.player2CanSwapCards = false;
+                }
             }
         }
     }
@@ -72,11 +76,20 @@ public class Player2Manager : MonoBehaviour
     public void StartingTheCardSwap()       //Lo acciona un botton, aqui se dan las condiciones previas para el intercambio
     {
         //Añadir un Subscriber a los Eventos
-        EventManager.OnCardClicked += SelectCardNotinHand;
+        EventManager.OnCardClicked += SelectCardInHand;
         //Inicio del metodo para cambiar cartas
-        StartCoroutine(SwapCardsInHands());      
+        StartCoroutine(OrganizedMetods());      
     }
-
+    IEnumerator OrganizedMetods()
+    {
+        yield return StartCoroutine(SwapCardsInHands());
+        yield return StartCoroutine(DrawSingleCard());
+    }
+    IEnumerator DrawSingleCard()
+    {
+        yield return new WaitForSeconds(0.2f);
+        DrawCard(1);
+    }
     //Coroutine para Cambiar las cartas en la mano
     IEnumerator SwapCardsInHands()
     {
@@ -87,11 +100,11 @@ public class Player2Manager : MonoBehaviour
             //Robamos una carta
             DrawCard(1);
             //Eliminamos el Event Subscriber ya que no queremos que fuera de este metodo el click guarde informacion
-            EventManager.OnCardClicked -= SelectCardNotinHand;      
+            EventManager.OnCardClicked -= SelectCardInHand;      
             lastClickedCard = null; 
     }
     //Guardamos la carta clickeada en la variable lastClickedCard
-    public void SelectCardNotinHand(GameObject card)
+    public void SelectCardInHand(GameObject card)
     {   
         //Si no esta en la mano no guardamos la informacion, solo queremos cartas de la mano
         if (card.transform.IsChildOf(handPlayer2.transform) != handPlayer2)
@@ -112,9 +125,9 @@ public class Player2Manager : MonoBehaviour
         //Eliminamos la carta de la mano
         Destroy(card);
         //Añadimos el scriptable object con el nombre de la carta a la lista de cartas del deck
-        deckPlayer2.GetComponent<AspectosDeck>().aspectosDeck.Add(Resources.Load<CardData>("Scriptable Objects/Aspectos Deck/" + name));
+        deckPlayer2.GetComponent<ArthasDeck>().arthasDeck.Add(Resources.Load<CardData>("Scriptable Objects/Arthas Deck/" + name));
         //Barajeamos el deck
-        ShuffleDeck(deckPlayer2.GetComponent<AspectosDeck>().aspectosDeck);
+        ShuffleDeck(deckPlayer2.GetComponent<ArthasDeck>().arthasDeck);
     }
 
     public void SetLead()
@@ -129,7 +142,7 @@ public class Player2Manager : MonoBehaviour
     {
         for (int i = 0; i < amount; i++)     
         {   
-            if (handPlayer2.transform.childCount < 10)
+            if (handPlayer2.transform.GetComponentsInChildren<Card>(true).Length < 10)
             {       
                 //Instanciando la carta con el prefab y en la posicion de la mano
                 GameObject g = Instantiate(cardPrefab2, handPlayer2.transform);                         

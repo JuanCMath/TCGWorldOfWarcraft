@@ -7,6 +7,10 @@ public class DisplayCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     // Este método se llama cuando el puntero entra en el objeto
     public void OnPointerEnter(PointerEventData eventData)
     {   
+        foreach (Transform child in GameObject.Find("Game Manager").GetComponent<GameManager>().panelCardDsiplay.transform)
+        {
+            Destroy(child.gameObject);
+        }
         GameObject enteredObject = eventData.pointerEnter;
         GameObject cardToDisplay = enteredObject.GetComponentInParent<Card>().gameObject;   
 

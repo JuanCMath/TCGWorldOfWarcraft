@@ -2,17 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Enums;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    public TextMeshProUGUI actualRound;
+    public TextMeshProUGUI currentTurn;
+    public TextMeshProUGUI player1Won;
+    public TextMeshProUGUI player2Won;
+
     public GameObject cardDisplayPrefab;
     public GameObject panelCardDsiplay;
     
     public int numberOfRounds = 1;
     public int numberOfActionsAvailable = 1;
 
-    public static bool firstTurnOfTheRoundPlayer1 = true;
-    public static bool firstTurnOfTheRoundPlayer2 = true;
+    public static bool player1CanSwapCards = true;
+    public static bool player2CanSwapCards = true;
 
     public int player1WinedRounds = 0;
     public int player2WinedRounds = 0;
@@ -38,14 +44,14 @@ public class GameManager : MonoBehaviour
             if (player2Pass == true) state = gameTracker.Player1Turn;
             else state = gameTracker.Player2Turn;
 
-            firstTurnOfTheRoundPlayer1 = false;
+            player1CanSwapCards = false;
         } 
         else if (state == gameTracker.Player2Turn)
         {   
             if (player1Pass == true) state = gameTracker.Player2Turn;
             else state = gameTracker.Player1Turn;
 
-            firstTurnOfTheRoundPlayer2 = false;
+            player2CanSwapCards = false;
         }
 
         numberOfActionsAvailable = 1;
@@ -129,6 +135,21 @@ public class GameManager : MonoBehaviour
             Debug.Log("DRAW!!!!");
         }
     }
+    public void UpdateInfo()
+    {
+        actualRound.text= "Current Round: " + numberOfRounds;
+        if (player1 == true)
+        {
+            currentTurn.text = "Current Turn: Player 1";
+        }
+        else
+        {
+            currentTurn.text = "Current Turn: Player 2";
+        }
+
+        player1Won.text = "Player 1 Won:" + player1WinedRounds + " Rounds";
+        player2Won.text = "Player 2 Won:" + player2WinedRounds + " Rounds";
+    }
 
     void Start()
     {
@@ -210,5 +231,7 @@ public class GameManager : MonoBehaviour
                 //Se acabo jejeje
                 break;
         }
+
+        UpdateInfo();
     }
 }

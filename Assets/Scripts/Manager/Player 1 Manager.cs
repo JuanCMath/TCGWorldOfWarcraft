@@ -62,11 +62,15 @@ public class Player1Manager : MonoBehaviour
     //Cambiar Cartas
     public void SwapCards() //Aqui en algun momento pondre la cantidad de cartas a Swapear, no es por gusto el metodo
     {
-        if (GameManager.firstTurnOfTheRoundPlayer1 == true)
+        if (GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable == 1)
         {
-            for (int i = 0; i < 2; i++)
+            if (GameManager.player1CanSwapCards == true)
             {
-                StartingTheCardSwap();
+                for (int i = 0; i < 2; i++)
+                {
+                    StartingTheCardSwap();
+                    GameManager.player1CanSwapCards = false;
+                }               
             }
         }
     }
@@ -75,9 +79,20 @@ public class Player1Manager : MonoBehaviour
     public void StartingTheCardSwap()       //Lo acciona un botton, aqui se dan las condiciones previas para el intercambio
     {
         //Añadir un Subscriber a los Eventos
-        EventManager.OnCardClicked += SelectCardNotinHand;
+        EventManager.OnCardClicked += SelectCardInHand;
         //Inicio del metodo para cambiar cartas
-        StartCoroutine(SwapCardsInHands());      
+        StartCoroutine(OrganizedMetods()); 
+    }
+
+    IEnumerator OrganizedMetods()
+    {
+        yield return StartCoroutine(SwapCardsInHands());
+        yield return StartCoroutine(DrawSingleCard());
+    }
+    IEnumerator DrawSingleCard()
+    {
+        yield return new WaitForSeconds(0.2f);
+        DrawCard(1);
     }
     
     //Coroutine para Cambiar las cartas en la mano
@@ -87,15 +102,13 @@ public class Player1Manager : MonoBehaviour
             yield return new WaitUntil(() => lastClickedCard != null);
             //Una vez tengamos alguna carta en "lastClikedCard" podemos empezar el intercambio
             ReturnCardToDeck(lastClickedCard);
-            //Robamos una carta
-            DrawCard(1);
             //Eliminamos el Event Subscriber ya que no queremos que fuera de este metodo el click guarde informacion
-            EventManager.OnCardClicked -= SelectCardNotinHand;      
-            lastClickedCard = null; 
+            EventManager.OnCardClicked -= SelectCardInHand;      
+            lastClickedCard = null;
     }
 
     //Guardamos la carta clickeada en la variable lastClickedCard
-    public void SelectCardNotinHand(GameObject card)
+    public void SelectCardInHand(GameObject card)
     {   
         //Si no esta en la mano no guardamos la informacion, solo queremos cartas de la mano
         if (card.transform.IsChildOf(handPlayer1.transform) != handPlayer1)
@@ -120,6 +133,7 @@ public class Player1Manager : MonoBehaviour
         //Barajeamos el deck
         ShuffleDeck(deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck);
     }
+
     public void SetLead()
     {
         GameObject g = Instantiate(cardLeadPrefab, leadSpotPlayer1.transform);
@@ -131,7 +145,7 @@ public class Player1Manager : MonoBehaviour
     {
         for (int i = 0; i < amount; i++)     
         {   
-            if (handPlayer1.transform.childCount < 10)
+            if (handPlayer1.transform.GetComponentsInChildren<Card>(true).Length < 10)
             {       
                 //Instanciando la carta con el prefab y en la posicion de la mano
                 GameObject g = Instantiate(cardPrefab1, handPlayer1.transform);                         
