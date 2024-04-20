@@ -8,9 +8,9 @@ Juego De Cartas Collecionable insiparo en mi juego favorito por muchos años, Wo
 
 ## Reglas del Juego
 
-Al comenzar una partida, cada jugador roba 10 cartas de su deck. Antes de que arranque la batalla, los jugadores pueden escoger hasta 2 cartas para regresarlas a la baraja y robar la misma cantidad. La m´axima cantidad
+Al comenzar una partida, cada jugador roba 10 cartas de su deck. Antes de que arranque la batalla, los jugadores pueden escoger hasta 2 cartas para regresarlas a la baraja y robar la misma cantidad. La máxima cantidad
 de cartas que se puede tener en la mano es 10, cualquier carta que sea robada (por algún efecto durante el juego) mientras se esta en este límite será descartada (enviada al cementerio).
-1. El jugador que gane la ronda anterior, ser´a quien comience la siguiente.
+1. El jugador que gane la ronda anterior, será quien comience la siguiente.
 2. Al inicio de la segunda ronda, cada jugador roba dos cartas.
 3. Si el juego alcanza una tercera ronda, cada jugador roba tambi´en dos
 cartas antes de comenzarla.
