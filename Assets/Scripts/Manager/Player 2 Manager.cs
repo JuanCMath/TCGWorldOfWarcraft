@@ -97,8 +97,6 @@ public class Player2Manager : MonoBehaviour
             yield return new WaitUntil(() => lastClickedCard != null);
             //Una vez tengamos alguna carta en "lastClikedCard" podemos empezar el intercambio
             ReturnCardToDeck(lastClickedCard);
-            //Robamos una carta
-            DrawCard(1);
             //Eliminamos el Event Subscriber ya que no queremos que fuera de este metodo el click guarde informacion
             EventManager.OnCardClicked -= SelectCardInHand;      
             lastClickedCard = null; 
