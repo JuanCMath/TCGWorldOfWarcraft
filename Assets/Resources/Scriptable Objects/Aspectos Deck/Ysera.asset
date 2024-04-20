@@ -15,7 +15,8 @@ MonoBehaviour:
   cardID: 4
   cardName: Ysera
   cardFaction: 0
-  cardDescription: 
+  cardDescription: "Ysera, era una dragona, miembro de los Dragones Aspectos por
+    ser la l\xEDder de la raza de los dragones verdes"
   isHero: 1
   cardSlot: 5
   cardType: 0

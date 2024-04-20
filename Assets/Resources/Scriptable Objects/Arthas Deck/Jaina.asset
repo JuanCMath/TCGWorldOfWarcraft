@@ -15,7 +15,9 @@ MonoBehaviour:
   cardID: 21
   cardName: Jaina
   cardFaction: 1
-  cardDescription: 
+  cardDescription: "\rJaina valiente es una maga consumada y la actual l\xEDder del
+    Kirin Tor. Jaina, una vez aprendiza del archimago Antonidas, guio a los supervivientes
+    de Lordaeron hasta Kalimdor"
   isHero: 1
   cardSlot: 6
   cardType: 0

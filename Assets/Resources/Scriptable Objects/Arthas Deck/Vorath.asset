@@ -15,7 +15,8 @@ MonoBehaviour:
   cardID: 23
   cardName: Vorath
   cardFaction: 1
-  cardDescription: 
+  cardDescription: "\xC9lite, que puede ser encontrado en Tierras Fantasma. Este
+    PNJ es el objetivo de Soy la espada de la Luz. "
   isHero: 1
   cardSlot: 2
   cardType: 0

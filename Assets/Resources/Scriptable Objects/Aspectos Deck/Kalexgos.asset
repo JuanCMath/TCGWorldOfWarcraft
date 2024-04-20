@@ -15,7 +15,10 @@ MonoBehaviour:
   cardID: 2
   cardName: Kalexgos
   cardFaction: 0
-  cardDescription: 
+  cardDescription: "Kalecgos es el actual Aspecto del Vuelo Azul tras la muerte de
+    Malygos. A menudo se disfraza de un semielfo, que se hace llamar Kalec. Debido
+    a que los dragones azules son el vuelo de drag\xF3n con m\xE1s sinton\xEDa con
+    la magia"
   isHero: 1
   cardSlot: 6
   cardType: 0

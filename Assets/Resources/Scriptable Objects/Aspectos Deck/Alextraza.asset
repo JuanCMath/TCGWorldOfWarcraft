@@ -15,7 +15,8 @@ MonoBehaviour:
   cardID: 1
   cardName: Alextraza
   cardFaction: 0
-  cardDescription: 
+  cardDescription: Alexstrasza la Protectora fue el Aspecto del Vuelo Rojo y guardiana
+    de la vida en Azeroth.
   isHero: 1
   cardSlot: 5
   cardType: 0

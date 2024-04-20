@@ -13,6 +13,10 @@ public class Card : MonoBehaviour
 {
     public CardData cardData;
 
+    public GameObject cardBack;
+
+    public bool displayCardBack;
+
     public int effectNumber;
 
     [Header("Card Info")]
@@ -74,8 +78,20 @@ public class Card : MonoBehaviour
         if (match.Success)
             effectNumber = int.Parse(match.Value);
     }
+    public void DisplayCardBack()
+    {
+        if (displayCardBack == true)
+        {
+            cardBack.SetActive(true);
+        }
+        else
+        {
+            cardBack.SetActive(false);
+        }
+    }
     public void Update()
     {
         UpdateDisplay();
+        DisplayCardBack();
     }
 }

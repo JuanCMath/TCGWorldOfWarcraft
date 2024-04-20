@@ -453,6 +453,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardData: {fileID: 0}
+  cardBack: {fileID: 0}
   effectNumber: 0
   cardDescText: {fileID: 2050434192302956749}
   cardTypeText: {fileID: 5607479977113299648}

@@ -15,7 +15,10 @@ MonoBehaviour:
   cardID: 3
   cardName: Nozdormu
   cardFaction: 0
-  cardDescription: 
+  cardDescription: "Nozdormu es un delgado y sinuoso drag\xF3n de bronce, con escamas
+    de color marr\xF3n-dorado met\xE1lico que puede adaptar la arena a su cuerpo
+    y moldearla en una forma definida. Sus ojos est\xE1n hechos de piedras preciosas,
+    el color del sol"
   isHero: 1
   cardSlot: 5
   cardType: 0

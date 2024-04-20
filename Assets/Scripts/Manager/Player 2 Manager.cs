@@ -235,6 +235,33 @@ public class Player2Manager : MonoBehaviour
             EffectsManager.IncreaseEffect(siegeZonePlayer2, amountOfChangeS);
         }
     }
+
+    public static void ShowCardBack()
+    {
+        GameObject[] cards = GameObject.FindGameObjectsWithTag("Card Player2");
+
+        foreach (GameObject card in cards)
+        {
+            if (card.transform.parent.name != "Hand p2") continue;
+            else
+            {
+                card.GetComponent<Card>().displayCardBack = true;
+            }
+        }
+    }
+    public static void HideCardBack()
+    {
+        GameObject[] cards = GameObject.FindGameObjectsWithTag("Card Player2");
+
+        foreach (GameObject card in cards)
+        {
+            if (card.transform.parent.name != "Hand p2") continue;
+            else
+            {
+                card.GetComponent<Card>().displayCardBack = false;
+            }
+        }
+    }
     
      public void Start()
      {

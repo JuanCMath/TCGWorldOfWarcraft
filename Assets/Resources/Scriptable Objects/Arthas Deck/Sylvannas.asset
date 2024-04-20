@@ -15,7 +15,8 @@ MonoBehaviour:
   cardID: 20
   cardName: Sylvannas
   cardFaction: 1
-  cardDescription: 
+  cardDescription: Sylvanas fue miembro de la familia Brisaveloz. Su hogar era Windrunner
+    Spire, en los tranquilos bosques de Quel'thalas (hoy parte de Tierras Fantasma).
   isHero: 1
   cardSlot: 6
   cardType: 0

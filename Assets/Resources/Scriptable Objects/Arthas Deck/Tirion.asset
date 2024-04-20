@@ -15,7 +15,7 @@ MonoBehaviour:
   cardID: 22
   cardName: Tirion
   cardFaction: 1
-  cardDescription: 
+  cardDescription: Gran guerrero y gobernante
   isHero: 1
   cardSlot: 0
   cardType: 0

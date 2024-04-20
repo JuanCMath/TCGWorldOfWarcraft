@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI currentTurn;
     public TextMeshProUGUI player1Won;
     public TextMeshProUGUI player2Won;
+    public TextMeshProUGUI player1CanSwapCardsText;
+    public TextMeshProUGUI player2CanSwapCardsText;
 
     public GameObject cardDisplayPrefab;
     public GameObject panelCardDsiplay;
@@ -136,8 +138,28 @@ public class GameManager : MonoBehaviour
         }
     }
     public void UpdateInfo()
-    {
+    {   
+        //Mostrar Ronda Actual
         actualRound.text= "Current Round: " + numberOfRounds;
+        //Mostrar Si el Player 1 puede cambiar cartas
+        if (player1CanSwapCards == true)
+        {
+            player1CanSwapCardsText.text = "<- Can Swap";
+        }
+        else
+        {
+            player1CanSwapCardsText.text = "";
+        }
+        //Mostrar si el player 2 puede cambiar cartas
+        if (player2CanSwapCards == true)
+        {
+            player2CanSwapCardsText.text = "<- Can Swap";
+        }
+        else
+        {
+            player2CanSwapCardsText.text = "";
+        }
+        //Mostrar actual turno
         if (player1 == true)
         {
             currentTurn.text = "Current Turn: Player 1";
@@ -147,6 +169,7 @@ public class GameManager : MonoBehaviour
             currentTurn.text = "Current Turn: Player 2";
         }
 
+        //Mostrar cuantas rondas ha ganado cada uno
         player1Won.text = "Player 1 Won:" + player1WinedRounds + " Rounds";
         player2Won.text = "Player 2 Won:" + player2WinedRounds + " Rounds";
     }
@@ -207,11 +230,15 @@ public class GameManager : MonoBehaviour
                 break;
 
             case gameTracker.Player1Turn:
+                Player2Manager.ShowCardBack();
+                Player1Manager.HideCardBack();
                 player1 = true;
                 player2 = false;
                 break;
 
             case gameTracker.Player2Turn:
+                Player1Manager.ShowCardBack();
+                Player2Manager.HideCardBack();
                 player1 = false;
                 player2 = true;
                 break;

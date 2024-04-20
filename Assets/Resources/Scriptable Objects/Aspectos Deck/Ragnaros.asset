@@ -15,7 +15,7 @@ MonoBehaviour:
   cardID: 16
   cardName: Ragnaros
   cardFaction: 0
-  cardDescription: 
+  cardDescription: Despeja un Clima haciendo favorable la batalla contra los no-muertos
   isHero: 0
   cardSlot: 7
   cardType: 3
