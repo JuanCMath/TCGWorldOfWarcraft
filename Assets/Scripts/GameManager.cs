@@ -144,7 +144,11 @@ public class GameManager : MonoBehaviour
         //Mostrar Si el Player 1 puede cambiar cartas
         if (player1CanSwapCards == true)
         {
-            player1CanSwapCardsText.text = "<- Can Swap";
+            if (numberOfActionsAvailable == 1 )  player1CanSwapCardsText.text = "<- Can Swap";
+            else if (state == gameTracker.Player1Turn)
+            {
+                player1CanSwapCardsText.text = "";
+            }
         }
         else
         {
@@ -153,7 +157,11 @@ public class GameManager : MonoBehaviour
         //Mostrar si el player 2 puede cambiar cartas
         if (player2CanSwapCards == true)
         {
-            player2CanSwapCardsText.text = "<- Can Swap";
+            if (numberOfActionsAvailable == 1)  player1CanSwapCardsText.text = "<- Can Swap"; 
+            else if (state == gameTracker.Player2Turn)
+            {
+                player2CanSwapCardsText.text = "";
+            }
         }
         else
         {

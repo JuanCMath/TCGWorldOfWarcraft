@@ -11,6 +11,7 @@ using Unity.VisualScripting;
 using Enums;
 using JetBrains.Annotations;
 using UnityEngine.UIElements;
+using Unity.VisualScripting.Antlr3.Runtime;
 
 public class EffectsManager : MonoBehaviour
 {
@@ -145,7 +146,11 @@ public class EffectsManager : MonoBehaviour
                         }
                     }  
                 }
+                
                 SendCardToGraveyard(cardToDestroy);
+                
+                selectedcard = null;
+                panel = null;
             }    
         }
         else if (GameManager.player2 == true)
@@ -171,8 +176,8 @@ public class EffectsManager : MonoBehaviour
                         }
                     } 
                 }
-                Debug.Log("Destruyendo" + cardToDestroy.name);
                 SendCardToGraveyard(cardToDestroy);
+                  
                 selectedcard = null;
                 panel = null;
             }    
@@ -213,7 +218,8 @@ public class EffectsManager : MonoBehaviour
                 }
             }
         }
-        SendCardToGraveyard(cardToDestroy);   
+        SendCardToGraveyard(cardToDestroy);
+         
         selectedcard = null;
         panel = null;     
     }
@@ -341,7 +347,14 @@ public class EffectsManager : MonoBehaviour
     {
         if (card.transform.IsChildOf(panel.transform))
         {
+            if (card.GetComponent<Card>().isHero == true)
+            {
+                Debug.Log("Cartas Heroes No son Afectadas");
+            }
+            else
+            {
             selectedcard = card;
+            }
         }
         else
         {
