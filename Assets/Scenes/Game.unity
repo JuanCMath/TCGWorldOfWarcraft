@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 69520769}
   - component: {fileID: 69520768}
   m_Layer: 5
-  m_Name: Background
+  m_Name: Field
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1430,6 +1430,7 @@ MonoBehaviour:
   deckPlayer2: {fileID: 1222444520}
   graveyardPlayer2: {fileID: 170981884}
   handPlayer2: {fileID: 1453628168}
+  leadSpotPlayer2: {fileID: 2046748995}
   aumentoMZonePlayer2: {fileID: 1018325244}
   aumentoRZonePlayer2: {fileID: 1201730848}
   aumentoSZonePlayer2: {fileID: 1219823143}
@@ -1437,7 +1438,6 @@ MonoBehaviour:
   meleeZonePlayer2: {fileID: 2115632254}
   rangeZonePlayer2: {fileID: 403890434}
   siegeZonePlayer2: {fileID: 2117122873}
-  leadSpotPlayer2: {fileID: 2046748995}
   startingHandSize: 10
   maxHandSize: 10
   deckTextPlayer2: {fileID: 833846007}
@@ -2589,6 +2589,7 @@ MonoBehaviour:
   deckPlayer1: {fileID: 1438966709}
   graveyardPlayer1: {fileID: 843968476}
   handPlayer1: {fileID: 216967025}
+  leadSpotPlayer1: {fileID: 322155612}
   aumentoMZonePlayer1: {fileID: 1217779657}
   aumentoRZonePlayer1: {fileID: 737718819}
   aumentoSZonePlayer1: {fileID: 1331299080}
@@ -2596,7 +2597,6 @@ MonoBehaviour:
   meleeZonePlayer1: {fileID: 2009433856}
   rangeZonePlayer1: {fileID: 171783803}
   siegeZonePlayer1: {fileID: 2025033406}
-  leadSpotPlayer1: {fileID: 322155612}
   startingHandSize: 10
   maxHandSize: 10
   deckTextPlayer1: {fileID: 1710099804}
@@ -3493,7 +3493,7 @@ GameObject:
   - component: {fileID: 1385997369}
   - component: {fileID: 1385997371}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4315,20 +4315,19 @@ MonoBehaviour:
   player2Won: {fileID: 549545275}
   player1CanSwapCardsText: {fileID: 257603657}
   player2CanSwapCardsText: {fileID: 394863527}
-  cardDisplayPrefab: {fileID: 5710362436332554621, guid: 3bdddcae7d4732447a9bf1486233b2f4, type: 3}
-  panelCardDsiplay: {fileID: 1424904777}
-  numberOfRounds: 1
-  numberOfActionsAvailable: 1
-  player1WinedRounds: 0
-  player2WinedRounds: 0
-  player1StartTheRound: 1
   player1Pass: 0
   player2Pass: 0
   leadP1: {fileID: 322155612}
   leadP2: {fileID: 2046748995}
   handP1: {fileID: 216967025}
   handP2: {fileID: 1453628168}
+  cardDisplayPrefab: {fileID: 5710362436332554621, guid: 3bdddcae7d4732447a9bf1486233b2f4, type: 3}
+  panelCardDsiplay: {fileID: 1424904777}
   state: 2
+  numberOfRounds: 1
+  numberOfActionsAvailable: 1
+  player1WinedRounds: 0
+  player2WinedRounds: 0
 --- !u!1 &1710099802
 GameObject:
   m_ObjectHideFlags: 0

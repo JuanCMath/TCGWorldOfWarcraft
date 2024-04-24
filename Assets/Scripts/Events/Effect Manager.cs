@@ -18,232 +18,216 @@ public class EffectsManager : MonoBehaviour
     static GameObject selectedcard;
     static GameObject panel;
 
-    public static void ClimateEffect(GameObject panel, int number)
+    //Efecto Clima
+    public static void ClimateEffect(GameObject panel, int number) //panel es el panel donde esta el clima, y number la cantidad de ataque que modifica el clima
     {   
-        GameObject[] cardsP1 = GameObject.FindGameObjectsWithTag("Card Player1");
-        GameObject[] cardsP2 = GameObject.FindGameObjectsWithTag("Card Player2");
+        GameObject[] cardsP1 = GameObject.FindGameObjectsWithTag("Card Player1"); //Cartas Jugador 1
+        GameObject[] cardsP2 = GameObject.FindGameObjectsWithTag("Card Player2"); //Cartas Jugador 2
 
-        if (panel.transform.parent.name == GameObject.Find("Panels p1").transform.name)
-            foreach (GameObject card in cardsP2)
+        //Este if verifica de quien es el clima y en base a eso modifica cartas
+        if (panel.transform.parent.name == GameObject.Find("Panels p1").transform.name) 
+        {
+            foreach (GameObject card in cardsP2) //Para cada carta del jugador 2
             {   
-                if (card.transform.parent.ToString() == "Hand p2") continue;
-                else if (card.GetComponent<Card>().isHero == true) continue;
+                if (card.transform.parent.ToString() == "Hand p2") continue; //Si esta en la mano se ignora
+                else if (card.GetComponent<Card>().isHero == true) continue; //Si es Heroe se ignora
                 else 
                 {
-                    card.GetComponent<Card>().attackPower -= number;
-                    if (card.GetComponent<Card>().attackPower < 0) card.GetComponent<Card>().attackPower = 0;
+                    card.GetComponent<Card>().attackPower -= number;    //Aplicamos efecto clima
+                    if (card.GetComponent<Card>().attackPower < 0) card.GetComponent<Card>().attackPower = 0; //Si se llega a un ataque menor que 0 dejamos en 0
                 }
-            }  
+            }
+        }
 
         else if (panel.transform.parent.name == GameObject.Find("Panels p2").transform.name)
-            foreach (GameObject card in cardsP1)
+        {
+            foreach (GameObject card in cardsP1) //Para cada carta del jugador 1
             {
-                if (card.transform.parent.ToString() == "Hand p1") continue;
-                else if (card.GetComponent<Card>().isHero == true) continue;
+                if (card.transform.parent.ToString() == "Hand p1") continue; //Si esta en la mano se ignora
+                else if (card.GetComponent<Card>().isHero == true) continue; //Si es Heroe se ignora
                 else 
                 {
-                    card.GetComponent<Card>().attackPower -= number;
-                    if (card.GetComponent<Card>().attackPower < 0) card.GetComponent<Card>().attackPower = 0;
+                    card.GetComponent<Card>().attackPower -= number;   //Aplicamos efecto clima
+                    if (card.GetComponent<Card>().attackPower < 0) card.GetComponent<Card>().attackPower = 0; //Si se llega a un ataque menor que 0 dejamos en 0
                 }   
             }
+        }
     }
 
-    public static void IncreaseEffect(GameObject ouputPanel, int number)
+    //Efecto Aumento
+    public static void IncreaseEffect(GameObject ouputPanel, int number) //outputPanel es el panel donde el aumento hace efecto, number la cantidad de ataque que modifica el aumento
     {
-        GameObject[] cardsP1 = GameObject.FindGameObjectsWithTag("Card Player1");
-        GameObject[] cardsP2 = GameObject.FindGameObjectsWithTag("Card Player2");
+        GameObject[] cardsP1 = GameObject.FindGameObjectsWithTag("Card Player1"); //Cartas jugador 1
+        GameObject[] cardsP2 = GameObject.FindGameObjectsWithTag("Card Player2"); //Cartas jugador 2
 
+        //Verificamos de que jugador es el aumento
         if (ouputPanel.transform.parent.name == GameObject.Find("Panels p1").transform.name)
         {
-            foreach (GameObject card in cardsP1)
+            foreach (GameObject card in cardsP1)    //Para cada carta del jugador 1
             {
-                if (card.transform.IsChildOf(ouputPanel.transform))
+                if (card.transform.IsChildOf(ouputPanel.transform)) //Si pertenece al output panel
                 {
-                    card.GetComponent<Card>().attackPower += number;
+                    if (card.GetComponent<Card>().isHero == true) continue; //Ignoramos si es heroe
+                    else card.GetComponent<Card>().attackPower += number;   //Aplicamos aumento          
                 }
             }
         }
         else if(ouputPanel.transform.parent.name == GameObject.Find("Panels p2").transform.name)
         {
-            foreach (GameObject card in cardsP2)
+            foreach (GameObject card in cardsP2) //Para cada carta del jugador 2
             {
-                if (card.transform.IsChildOf(ouputPanel.transform))
+                if (card.transform.IsChildOf(ouputPanel.transform)) //Si pertenece al output panel
                 {
-                    card.GetComponent<Card>().attackPower += number;
+                    if (card.GetComponent<Card>().isHero == true) continue; //Ignoramos si es heroe
+                    else card.GetComponent<Card>().attackPower += number;   //Aplicamos aumento 
                 }
             }
         }
     }
 
-    public void ClearanceEffect(GameObject panelOfTheDropedCard)
+    //Efecto Despeje
+    public void ClearanceEffect(GameObject panelOfTheDropedCard) //Vemos en que panel se dropeo la carta
+    {
+        panel = panelOfTheDropedCard;
+        Debug.Log("aplicando efecto Despeje");
+        //Seleccionar una carta
+        EventManager.OnCardClicked += SelectCard;
+        //y devolverla a la mano
+        StartCoroutine(SendCardToHand());  
+    }
+
+    //Efecto Señuelo
+    public void BaitEffect(GameObject panelOfTheDropedCard) //Vemos en que panel se dropeo la carta
     {
         panel = panelOfTheDropedCard;
         Debug.Log("aplicando efecto señuelo");
-        //Seleccionar una carta y devolverla a la mano
+        //Seleccionar una carta 
         EventManager.OnCardClicked += SelectCard;
-        StartCoroutine(SendCardToHand());
-        Debug.Log("listo para enviar el despeje al cementerio");
-        
-    }
-
-    public void BaitEffect(GameObject panelOfTheDropedCard)
-    {
-        panel = panelOfTheDropedCard;
-        Debug.Log("aplicando efecto señuelo");
-        //Seleccionar una carta y devolverla a la mano
-        EventManager.OnCardClicked += SelectCard;
+        //y devolverla a la mano
         StartCoroutine(SendCardToHand());
     }
 
+    //Efecto de robo de carta
     public static void DrawACard()
     {
         if (GameManager.player1 == true)  GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().DrawCard(1);  
         else if (GameManager.player2 == true) GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().DrawCard(1);
     }
 
+    //Efecto Destruir Carta con menor poder de ataque del oponente
     public static void DestroyLowerPowerCardOnOponent()
     {
-        GameObject[] cardsP1 = GameObject.FindGameObjectsWithTag("Card Player1");
-        GameObject[] cardsP2 = GameObject.FindGameObjectsWithTag("Card Player2");
+        GameObject[] cardsP1 = GameObject.FindGameObjectsWithTag("Card Player1"); //Cartas Jugador 1
+        GameObject[] cardsP2 = GameObject.FindGameObjectsWithTag("Card Player2"); //Cartas Jugador 2 
 
+        //Inicializando las condiciones para hayar la carta con menor ataque
         GameObject cardToDestroy = null;
         int attackPowerOfCardToDestroy = 1000;
 
-        int amountOfCardsInFieldP1 = 0;
-        int amountOfCardsInFieldP2 = 0;
-
-        foreach (GameObject card in cardsP1)
-        {
-            if (card.transform.parent.name == "Hand p1") continue;
-            else amountOfCardsInFieldP1 += 1;
-        }
-
-        foreach (GameObject card in cardsP2)
-        {
-            if (card.transform.parent.name == "Hand p2") continue;
-            else amountOfCardsInFieldP2 += 1;
-        }
+        //Segun el jugador que este jugando escogeremos un campo o el otro
+        //Iteramos por cada carta comparando el ataque de ella con la anterior
+        //Si es menor entonces escogemos esa carta para destruirla
         if (GameManager.player1 == true)
         {
-            if (amountOfCardsInFieldP2 != 0)
+            foreach (GameObject card in cardsP2)
             {
-                foreach (GameObject card in cardsP2)
+                if (card.GetComponent<Card>().cardType == type.Unidad && card.GetComponent<Card>().isHero == false)
                 {
                     if (card.transform.parent.name == "Hand p2") continue;
                     else if (card.transform.parent.name == "Graveyard p2") continue;
                     else if (card.transform.parent.name == "Lider p2") continue;
-                    else if (card.GetComponent<Card>().isHero == true) continue;
-                    else if (card.GetComponent<Card>().cardType == type.Aumento) continue;
-                    else if (card.GetComponent<Card>().cardType == type.Clima) continue;
-                    else if (card.GetComponent<Card>().cardType == type.Señuelo) continue;
-                    else if (card.GetComponent<Card>().cardType == type.Despeje) continue;
-                    else
+                         
+                    if (card.GetComponent<Card>().attackPower < attackPowerOfCardToDestroy) //Comparando con la anterior
                     {
-                        if (card.GetComponent<Card>().attackPower < attackPowerOfCardToDestroy)
-                        {
-                            attackPowerOfCardToDestroy = card.GetComponent<Card>().attackPower;
-                            cardToDestroy = card;
-                        }
-                    }  
-                }
-                
-                SendCardToGraveyard(cardToDestroy);
-                
-                selectedcard = null;
-                panel = null;
-            }    
+                        attackPowerOfCardToDestroy = card.GetComponent<Card>().attackPower;                            
+                        cardToDestroy = card;
+                    }
+                }  
+            }            
+            SendCardToGraveyard(cardToDestroy);  
         }
         else if (GameManager.player2 == true)
-        {
-            if (amountOfCardsInFieldP1 != 0)
+        {   
+            foreach (GameObject card in cardsP1)
             {
-                foreach (GameObject card in cardsP1)
+                if (card.GetComponent<Card>().cardType == type.Unidad && card.GetComponent<Card>().isHero == false)
                 {
                     if (card.transform.parent.name == "Hand p1") continue;
                     else if (card.transform.parent.name == "Graveyard p1") continue;
                     else if (card.transform.parent.name == "Lider p1") continue;
-                    else if (card.GetComponent<Card>().isHero == true) continue;
-                    else if (card.GetComponent<Card>().cardType == type.Aumento) continue;
-                    else if (card.GetComponent<Card>().cardType == type.Clima) continue;
-                    else if (card.GetComponent<Card>().cardType == type.Señuelo) continue;
-                    else if (card.GetComponent<Card>().cardType == type.Despeje) continue;
-                    else
+                         
+                    if (card.GetComponent<Card>().attackPower < attackPowerOfCardToDestroy)
                     {
-                        if (card.GetComponent<Card>().attackPower < attackPowerOfCardToDestroy)
-                        {
-                            attackPowerOfCardToDestroy = card.GetComponent<Card>().attackPower;
-                            cardToDestroy = card;
-                        }
-                    } 
+                        attackPowerOfCardToDestroy = card.GetComponent<Card>().attackPower;                            
+                        cardToDestroy = card;
+                    }
                 }
-                SendCardToGraveyard(cardToDestroy);
-                  
-                selectedcard = null;
-                panel = null;
-            }    
-        }
+            }
+            SendCardToGraveyard(cardToDestroy);
+        }    
     }
 
-    public static void DestroyHighestPowerCardOnField()
-    {
+    //Efecto Destruir Cara con mayor poder de ataque del campo
+    public static void DestroyHighestPowerCardOnField(GameObject dropedcard)
+    {   
+        //Iniciando condiciones
+        GameObject cardToDestroy = null;
+        int attackPowerOfCardToDestroy = 0;
+        
+        //Hallando todas las cartas en el juego
         Card[] provisionalCards = FindObjectsOfType<Card>();
-
         // Convierte el array de Card a GameObject[]
         GameObject[] cards = new GameObject[provisionalCards.Length];
-
         for (int i = 0; i < provisionalCards.Length; i++)
         {
             cards[i] = provisionalCards[i].gameObject;
         }
-        
-        GameObject cardToDestroy = null;
-        int attackPowerOfCardToDestroy = 0;
 
-        foreach (GameObject card in cards)
+        //Buscamos la carta con mayor poder de ataque en el campo,
+        //comparando el ataque de cada una con attackPowerOfCardToDestroy, y si es mayor escogemos esa carta
+        foreach (GameObject card in cards)//Iteramos por cada carta
         {
-            if (card.transform.parent.name == "Hand p1" || card.transform.parent.name == "Hand p2") continue;
-            else if (card.transform.parent.name == "Graveyard p1" || card.transform.parent.name == "Graveyard p2") continue;
-            else if (card.transform.parent.name == "Lider p1" || card.transform.parent.name == "Lider p2") continue;
-            else if (card.GetComponent<Card>().isHero == true) continue;
-            else if (card.GetComponent<Card>().cardType == type.Aumento) continue;
-            else if (card.GetComponent<Card>().cardType == type.Clima) continue;
-            else if (card.GetComponent<Card>().cardType == type.Señuelo) continue;
-            else if (card.GetComponent<Card>().cardType == type.Despeje) continue;
-            else 
+            if (card.GetComponent<Card>().cardType == type.Unidad && card.GetComponent<Card>().isHero == false)
             {
-                if (card.GetComponent<Card>().attackPower > attackPowerOfCardToDestroy)
+                if (card.transform.parent.name == "Hand p1" || card.transform.parent.name == "Hand p2") continue;
+                else if (card.transform.parent.name == "Graveyard p1" || card.transform.parent.name == "Graveyard p2") continue;
+                else if (card.transform.parent.name == "Lider p1" || card.transform.parent.name == "Lider p2") continue;
+                else if (card == dropedcard) continue;
+                else 
                 {
-                    attackPowerOfCardToDestroy = card.GetComponent<Card>().attackPower;
-                    cardToDestroy = card;
+                    if (card.GetComponent<Card>().attackPower > attackPowerOfCardToDestroy) //Si es mayor que la que teniamos anteriormente escogemos esa
+                    {
+                        attackPowerOfCardToDestroy = card.GetComponent<Card>().attackPower;
+                        cardToDestroy = card; 
+                    }
                 }
             }
         }
-        SendCardToGraveyard(cardToDestroy);
-         
-        selectedcard = null;
-        panel = null;     
+        SendCardToGraveyard(cardToDestroy);    
     }
 
+    //Efecto Aumentar ataque de la carta segun la cantidad iguales a ella en el campo
     public static void MultAttackPower(GameObject dropedcard)
     {
-        string multCardName = dropedcard.GetComponent<Card>().cardName;
-        int amountOfCardsWithTheSameName = 0;
+        string multCardName = dropedcard.GetComponent<Card>().cardName; //Guardamos el nombre de la carta dropeada
+        int amountOfCardsWithTheSameName = 0;   //Cantidad de ellas en el campo
 
-        GameObject[] cardsP1 = GameObject.FindGameObjectsWithTag("Card Player1");
-        GameObject[] cardsP2 = GameObject.FindGameObjectsWithTag("Card Player2");
+        GameObject[] cardsP1 = GameObject.FindGameObjectsWithTag("Card Player1"); //Cartas jugador 1
+        GameObject[] cardsP2 = GameObject.FindGameObjectsWithTag("Card Player2"); //Cartas jugador 2
 
+        //Chequeamos que jugador esta jugando, respecto a esto activamos el efecto en un campo o en el otro
         if (GameManager.player1 == true)
         {
             foreach (GameObject card in cardsP1)
             {
                 if (card.transform.parent.name == "Hand p1") continue;
 
-                else if (card.GetComponent<Card>().cardName == multCardName)
+                else if (card.GetComponent<Card>().cardName == multCardName) //Si encontramos una carta con el mismo nombre que la dropeada aumentamos 1 el contador
                     {
                         amountOfCardsWithTheSameName += 1;
                     }
             }
-            dropedcard.GetComponent<Card>().attackPower *= amountOfCardsWithTheSameName;     
+            dropedcard.GetComponent<Card>().attackPower *= amountOfCardsWithTheSameName; //Multiplicamos el ataque de la carta dropeada por la cantidad de cartas iguales a ella  
         }
         else if (GameManager.player2 == true)
         {
@@ -251,17 +235,19 @@ public class EffectsManager : MonoBehaviour
             {
                 if (card.transform.parent.name == "Hand p2") continue;
 
-                else if (card.GetComponent<Card>().cardName == multCardName)
+                else if (card.GetComponent<Card>().cardName == multCardName) //Si encontramos una carta con el mismo nombre que la dropeada aumentamos 1 el contador
                 {
                     amountOfCardsWithTheSameName += 1;
                 }
             }
-            dropedcard.GetComponent<Card>().attackPower *= amountOfCardsWithTheSameName;          
+            dropedcard.GetComponent<Card>().attackPower *= amountOfCardsWithTheSameName; //Multiplicamos el ataque de la carta dropeada por la cantidad de cartas iguales a ella  
         }
     }
 
+    //Efecto Destruir la fila con menor cantidad de cartas
     public static void DestoyFieldSpotWithLowerAmountOfCards()
     {
+        //Iniciando condiciones
         int amountOfCardsInPanelToDestroyedPanel = 0;
         GameObject panelToDestroyed = null;
 
@@ -275,7 +261,7 @@ public class EffectsManager : MonoBehaviour
 
         GameObject[] panels = new GameObject[] {meleePlayer1, rangePlayer1, siegePlayer1, meleePlayer2, rangePlayer2, siegePlayer2};
 
-        foreach (GameObject panel in panels)
+        foreach (GameObject panel in panels) //Obtenemos el panel con menos cartas
         {
             if (panel.transform.childCount > amountOfCardsInPanelToDestroyedPanel)
             {
@@ -283,19 +269,19 @@ public class EffectsManager : MonoBehaviour
                 amountOfCardsInPanelToDestroyedPanel = panel.transform.childCount;
             }
         }
-        for (int i = 0; i < amountOfCardsInPanelToDestroyedPanel; i++)
+        for (int i = 0; i < amountOfCardsInPanelToDestroyedPanel; i++) //Iteramos por cada carta y la destruimos
         {
             SendCardToGraveyard(panelToDestroyed.transform.GetChild(i).gameObject);
         }
     }
 
+    //Efecto para igualar ataque de todas las cartas del campo a su promedio
     public static void SetAttackPowerOfAllCardsToAverageAtackPower()
     {
+        //Obtenemos la lista de todas las cartas en el campo
         Card[] provisionalCards = FindObjectsOfType<Card>();
-
         // Convierte el array de Card a GameObject[]
         GameObject[] cards = new GameObject[provisionalCards.Length];
-
         for (int i = 0; i < provisionalCards.Length; i++)
         {
             cards[i] = provisionalCards[i].gameObject;
@@ -303,46 +289,41 @@ public class EffectsManager : MonoBehaviour
 
         int amountOfCardsInField = 0;
         int sumOfAllAttackPower = 0;
-        int averageAtackPower = 0;
+        int averageAtackPower;
 
-        foreach (GameObject card in cards)
+        foreach (GameObject card in cards) //Calculamos la cantidad de cartas que hay y la suma total de sus ataques
         {
-            if (card.transform.parent.name == "Hand p1" || card.transform.parent.name == "Hand p2") continue;
-            else if (card.transform.parent.name == "Graveyard p1" || card.transform.parent.name == "Graveyard p2") continue;
-            else if (card.transform.parent.name == "Lider p1" || card.transform.parent.name == "Lider p2") continue;
-            else if (card.GetComponent<Card>().isHero == true) continue;
-            else if (card.GetComponent<Card>().cardType == type.Aumento) continue;
-            else if (card.GetComponent<Card>().cardType == type.Clima) continue;
-            else if (card.GetComponent<Card>().cardType == type.Señuelo) continue;
-            else if (card.GetComponent<Card>().cardType == type.Despeje) continue;
-            else
-            {
-                amountOfCardsInField += 1;
-                sumOfAllAttackPower += card.GetComponent<Card>().attackPower;
+            if (card.GetComponent<Card>().cardType == type.Unidad && card.GetComponent<Card>().isHero == false && card.GetComponent<Card>().cardType != type.Señuelo)
+            { 
+                if (card.transform.parent.name == "Hand p1" || card.transform.parent.name == "Hand p2") continue;
+                else if (card.transform.parent.name == "Graveyard p1" || card.transform.parent.name == "Graveyard p2") continue;
+                else if (card.transform.parent.name == "Lider p1" || card.transform.parent.name == "Lider p2") continue;
+                else
+                {
+                    amountOfCardsInField += 1;
+                    sumOfAllAttackPower += card.GetComponent<Card>().attackPower;
+                }
             }
         }
-        averageAtackPower = sumOfAllAttackPower % sumOfAllAttackPower;
+        averageAtackPower = sumOfAllAttackPower % sumOfAllAttackPower;  //Hallamos el promedio
 
-        foreach (GameObject card in cards)
+        foreach (GameObject card in cards) //Igualamos el ataque de todas las cartas al promedio
         {
-            if (card.transform.parent.name == "Hand p1" || card.transform.parent.name == "Hand p2") continue;
-            else if (card.transform.parent.name == "Graveyard p1" || card.transform.parent.name == "Graveyard p2") continue;
-            else if (card.transform.parent.name == "Lider p1" || card.transform.parent.name == "Lider p2") continue;
-            else if (card.GetComponent<Card>().isHero == true) continue;
-            else if (card.GetComponent<Card>().cardType == type.Aumento) continue;
-            else if (card.GetComponent<Card>().cardType == type.Clima) continue;
-            else if (card.GetComponent<Card>().cardType == type.Señuelo) continue;
-            else if (card.GetComponent<Card>().cardType == type.Despeje) continue;
-            else
-            {
-                card.GetComponent<Card>().attackPower = averageAtackPower;
+            if (card.GetComponent<Card>().cardType == type.Unidad && card.GetComponent<Card>().isHero == false && card.GetComponent<Card>().cardType != type.Señuelo)
+            { 
+                if (card.transform.parent.name == "Hand p1" || card.transform.parent.name == "Hand p2") continue;
+                else if (card.transform.parent.name == "Graveyard p1" || card.transform.parent.name == "Graveyard p2") continue;
+                else if (card.transform.parent.name == "Lider p1" || card.transform.parent.name == "Lider p2") continue;
+                else
+                {
+                    card.GetComponent<Card>().attackPower = averageAtackPower;
+                }
             }
         }
-
-
     }
 
     #region Utilidades
+    //Metodo para seleccionar una carta del mismo panel que una carta dada
     public static void SelectCard(GameObject card)
     {
         if (card.transform.IsChildOf(panel.transform))
@@ -353,7 +334,7 @@ public class EffectsManager : MonoBehaviour
             }
             else
             {
-            selectedcard = card;
+                selectedcard = card;
             }
         }
         else
@@ -362,19 +343,23 @@ public class EffectsManager : MonoBehaviour
         }
     }
 
+    //Coroutine para enviar la carta seleccionada a la mano
     IEnumerator SendCardToHand()
     {
-        yield return new WaitUntil(() => selectedcard != null);
+        yield return new WaitUntil(() => selectedcard != null); //Esperando a que la carta sea seleccionada
 
-        ReturnCardToHand(selectedcard);
+        ReturnCardToHand(selectedcard); //Returnandola a la mano
 
-        EventManager.OnCardClicked -= SelectCard;
+        EventManager.OnCardClicked -= SelectCard; //Removiendo el evento Select card, no queremos fuera de estos efectos que cuando se clikee una carta inicie el metodo
+        //Una vez terminada la accion reseteamos los parametros de la carta
         selectedcard = null;
         panel = null;
     }
 
+    //Enviar una carta a la mano
     public void ReturnCardToHand(GameObject card)
     {
+        //Buscando que player esta jugando y cambiando la carta del campo a su mano
         if (GameManager.player1 == true)
         {
             selectedcard.transform.SetParent(GameObject.Find("Game Manager").GetComponent<GameManager>().handP1.transform);
@@ -385,6 +370,7 @@ public class EffectsManager : MonoBehaviour
         } 
     }
 
+    //Enviar una carta al cementerio
     public static void SendCardToGraveyard(GameObject card)
     {
         if (card != null)

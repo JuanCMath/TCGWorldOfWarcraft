@@ -11,6 +11,7 @@ public class DisplayCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         {
             Destroy(child.gameObject);
         }
+
         GameObject enteredObject = eventData.pointerEnter;
         GameObject cardToDisplay = enteredObject.GetComponentInParent<Card>().gameObject;   
 

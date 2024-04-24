@@ -16,13 +16,17 @@ public class Player1Manager : MonoBehaviour
     public int powerPlayer1;
     private GameObject lastClickedCard = null;
 
+    [Header("Prefabs")]
     public GameObject cardPrefab1;
     public GameObject cardLeadPrefab;
     
+    [Header("Setup Panels")]
     public GameObject deckPlayer1;
     public GameObject graveyardPlayer1;
     public GameObject handPlayer1; 
+    public GameObject leadSpotPlayer1;
 
+    [Header("Game Panels")]
     public GameObject aumentoMZonePlayer1;
     public GameObject aumentoRZonePlayer1; 
     public GameObject aumentoSZonePlayer1;
@@ -30,8 +34,6 @@ public class Player1Manager : MonoBehaviour
     public GameObject meleeZonePlayer1;
     public GameObject rangeZonePlayer1;
     public GameObject siegeZonePlayer1;
-
-    public GameObject leadSpotPlayer1;
 
     [Header ("Hand Counter")]
     public int startingHandSize = 10;
@@ -42,6 +44,7 @@ public class Player1Manager : MonoBehaviour
     public TextMeshProUGUI discardTextPlayer1;
     #endregion
 
+    //Eliminar todas las cartas del campo
     public void CleanField()
     {
         GameObject[] cartas = GameObject.FindGameObjectsWithTag("Card Player1");
@@ -60,7 +63,7 @@ public class Player1Manager : MonoBehaviour
     }
 
     //Cambiar Cartas
-    public void SwapCards() //Aqui en algun momento pondre la cantidad de cartas a Swapear, no es por gusto el metodo
+    public void SwapCards() //Aqui en algun momento pondre la cantidad de cartas a Swapear si es necesario
     {
         if (GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable == 1)
         {
@@ -68,7 +71,7 @@ public class Player1Manager : MonoBehaviour
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    StartingTheCardSwap();
+                    StartingTheCardSwap(); //Iniciando el cambio de cartas
                     GameManager.player1CanSwapCards = false;
                 }               
             }
@@ -78,17 +81,20 @@ public class Player1Manager : MonoBehaviour
     //Metodo para iniciar el cambio de cartas en la mano
     public void StartingTheCardSwap()       //Lo acciona un botton, aqui se dan las condiciones previas para el intercambio
     {
-        //Añadir un Subscriber a los Eventos
+        //Añadir un SelectCardInHand a los Eventos
         EventManager.OnCardClicked += SelectCardInHand;
-        //Inicio del metodo para cambiar cartas
+        //Inicio de la Coroutine para cambiar cartas
         StartCoroutine(OrganizedMetods()); 
     }
 
+    //Coroutine necesaria para oganizar el timepo de ejecucion
     IEnumerator OrganizedMetods()
     {
-        yield return StartCoroutine(SwapCardsInHands());
-        yield return StartCoroutine(DrawSingleCard());
+        yield return StartCoroutine(SwapCardsInHands()); //Este se ejecuta primero
+        yield return StartCoroutine(DrawSingleCard()); //Este se ejecuta despues que se ejecute el primero
     }
+    
+    //Robar una carta
     IEnumerator DrawSingleCard()
     {
         yield return new WaitForSeconds(0.2f);
@@ -134,6 +140,7 @@ public class Player1Manager : MonoBehaviour
         ShuffleDeck(deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck);
     }
 
+    //Poniendo carta lider en el campo
     public void SetLead()
     {
         GameObject g = Instantiate(cardLeadPrefab, leadSpotPlayer1.transform);

@@ -72,7 +72,7 @@ public class DropZoneRP2 : MonoBehaviour, IDropHandler, IPointerEnterHandler, IP
                                 }
                                 else if (dropedCard.GetComponent<Card>().cardDescription == "Destruye la criatura con mas poder en el campo")
                                 {
-                                    EffectsManager.DestroyHighestPowerCardOnField();
+                                    EffectsManager.DestroyHighestPowerCardOnField(dropedCard);
                                 }
                                 else if (dropedCard.GetComponent<Card>().cardDescription == "Esta criatura es mas fuerte en manada, multiplica su ataque por la cantidad de critaturas iguales en el campo")
                                 {

@@ -14,13 +14,17 @@ public class Player2Manager : MonoBehaviour
     public int powerPlayer2;
     private GameObject lastClickedCard = null;
 
+    [Header("Prefabs")]
     public GameObject cardPrefab2;
     public GameObject cardLeadPrefab;
     
+    [Header("Setup Panels")]
     public GameObject deckPlayer2;
     public GameObject graveyardPlayer2;
     public GameObject handPlayer2;
+    public GameObject leadSpotPlayer2;
 
+    [Header("Game Panels")]
     public GameObject aumentoMZonePlayer2;
     public GameObject aumentoRZonePlayer2; 
     public GameObject aumentoSZonePlayer2;
@@ -28,9 +32,7 @@ public class Player2Manager : MonoBehaviour
     public GameObject meleeZonePlayer2;
     public GameObject rangeZonePlayer2;
     public GameObject siegeZonePlayer2;
-
-    public GameObject leadSpotPlayer2;
-
+    
     [Header ("Hand Counter")]
     public int startingHandSize = 10;
     public int maxHandSize = 10;
@@ -65,7 +67,7 @@ public class Player2Manager : MonoBehaviour
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    StartingTheCardSwap();
+                    StartingTheCardSwap(); //Iniciando el cambio de cartas
                     GameManager.player2CanSwapCards = false;
                 }
             }
@@ -75,16 +77,20 @@ public class Player2Manager : MonoBehaviour
     //Metodo para iniciar el cambio de cartas en la mano
     public void StartingTheCardSwap()       //Lo acciona un botton, aqui se dan las condiciones previas para el intercambio
     {
-        //Añadir un Subscriber a los Eventos
+        //Añadir un SelectCardInHand a los Eventos
         EventManager.OnCardClicked += SelectCardInHand;
-        //Inicio del metodo para cambiar cartas
+        //Inicio de la Coroutine para cambiar cartas
         StartCoroutine(OrganizedMetods());      
     }
+
+    //Coroutine necesaria para oganizar el timepo de ejecucion
     IEnumerator OrganizedMetods()
     {
-        yield return StartCoroutine(SwapCardsInHands());
-        yield return StartCoroutine(DrawSingleCard());
+        yield return StartCoroutine(SwapCardsInHands()); //Este se ejecuta primero
+        yield return StartCoroutine(DrawSingleCard()); //Este se ejecuta despues que se ejecute el primero
     }
+
+    //Robar una carta
     IEnumerator DrawSingleCard()
     {
         yield return new WaitForSeconds(0.2f);
