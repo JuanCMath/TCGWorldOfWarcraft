@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviour
         }
         else if (GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().powerPlayer1 < GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().powerPlayer2)
         {
+            //PLayer 2 Wins!
             player1StartTheRound = false;
             player2WinedRounds ++;
         }
@@ -170,6 +171,10 @@ public class GameManager : MonoBehaviour
                     player1CanSwapCardsText.text = "";
                 }
             }
+            else
+            {
+                player1CanSwapCardsText.text = "";
+            }
         }
         else
         {
@@ -185,6 +190,10 @@ public class GameManager : MonoBehaviour
                 {
                     player2CanSwapCardsText.text = "";
                 }
+            }
+            else
+            {
+                player2CanSwapCardsText.text = "";
             }
         }
         else

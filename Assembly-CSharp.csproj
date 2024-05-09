@@ -70,12 +70,12 @@
     <Compile Include="Assets\Scripts\Card Stuffs\Display Card.cs" />
     <Compile Include="Assets\Scripts\Main Menu.cs" />
     <Compile Include="Assets\Scripts\Panels Scripts\Panles Player2\DropZone M P2.cs" />
+    <Compile Include="Assets\Scripts\Panels Scripts\Drop Zone Generic.cs" />
     <Compile Include="Assets\Scripts\Panels Scripts\Panels Player1\DropZone C P1.cs" />
     <Compile Include="Assets\Scripts\Panels Scripts\Panles Player2\DropZone C P2.cs" />
     <Compile Include="Assets\Scripts\Databases\Aspectos Deck.cs" />
     <Compile Include="Assets\Scripts\Panels Scripts\Panles Player2\DropZone R P2.cs" />
     <Compile Include="Assets\Scripts\Card Stuffs\Draggable.cs" />
-    <Compile Include="Assets\Scripts\Panels Scripts\DropZoneHand.cs" />
     <Compile Include="Assets\Scripts\Panels Scripts\Panels Player1\DropZone A P1.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Events\Event Manager.cs" />

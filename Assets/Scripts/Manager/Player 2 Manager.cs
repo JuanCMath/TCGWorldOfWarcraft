@@ -65,6 +65,7 @@ public class Player2Manager : MonoBehaviour
         {
             if (GameManager.player2CanSwapCards == true)
             {
+                GameManager.player2CanSwapCards = false;
                 for (int i = 0; i < 2; i++)
                 {
                     StartingTheCardSwap(); //Iniciando el cambio de cartas

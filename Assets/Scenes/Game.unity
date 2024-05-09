@@ -228,7 +228,7 @@ GameObject:
   - component: {fileID: 96004666}
   - component: {fileID: 96004667}
   m_Layer: 5
-  m_Name: Clima Zone p2
+  m_Name: Clima Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -525,7 +525,7 @@ GameObject:
   - component: {fileID: 170981887}
   - component: {fileID: 170981886}
   m_Layer: 5
-  m_Name: Graveyard p2
+  m_Name: Graveyard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -646,9 +646,8 @@ GameObject:
   - component: {fileID: 171783808}
   - component: {fileID: 171783807}
   - component: {fileID: 171783806}
-  - component: {fileID: 171783810}
   m_Layer: 5
-  m_Name: Range Zone p1
+  m_Name: Range Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -751,18 +750,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 171783803}
   m_CullTransparentMesh: 1
---- !u!114 &171783810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 171783803}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71fe785d6583bb149b646b0d3e84c033, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &180033778
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,6 +789,8 @@ RectTransform:
   - {fileID: 599532842}
   - {fileID: 2045945879}
   - {fileID: 122889366}
+  - {fileID: 953588807}
+  - {fileID: 2023131642}
   m_Father: {fileID: 1681513803}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -887,7 +876,7 @@ GameObject:
   - component: {fileID: 216967028}
   - component: {fileID: 216967032}
   m_Layer: 5
-  m_Name: Hand p1
+  m_Name: Hand p2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1273,7 +1262,7 @@ GameObject:
   - component: {fileID: 322155616}
   - component: {fileID: 322155614}
   m_Layer: 5
-  m_Name: Lider p1
+  m_Name: Lider p2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1634,7 +1623,7 @@ GameObject:
   - component: {fileID: 403890437}
   - component: {fileID: 403890441}
   m_Layer: 5
-  m_Name: Range Zone p2
+  m_Name: Range Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2165,7 +2154,7 @@ GameObject:
   - component: {fileID: 737718822}
   - component: {fileID: 737718826}
   m_Layer: 5
-  m_Name: Aumento R p1
+  m_Name: Aumento R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2427,7 +2416,7 @@ GameObject:
   - component: {fileID: 843968479}
   - component: {fileID: 843968478}
   m_Layer: 5
-  m_Name: Graveyard p1
+  m_Name: Graveyard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2601,6 +2590,81 @@ MonoBehaviour:
   maxHandSize: 10
   deckTextPlayer1: {fileID: 1710099804}
   discardTextPlayer1: {fileID: 641329560}
+--- !u!1 &953588806
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 953588807}
+  - component: {fileID: 953588809}
+  - component: {fileID: 953588808}
+  m_Layer: 5
+  m_Name: Dont Ask
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &953588807
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953588806}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 180033779}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 490.7094, y: -148.81877}
+  m_SizeDelta: {x: 107.0837, y: 146.5271}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &953588808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953588806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &953588809
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953588806}
+  m_CullTransparentMesh: 1
 --- !u!1 &1018325244
 GameObject:
   m_ObjectHideFlags: 0
@@ -2616,7 +2680,7 @@ GameObject:
   - component: {fileID: 1018325247}
   - component: {fileID: 1018325251}
   m_Layer: 5
-  m_Name: Aumento M p2
+  m_Name: Aumento M
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2746,7 +2810,7 @@ GameObject:
   - component: {fileID: 1201730851}
   - component: {fileID: 1201730855}
   m_Layer: 5
-  m_Name: Aumento R p2
+  m_Name: Aumento R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2876,7 +2940,7 @@ GameObject:
   - component: {fileID: 1217779660}
   - component: {fileID: 1217779664}
   m_Layer: 5
-  m_Name: Aumento M p1
+  m_Name: Aumento M
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3006,7 +3070,7 @@ GameObject:
   - component: {fileID: 1219823146}
   - component: {fileID: 1219823150}
   m_Layer: 5
-  m_Name: Aumento S p2
+  m_Name: Aumento S
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3365,7 +3429,7 @@ GameObject:
   - component: {fileID: 1331299083}
   - component: {fileID: 1331299087}
   m_Layer: 5
-  m_Name: Aumento S p1
+  m_Name: Aumento S
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3820,7 +3884,7 @@ GameObject:
   - component: {fileID: 1438966711}
   - component: {fileID: 1438966714}
   m_Layer: 5
-  m_Name: Deck p1
+  m_Name: Deck p2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4101,7 +4165,6 @@ GameObject:
   - component: {fileID: 1453628173}
   - component: {fileID: 1453628172}
   - component: {fileID: 1453628171}
-  - component: {fileID: 1453628175}
   m_Layer: 5
   m_Name: Hand p2
   m_TagString: Untagged
@@ -4206,18 +4269,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1453628168}
   m_CullTransparentMesh: 1
---- !u!114 &1453628175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1453628168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 147d3847fd2bdcf4faebde6d52a4dba1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1651074405
 GameObject:
   m_ObjectHideFlags: 0
@@ -4692,7 +4743,7 @@ GameObject:
   - component: {fileID: 1988740580}
   - component: {fileID: 1988740581}
   m_Layer: 5
-  m_Name: Clima Zone p1
+  m_Name: Clima Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4818,9 +4869,8 @@ GameObject:
   - component: {fileID: 2009433861}
   - component: {fileID: 2009433860}
   - component: {fileID: 2009433858}
-  - component: {fileID: 2009433863}
   m_Layer: 5
-  m_Name: Melee Zone p1
+  m_Name: Melee Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4923,18 +4973,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2009433856}
   m_CullTransparentMesh: 1
---- !u!114 &2009433863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2009433856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 525241e6b364eb942897fdf27ce6b418, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2018725608
 GameObject:
   m_ObjectHideFlags: 0
@@ -5018,6 +5056,81 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1681513803}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2023131641
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2023131642}
+  - component: {fileID: 2023131644}
+  - component: {fileID: 2023131643}
+  m_Layer: 5
+  m_Name: Dont Ask 2.0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2023131642
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2023131641}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 180033779}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 490.2, y: 156}
+  m_SizeDelta: {x: 95.8774, y: 136.3396}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2023131643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2023131641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &2023131644
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2023131641}
+  m_CullTransparentMesh: 1
 --- !u!1 &2025033406
 GameObject:
   m_ObjectHideFlags: 0
@@ -5031,9 +5144,8 @@ GameObject:
   - component: {fileID: 2025033411}
   - component: {fileID: 2025033410}
   - component: {fileID: 2025033409}
-  - component: {fileID: 2025033413}
   m_Layer: 5
-  m_Name: Siege Zone p1
+  m_Name: Siege Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5136,18 +5248,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2025033406}
   m_CullTransparentMesh: 1
---- !u!114 &2025033413
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2025033406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f2ae01e4e4205c489e71c3a893fd98e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2045945878
 GameObject:
   m_ObjectHideFlags: 0
@@ -5413,7 +5513,7 @@ GameObject:
   - component: {fileID: 2115632257}
   - component: {fileID: 2115632261}
   m_Layer: 5
-  m_Name: Melee Zone p2
+  m_Name: Melee Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5543,7 +5643,7 @@ GameObject:
   - component: {fileID: 2117122876}
   - component: {fileID: 2117122880}
   m_Layer: 5
-  m_Name: Siege Zone p2
+  m_Name: Siege Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

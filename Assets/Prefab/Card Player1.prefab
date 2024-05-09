@@ -478,6 +478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardData: {fileID: 0}
   cardBack: {fileID: 6283772191882467972}
+  displayCardBack: 0
   effectNumber: 0
   cardDescText: {fileID: 2050434192302956749}
   cardTypeText: {fileID: 5607479977113299648}
