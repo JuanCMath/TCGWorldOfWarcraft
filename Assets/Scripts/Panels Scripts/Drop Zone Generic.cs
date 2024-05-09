@@ -13,9 +13,40 @@ public class DropZoneGeneric : MonoBehaviour, IDropHandler, IPointerEnterHandler
         // Numero de cartas maximo por panel
         private int maxCards;
         private bool playerCanPlaceCard;
-        private bool cardCanBePlaced;
-        private type allowedTypeCard;
+        private type[] allowedTypeCard;
         private slot[] allowedCards;
+
+        public void ApplyEffect(GameObject dropedCard)
+        {
+                if (dropedCard.GetComponent<Card>().cardType == type.Señuelo)
+                {
+                    GameObject.Find("Effect Manager").GetComponent<EffectsManager>().BaitEffect(gameObject);
+                }
+                else if (dropedCard.GetComponent<Card>().cardType == type.Unidad && dropedCard.GetComponent<Card>().isHero == false)
+                {
+                    if (dropedCard.GetComponent<Card>().cardDescription == "Roba una Carta")
+                    {
+                        EffectsManager.DrawACard();
+                    }
+                    else if (dropedCard.GetComponent<Card>().cardDescription == "Destruye la carta con menor poder del enemigo")
+                    {
+                        EffectsManager.DestroyLowerPowerCardOnOponent();
+                    }
+                    else if (dropedCard.GetComponent<Card>().cardDescription == "Destruye la criatura con mas poder en el campo")
+                    {
+                        EffectsManager.DestroyHighestPowerCardOnField(dropedCard);
+                    }
+                    else if (dropedCard.GetComponent<Card>().cardDescription == "Esta criatura es mas fuerte en manada, multiplica su ataque por la cantidad de critaturas iguales en el campo")
+                    {
+                        EffectsManager.MultAttackPower(dropedCard);
+                    }
+                }
+                else if (dropedCard.GetComponent<Card>().cardType == type.Despeje)
+                {
+                    Destroy(dropedCard); //Dejare el señuelo destruyendose, deberia ir al cementerio pero me da un error raro            
+                    GameObject.Find("Effect Manager").GetComponent<EffectsManager>().ClearanceEffect(gameObject);
+                }
+        }
 
         public bool CardCanBePlaced(GameObject dropedCard)
         {
@@ -25,11 +56,16 @@ public class DropZoneGeneric : MonoBehaviour, IDropHandler, IPointerEnterHandler
                 {
                     if (playerCanPlaceCard == true)
                     {
-                        if (dropedCard.GetComponent<Card>().cardType == allowedTypeCard)
+                        if (allowedTypeCard.Contains(dropedCard.GetComponent<Card>().cardType))
                         {
                             if (allowedCards.Contains(dropedCard.GetComponent<Card>().cardSlot))
                             {
-                                return true;
+                                if (dropedCard.transform.tag == "Card Player1" && GameManager.player1 == true)
+                                    return true;
+                                else if (dropedCard.transform.tag == "Card Player2" && GameManager.player2 == true)
+                                    return true;
+                                else
+                                    return false;
                             }
                             else return false;
                         }
@@ -82,29 +118,7 @@ public class DropZoneGeneric : MonoBehaviour, IDropHandler, IPointerEnterHandler
                     draggedComponent.parentToReturnTo = this.transform;
                     GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable --;
 
-                    if (dropedCard.GetComponent<Card>().cardType == type.Señuelo)
-                    {
-                        GameObject.Find("Effect Manager").GetComponent<EffectsManager>().BaitEffect(dropedPanel);
-                    }
-                    else if (dropedCard.GetComponent<Card>().cardType == type.Unidad && dropedCard.GetComponent<Card>().isHero == false)
-                    {
-                        if (dropedCard.GetComponent<Card>().cardDescription == "Roba una Carta")
-                        {
-                            EffectsManager.DrawACard();
-                        }
-                        else if (dropedCard.GetComponent<Card>().cardDescription == "Destruye la carta con menor poder del enemigo")
-                        {
-                            EffectsManager.DestroyLowerPowerCardOnOponent();
-                        }
-                        else if (dropedCard.GetComponent<Card>().cardDescription == "Destruye la criatura con mas poder en el campo")
-                        {
-                            EffectsManager.DestroyHighestPowerCardOnField(dropedCard);
-                        }
-                        else if (dropedCard.GetComponent<Card>().cardDescription == "Esta criatura es mas fuerte en manada, multiplica su ataque por la cantidad de critaturas iguales en el campo")
-                        {
-                            EffectsManager.MultAttackPower(dropedCard);
-                        }
-                    }
+                    ApplyEffect(dropedCard);  
                 }      
             }  
         }
@@ -160,20 +174,12 @@ public class DropZoneGeneric : MonoBehaviour, IDropHandler, IPointerEnterHandler
                           match.Groups[5].Success ? new slot[] {slot.X} : 
                           null;
 
-        if (match.Groups[1].Success || //'M'
-            match.Groups[2].Success || //'R'
-            match.Groups[3].Success)   //'S'
-            {
-                allowedTypeCard = type.Unidad;
-            }
-            else if (match.Groups[4].Success) // 'C'
-            {
-                allowedTypeCard = type.Clima;
-            }
-            else if (match.Groups[5].Success) // 'A'
-            {
-                allowedTypeCard = type.Aumento;
-            }
+        allowedTypeCard = match.Groups[1].Success ? new type[] {type.Unidad, type.Señuelo} :
+                          match.Groups[2].Success ? new type[] {type.Unidad, type.Señuelo} :
+                          match.Groups[3].Success ? new type[] {type.Unidad, type.Señuelo} :
+                          match.Groups[4].Success ? new type[] {type.Clima, type.Despeje} :
+                          match.Groups[5].Success ? new type[] {type.Aumento} : 
+                          null;
         }
         else
         {
