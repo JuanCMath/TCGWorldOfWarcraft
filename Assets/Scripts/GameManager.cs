@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI player2Won;
     public TextMeshProUGUI player1CanSwapCardsText;
     public TextMeshProUGUI player2CanSwapCardsText;
+    public TextMeshProUGUI player1ShowingPower;
+    public TextMeshProUGUI player2ShowingPower;
     public TextMeshProUGUI whoWonDescription;
 
     [Header("Pass Manager")]
@@ -42,6 +44,46 @@ public class GameManager : MonoBehaviour
     public static bool player1StartTheRound = true;
     #endregion
 
+    public void ShowAttackOnField()
+    {
+        player1ShowingPower.text = Player1AttackOnField().ToString();
+        player2ShowingPower.text = Player2AtacckOnField().ToString();
+    }
+
+    public int Player1AttackOnField()
+    {
+        int helper1 = 0;
+        GameObject[] cartasp1 = GameObject.FindGameObjectsWithTag("Card Player1");
+
+        foreach (GameObject carta in cartasp1)
+        {
+            //Si esta en la mano no la destruyas
+            if (carta.transform.IsChildOf(handP1.transform)) continue;
+            else if (carta.transform.IsChildOf(leadP1.transform)) continue;
+            else if (carta.transform.IsChildOf(panelCardDsiplay.transform)) continue;
+
+            //Si no esta en la mano destruyela, Aqui podriamos poner despues que se vayan al cementerio
+            helper1 += carta.GetComponent<Card>().attackPower;
+        }
+        return helper1;
+    }
+
+    public int Player2AtacckOnField()
+    {
+        int helper2 = 0;
+        GameObject[] cartasp2 = GameObject.FindGameObjectsWithTag("Card Player2");
+
+        foreach (GameObject carta in cartasp2)
+        {
+            //Si esta en la mano no la destruyas
+            if (carta.transform.IsChildOf(handP2.transform)) continue;
+            else if (carta.transform.IsChildOf(leadP2.transform)) continue;
+            else if (carta.transform.IsChildOf(panelCardDsiplay.transform)) continue;
+            //Si no esta en la mano destruyela, Aqui podriamos poner despues que se vayan al cementerio
+            helper2 += carta.GetComponent<Card>().attackPower;
+        }
+        return helper2;
+    }
     //Cambiar de turno
     public void ChangeTurn()
     {   
@@ -219,6 +261,8 @@ public class GameManager : MonoBehaviour
         //Mostrar cuantas rondas ha ganado cada uno
         player1Won.text = "Player 1 Won:" + player1WinedRounds + " Rounds";
         player2Won.text = "Player 2 Won:" + player2WinedRounds + " Rounds";
+
+        ShowAttackOnField();
     }
 
     public void ResetVar()

@@ -49,32 +49,18 @@ public class DropZoneGeneric : MonoBehaviour, IDropHandler, IPointerEnterHandler
 
         public bool CardCanBePlaced(GameObject dropedCard)
         {
-            if (maxCards >= gameObject.transform.childCount)
+            if (maxCards >= gameObject.transform.childCount                                              &&
+                GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable > 0 &&
+                playerCanPlaceCard == true                                                               &&
+                allowedTypeCard.Contains(dropedCard.GetComponent<Card>().cardType)                       &&
+                allowedCards.Contains(dropedCard.GetComponent<Card>().cardSlot))
             {
-                if (GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable > 0)
-                {
-                    if (playerCanPlaceCard == true)
-                    {
-                        if (allowedTypeCard.Contains(dropedCard.GetComponent<Card>().cardType))
-                        {
-                            if (allowedCards.Contains(dropedCard.GetComponent<Card>().cardSlot))
-                            {
-                                if (dropedCard.transform.tag == "Card Player1" && GameManager.player1 == true)
-                                    return true;
-                                else if (dropedCard.transform.tag == "Card Player2" && GameManager.player2 == true)
-                                    return true;
-                                else
-                                    return false;
-                            }
-                            else return false;
-                        }
-                        else return false;
-                    }
-                    else return false;
-                }
-                else return false;
+                if (dropedCard.transform.tag == "Card Player1" && GameManager.player1 == true || dropedCard.transform.tag == "Card Player2" && GameManager.player2 == true)
+                    return true;
+                else
+                    return false;
             }
-            else return false; 
+            else return false;
         }
                          
         public void OnPointerEnter(PointerEventData eventData) //Metodo que se inicia cuando el puntero entra en la zona, evenData almacena los datos de mi puntero de clase PointerEventData
@@ -106,7 +92,6 @@ public class DropZoneGeneric : MonoBehaviour, IDropHandler, IPointerEnterHandler
         public void OnDrop(PointerEventData eventData) //Metodo que se inicia cuando un onjeto se dropea en la zona
         {           
             GameObject dropedCard = eventData.pointerDrag;
-            GameObject dropedPanel = gameObject;
 
             Draggable draggedComponent = dropedCard.GetComponent<Draggable>();
             //Si tienes algo agarrado y Si el panel no esta lleno y Si la carta es del mismo tipo del panel entonces dropear
@@ -124,7 +109,12 @@ public class DropZoneGeneric : MonoBehaviour, IDropHandler, IPointerEnterHandler
 
     public void Start()
     {
-        if (gameObject.transform.name == "Melee Zone" || gameObject.transform.name == "Range Zone" || gameObject.transform.name == "Siege Zone")
+        if (gameObject.transform.name == "Melee Zone" || 
+            gameObject.transform.name == "Range Zone" || 
+            gameObject.transform.name == "Siege Zone" ||
+            gameObject.transform.name == "Melee Zone 2" || 
+            gameObject.transform.name == "Range Zone 2" || 
+            gameObject.transform.name == "Siege Zone 2")
         {
             maxCards = 5;
         }
