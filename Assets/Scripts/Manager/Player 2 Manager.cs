@@ -1,12 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Enums;
-using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Animations;
-using System.Threading;
 
 public class Player2Manager : MonoBehaviour
 {

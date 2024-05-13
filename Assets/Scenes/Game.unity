@@ -4491,7 +4491,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 334112064}
         m_TargetAssemblyTypeName: Player2Manager, Assembly-CSharp
         m_MethodName: SwapCards
         m_Mode: 1
@@ -5310,7 +5310,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 858685630}
         m_TargetAssemblyTypeName: Player1Manager, Assembly-CSharp
         m_MethodName: SwapCards
         m_Mode: 1

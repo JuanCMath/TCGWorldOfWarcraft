@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Enums;
 using System.Text.RegularExpressions;
-using JetBrains.Annotations;
 using System.Linq;
-using System.Runtime.InteropServices;
 
 public class DropZoneGeneric : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {

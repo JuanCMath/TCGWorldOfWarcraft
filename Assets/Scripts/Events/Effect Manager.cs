@@ -1,17 +1,6 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using System;
-using UnityEditor.PackageManager;
-using UnityEngine.EventSystems;
-using UnityEditor.UI;
-using System.Runtime.CompilerServices;
-using System.Linq;
-using Unity.VisualScripting;
 using Enums;
-using JetBrains.Annotations;
-using UnityEngine.UIElements;
-using Unity.VisualScripting.Antlr3.Runtime;
 
 public class EffectsManager : MonoBehaviour
 {

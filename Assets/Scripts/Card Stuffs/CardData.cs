@@ -1,10 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using Enums;
 using UnityEngine;
-using Microsoft.Unity.VisualStudio.Editor;
 
 [CreateAssetMenu(fileName = "Card_", menuName = "Create/NewCard")]
 public class CardData : ScriptableObject
