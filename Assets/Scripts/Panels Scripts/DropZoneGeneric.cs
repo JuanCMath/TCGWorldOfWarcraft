@@ -43,8 +43,11 @@ public class DropZoneGeneric : MonoBehaviour, IDropHandler, IPointerEnterHandler
                 }
                 else if (dropedCard.GetComponent<Card>().cardType == type.Despeje)
                 {
-                    Destroy(dropedCard); //Dejare el señuelo destruyendose, deberia ir al cementerio pero me da un error raro            
-                    GameObject.Find("Effect Manager").GetComponent<EffectsManager>().ClearanceEffect(gameObject);
+                    Destroy(dropedCard); //Dejare el señuelo destruyendose, deberia ir al cementerio pero me da un error raro
+                    if (gameObject.transform.childCount >= 2)
+                    {      
+                        GameObject.Find("Effect Manager").GetComponent<EffectsManager>().ClearanceEffect(gameObject);
+                    }
                 }
         }
 
@@ -167,7 +170,7 @@ public class DropZoneGeneric : MonoBehaviour, IDropHandler, IPointerEnterHandler
 
         if (match.Success)
         {
-            allowedCards = match.Groups[1].Success ? new slot[] {slot.M, slot.MR, slot.MS, slot.MRS} :
+        allowedCards = match.Groups[1].Success ? new slot[] {slot.M, slot.MR, slot.MS, slot.MRS} :
                           match.Groups[2].Success ? new slot[] {slot.R, slot.MR, slot.RS, slot.MRS} :
                           match.Groups[3].Success ? new slot[] {slot.S, slot.MS, slot.RS, slot.MRS} :
                           match.Groups[4].Success ? new slot[] {slot.X} :

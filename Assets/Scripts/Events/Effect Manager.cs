@@ -111,7 +111,7 @@ public class EffectsManager : MonoBehaviour
     public static void DrawACard()
     {
         if (GameManager.player1 == true)  GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().DrawCard(1);  
-        else if (GameManager.player2 == true) GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().DrawCard(1);
+        else if (GameManager.player2 == true) GameObject.Find("Player2 Manager").GetComponent<Player1Manager>().DrawCard(1);
     }
 
     //Efecto Destruir Carta con menor poder de ataque del oponente
@@ -382,7 +382,7 @@ public class EffectsManager : MonoBehaviour
             }
             else if (card.transform.parent.parent.name == "Panels p2")
             {
-                card.transform.SetParent(GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().graveyardPlayer2.transform);
+                card.transform.SetParent(GameObject.Find("Player2 Manager").GetComponent<Player1Manager>().graveyardPlayer1.transform);
                 card.transform.localPosition = new Vector3 (0,0,0);
             }
         }

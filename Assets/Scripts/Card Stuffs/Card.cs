@@ -24,6 +24,7 @@ public class Card : MonoBehaviour
     public TextMeshProUGUI cardDescText;
     public TextMeshProUGUI cardTypeText;
     public TextMeshProUGUI cardAttack;
+    public TextMeshProUGUI cardPositionText;
 
     [Header("Card Data")]
     public int cardID;
@@ -68,6 +69,7 @@ public class Card : MonoBehaviour
         cardDescText.text = cardDescription;
         cardTypeText.text = cardType.ToString();
         cardAttack.text = attackPower.ToString();
+        cardPositionText.text = cardSlot.ToString();
         art.sprite = cardData.art;
     }
     public void ProcesDescription()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Enums;
 using TMPro;
+using UnityEditor;
 
 public class GameManager : MonoBehaviour
 { 
@@ -14,6 +15,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI player2Won;
     public TextMeshProUGUI player1CanSwapCardsText;
     public TextMeshProUGUI player2CanSwapCardsText;
+    public TextMeshProUGUI whoWonDescription;
 
     [Header("Pass Manager")]
     public bool player1Pass;
@@ -26,6 +28,7 @@ public class GameManager : MonoBehaviour
     public GameObject handP2;
     public GameObject cardDisplayPrefab;
     public GameObject panelCardDsiplay;
+    public GameObject endGameMenu;
 
     [Header("Game Trackers")]
     public gameTracker state;
@@ -143,15 +146,21 @@ public class GameManager : MonoBehaviour
         //Comparamos la cantidad de ronda ganadas por cada jugador, el de mayor cantidad gana
         if (player1WinedRounds > player2WinedRounds)
         {
-            Debug.Log("Player 1 WINS");
+            whoWonDescription.text = "The Aspects have won the war!, now the world is finally pacified thanks to you! what u will like to do next?";
+            endGameMenu.SetActive(true);
+            Time.timeScale = 0f;
         }
         else if (player1WinedRounds < player2WinedRounds)
         {
-            Debug.Log("Player 2 WINS");
+            whoWonDescription.text = "The Plague have conquerer the world, now we will never live in peace, want to try again?";
+            endGameMenu.SetActive(true);
+            Time.timeScale = 0f;
         }
         else 
         {
-            Debug.Log("DRAW!!!!");
+            whoWonDescription.text = "The War is NOT over";
+            endGameMenu.SetActive(true);
+            Time.timeScale = 0f;
         }
     }
 
@@ -215,10 +224,25 @@ public class GameManager : MonoBehaviour
         player2Won.text = "Player 2 Won:" + player2WinedRounds + " Rounds";
     }
 
+    public void ResetVar()
+    {
+        player1Pass = false;
+        player2Pass = false;
+        numberOfRounds = 1;
+        numberOfActionsAvailable = 1;
+        player1 = false;
+        player2 = false;
+        player1WinedRounds = 0;
+        player2WinedRounds = 0;
+        player1CanSwapCards = true;
+        player2CanSwapCards = true;
+        player1StartTheRound = true;
+    }
+
     //Inicial el juego
     void Start()
     {
-         state = gameTracker.StartingTheGame;         
+        state = gameTracker.StartingTheGame;         
     }
 
     //
@@ -228,7 +252,7 @@ public class GameManager : MonoBehaviour
         {
             //Empezando el juego, aqui pondre algunas animaciones e inputs a los usuarios para poner su nombre
             case gameTracker.StartingTheGame:
-
+                endGameMenu.SetActive(false);
                 state = gameTracker.StartingRound;
                 break;
 
@@ -313,7 +337,7 @@ public class GameManager : MonoBehaviour
 
                 break;
             case gameTracker.GameOver:  //En un futuro pondra animaciones aqui,
-                //Se acabo jejeje 
+                ResetVar();
                 break;
         }
 
