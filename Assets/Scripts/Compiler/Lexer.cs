@@ -1,9 +1,11 @@
 using System.Data;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-
+using UnityEngine.UIElements.Experimental;
+namespace Lexer
+{
 // Token class represents a token in the lexer
-class Token
+public class Token
 {
     public int Line { get; }
     public int Column { get; }
@@ -15,7 +17,7 @@ class Token
         Line = line;
         Column = column;
         Type = type;
-        Lexeme = lexeme;
+        Lexeme = lexeme;   
     }
 
     public override string ToString()
@@ -25,7 +27,7 @@ class Token
 }
 
 // Enum class for the token types
-enum TokenType
+public enum TokenType
 {
     //General Comands
     Number, String, Identifier, Semicolon, BraceL, BraceR, ParenL, ParenR, BracketL, BracketR, Comma, Equal,
@@ -95,7 +97,7 @@ class Lexer
         {"while", TokenType.WhileCycle}
     }; 
 
-    private static Regex symbols = new Regex(@"\{|\}|\(|\)|\[|\]|,|=|\+|-|\*|/|%|\^|\.|:|@|&|\||=>|!|>|<|@@", RegexOptions.IgnoreCase);
+    private static Regex symbols = new Regex(@"\{|\}|@@|=>|\(|\)|\[|\]|,|=|\+|-|\*|/|%|\^|\.|:|@|&|\||!|>|<", RegexOptions.IgnoreCase);
     private static Regex number = new Regex(@"[0-9]+|[0-9]*\.[0-9]+");
     private static Regex identifier = new Regex(@"[_a-zA-Z][_a-zA-Z0-9]*");
 
@@ -202,4 +204,5 @@ class Lexer
         tokens.Add(new Token(line, column, TokenType.End, "$"));
         return tokens;
     }
+}
 }

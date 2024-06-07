@@ -1,7 +1,7 @@
 card {
 	Type: "Oro",
 	Name: "Beluga"
-	Faction: "Nother Realms",
+	Faction: "Northern Realms",
 	Power: 10,
 	Range: ["Melee", "Ranged"],
 	OnActivation: 
@@ -14,9 +14,9 @@ card {
 			},
 			Selector: 
 			{
-				Source: "boad",
+				Source: "board",
 				Single: false,
-				Predicate: (unit) => unit.Faction == "Nothern" @@ "Realms"
+				Predicate: (unit) => unit.Faction == "Northern" @@ "Realms"
 			},
 			PostAction: 
 			{
