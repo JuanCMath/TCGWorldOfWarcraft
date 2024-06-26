@@ -28,7 +28,6 @@ card {
 						Predicate: (unit) => unit.Power < 1
 					},
 			}
-
 		},
 		{
 			Effect: "Draw"
