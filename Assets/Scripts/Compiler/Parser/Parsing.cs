@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using TokenEnum;
 using Lexer;
+using JetBrains.Annotations;
+using UnityEditor;
 
 namespace Parser
 {
@@ -51,7 +53,7 @@ namespace Parser
             Expect(TokenType.CardDeclaration);
             Expect(TokenType.BraceL);
 
-            while (!Match(TokenType.BraceL))
+            while (!Match(TokenType.BraceR))
             {
                 var propertyName = ExpectIdentifier();
                 Expect(TokenType.Colon);
@@ -70,9 +72,9 @@ namespace Parser
                     case TokenType.CardPower:
                         card.Power = ExpectNumber();
                         break;
-                    //case TokenType.CardRange:
-                    //    card.Range = ExpectStringArray();
-                    //    break;
+                    case TokenType.CardRange:
+                        card.Range = ExpectStringArray();
+                        break;
                     case TokenType.OnActivation:
                         card.OnActivation = ParseActionArray();
                         break;
@@ -307,24 +309,27 @@ namespace Parser
             return true;
         }
 
-       // private string[] ExpectStringArray()
-        //{
-       //     var token = Expect(tokens[currentIndex]);
-//
-        //    if (!token.StartsWith("[") || !token.EndsWith("]"))
-        //    {
-         //       throw new Exception($"Expected string array, but found '{token}'.");
-         //   }
-//
-         //   var array = token.Trim('[', ']').Split(',');
-//
-         //   for (var i = 0; i < array.Length; i++)
-        //    {
-        //        array[i] = array[i].Trim('"');
-        //    }
-//
-        //    return array;
-       // }
+         private string[] ExpectStringArray()
+         {
+            Queue<string> temporalRanges = new Queue<string>();
+
+            Expect(TokenType.BracketL);
+            while (!Match(TokenType.BracketR))
+            {
+                temporalRanges.Enqueue(ExpectString());
+                Expect(TokenType.Colon);
+            }
+            Expect(TokenType.BracketR);
+            
+            int amountOfRanges = temporalRanges.Count;
+            string[] rangeList = new string[amountOfRanges];
+
+            for (int i = 0; i < amountOfRanges; i++)
+            {
+                rangeList[i] = temporalRanges.Dequeue();
+            }   
+            return rangeList;
+        }
 
         private bool Match(TokenType expectedToken)
         {
