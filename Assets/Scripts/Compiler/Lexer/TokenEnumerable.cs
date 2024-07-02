@@ -1,98 +1,96 @@
 using System.Collections;
 using System.Collections.Generic;
-using Lexer;
 using System;
 
-namespace TokenEnum
+namespace Compiler
 {
-
-public class TokenEnumerator : IEnumerable<Token>
-{
-    private List<Token> tokens;
-    private int currentTokenIndex;
-    public int Position { get { return currentTokenIndex; } }
-
-    public TokenEnumerator(IEnumerable<Token> tokens)
+    public class TokenEnumerator : IEnumerable<Token>
     {
-        this.tokens = new List<Token>(tokens);
-        currentTokenIndex = 0;
-    }
+        private List<Token> tokens;
+        private int currentTokenIndex;
+        public int Position { get { return currentTokenIndex; } }
 
-    public IEnumerator<Token> GetEnumerator()
-    {
-        for (int i = currentTokenIndex; i < tokens.Count; i++)
-            yield return tokens[i];
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
-
-    private Token Consume(TokenType expectedType, string errorMessage)
-    {
-        if (Check(expectedType))
+        public TokenEnumerator(IEnumerable<Token> tokens)
         {
-            return Advance();
+            this.tokens = new List<Token>(tokens);
+            currentTokenIndex = 0;
         }
-        else
+    
+        public IEnumerator<Token> GetEnumerator()
         {
-            throw new Exception(errorMessage);
+            for (int i = currentTokenIndex; i < tokens.Count; i++)
+                yield return tokens[i];
         }
-    }
-
-    private bool Match(TokenType type)
-    {
-        if (Check(type))
+    
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            Advance();
-            return true;
+            return GetEnumerator();
         }
-        else
+    
+        private Token Consume(TokenType expectedType, string errorMessage)
         {
-            return false;
+            if (Check(expectedType))
+            {
+                return Advance();
+            }
+            else
+            {
+               throw new Exception(errorMessage);
+           }
         }
-    }
-
-    private bool Check(TokenType type)
-    {
-        if (tokens[currentTokenIndex].type != TokenType.EOF)
+    
+        private bool Match(TokenType type)
         {
-            return false;
+            if (Check(type))
+            {
+                Advance();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
-        else
+    
+        private bool Check(TokenType type)
         {
-            return Peek().type == type;
+           if (tokens[currentTokenIndex].type != TokenType.EOF)
+           {
+                return false;
+            }
+            else
+            {
+                return Peek().type == type;
+            }
         }
-    }
-
-    private Token Advance()
-    {
-        if (tokens[currentTokenIndex].type != TokenType.EOF)
+    
+        private Token Advance()
         {
-            currentTokenIndex++;
+            if (tokens[currentTokenIndex].type != TokenType.EOF)
+            {
+                currentTokenIndex++;
+            }
+            return Previous();
         }
-        return Previous();
+    
+        private Token Peek()
+        {
+            return tokens[currentTokenIndex];
+        }
+    
+        private Token Previous()
+        {
+            return tokens[currentTokenIndex - 1];
+        }
+    
+        public bool CanLookAhead(int k = 0)
+        {
+            return tokens.Count - currentTokenIndex > k;
+        }
+    
+        public Token LookAhead(int k = 0)
+        {
+            return tokens[currentTokenIndex + k];
+        }
     }
-
-    private Token Peek()
-    {
-        return tokens[currentTokenIndex];
-    }
-
-    private Token Previous()
-    {
-        return tokens[currentTokenIndex - 1];
-    }
-
-    public bool CanLookAhead(int k = 0)
-    {
-        return tokens.Count - currentTokenIndex > k;
-    }
-
-    public Token LookAhead(int k = 0)
-    {
-        return tokens[currentTokenIndex + k];
-    }
-}
 }

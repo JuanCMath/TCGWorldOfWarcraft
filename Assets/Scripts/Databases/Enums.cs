@@ -1,5 +1,11 @@
 namespace Enums
 {
+    public enum VariableType
+    {
+        Double,
+        String,
+    }
+
     public enum slot 
     {
         M,   // Melee

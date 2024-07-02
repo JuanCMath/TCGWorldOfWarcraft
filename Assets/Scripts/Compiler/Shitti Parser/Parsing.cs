@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using TokenEnum;
-using Lexer;
 using JetBrains.Annotations;
 using UnityEditor;
 
-namespace Parser
+namespace Compiler
 {
     public class Parsing
     {
@@ -14,7 +12,7 @@ namespace Parser
 
         public void Parse(string input)
         {
-            tokens = Lexer.Lexer.Tokenize(input);
+            tokens = Lexer.Tokenize(input);
             currentIndex = 0;
 
             var card = ParseCard();
@@ -242,6 +240,7 @@ namespace Parser
             return postAction;
         }
 
+        //Recive el token que estas esperando, te lo devuelve si es correcto lo que estabas esperando y se mueve al proximo token
         private Token Expect(TokenType expectedToken)
         {
             if (currentIndex >= tokens.Count)
@@ -321,10 +320,9 @@ namespace Parser
             }
             Expect(TokenType.BracketR);
             
-            int amountOfRanges = temporalRanges.Count;
-            string[] rangeList = new string[amountOfRanges];
+            string[] rangeList = new string[temporalRanges.Count];
 
-            for (int i = 0; i < amountOfRanges; i++)
+            for (int i = 0; i < temporalRanges.Count; i++)
             {
                 rangeList[i] = temporalRanges.Dequeue();
             }   
@@ -391,7 +389,7 @@ card {
     Power: 10,
     Range: [""Melee"", ""Ranged""],
     OnActivation: 
-    [
+    [   
         {
             Effect: 
             {

@@ -64,29 +64,51 @@
     <Analyzer Include="C:\Program Files\Unity 2022.3.15f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Compiler\Parser\AST.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Shitti Parser\TestingAST.cs" />
     <Compile Include="Assets\Scripts\Card Stuffs\CardData.cs" />
     <Compile Include="Assets\Scripts\Manager\Player 2 Manager.cs" />
-    <Compile Include="Assets\Scripts\Compiler\Parser\TestingAST.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\Terminals\BooleanNode.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\VariableAssignementNode.cs" />
     <Compile Include="Assets\Scripts\Events\Card Click Event.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\OnActivationNode.cs" />
     <Compile Include="Assets\Scripts\Card Stuffs\Display Card.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\VariableReferenceNode.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\SelectorNode.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\ActionDeclarationNode.cs" />
     <Compile Include="Assets\Scripts\Databases\Aspectos Deck.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\ASTNode.cs" />
     <Compile Include="Assets\Scripts\Manager\Player Actions.cs" />
     <Compile Include="Assets\Scripts\Card Stuffs\Draggable.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\IfNode.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\VariableDeclarationNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Lexer\Lexer.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\ConditionalExpresionNode.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\PredicateNode.cs" />
     <Compile Include="Assets\Scripts\Manager\Main Menu.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Events\Event Manager.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\Parser.cs" />
     <Compile Include="Assets\Scripts\Compiler\Lexer\TokenEnumerable.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Shitti Parser\AST.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\EffectActivationNode.cs" />
     <Compile Include="Assets\Scripts\Manager\Pause Menu.cs" />
     <Compile Include="Assets\Scripts\Manager\Player 1 Manager.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\BinaryExpressionNode.cs" />
     <Compile Include="Assets\Scripts\Card Stuffs\Card.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\WhileNode.cs" />
     <Compile Include="Assets\Scripts\Databases\LoadCard.cs" />
-    <Compile Include="Assets\Scripts\Compiler\Parser\Parsing.cs" />
     <Compile Include="Assets\Scripts\Panels Scripts\DropZoneGeneric.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\Terminals\StringNode.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Shitti Parser\Parsing.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\Terminals\GameObjectNode.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\Terminals\NumberNode.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\UnaryExpressionNode.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\EffectDeclarationNode.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\CardDeclarationNode.cs" />
     <Compile Include="Assets\Scripts\Events\Effect Manager.cs" />
     <Compile Include="Assets\Scripts\Databases\Arthas Deck.cs" />
     <Compile Include="Assets\Scripts\Databases\Enums.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\MainProgramNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -107,7 +129,7 @@
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
-    <None Include="Assets\Scripts\Compiler\Parser\Gramtica.txt" />
+    <None Include="Assets\Scripts\Compiler\Shitti Parser\Gramtica.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />

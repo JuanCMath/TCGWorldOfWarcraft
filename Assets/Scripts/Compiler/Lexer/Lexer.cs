@@ -2,7 +2,7 @@ using System.Data;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace Lexer
+namespace Compiler
 {
     // Token class represents a token in the lexer
     public class Token
@@ -32,7 +32,9 @@ namespace Lexer
         //General Comands
         Number, String, Identifier, Semicolon, BraceL, BraceR, ParenL, ParenR, BracketL, BracketR, Comma, Equal,
         Plus, Sub, Star, Div, Rem, Pow, Dot, Colon, At, And, Or, Lambda, Not, EOF, Concatenate,
-        GreaterThan, LessThan,
+        GreaterThan, LessThan, GreatherOrEqual, LessOrEqual, NotEqual, Assignement,
+        PlusOne, MinusOne,
+        LogicalAnd, LogicalOr,
         ForCycle, WhileCycle,   
         True, False,
 
@@ -57,8 +59,10 @@ namespace Lexer
             { "[", TokenType.BracketL },
             { "]", TokenType.BracketR },
             { ",", TokenType.Comma },
-            { "=", TokenType.Equal },
+            { "=", TokenType.Assignement },
             { "+", TokenType.Plus },
+            { "++", TokenType.PlusOne},
+            { "--", TokenType.MinusOne},
             { "-", TokenType.Sub },
             { "*", TokenType.Star },
             { "/", TokenType.Div },
@@ -67,16 +71,18 @@ namespace Lexer
             { ".", TokenType.Dot },
             { ":", TokenType.Colon },
             { "@", TokenType.At },
-            { "&", TokenType.And },
-            { "|", TokenType.Or },
             { "=>", TokenType.Lambda },
+            { "==", TokenType.Equal },
+            { "!=", TokenType.NotEqual },
+            { ">=", TokenType.GreatherOrEqual },
+            { "<=", TokenType.LessOrEqual},
             { "!", TokenType.Not },
             { ">", TokenType.GreaterThan },
             { "<", TokenType.LessThan },
             { "$", TokenType.EOF},
             { "@@", TokenType.Concatenate},
-            { "true", TokenType.True},
-            { "false", TokenType.False}
+            { "&&", TokenType.LogicalAnd},
+            { "||", TokenType.LogicalOr}
         };
 
         private static Dictionary<string, TokenType> reservedWords = new Dictionary<string, TokenType>()
@@ -99,10 +105,12 @@ namespace Lexer
             {"for", TokenType.ForCycle},
             {"while", TokenType.WhileCycle},
             {"Params", TokenType.EffectParams},
-            {"Action", TokenType.EffectAction}
+            {"Action", TokenType.EffectAction},
+            {"true", TokenType.True},
+            {"false", TokenType.False}
         }; 
 
-        private static Regex symbols = new Regex(@"\{|\}|@@|=>|\(|\)|\[|\]|,|=|\+|-|\*|/|%|\^|\.|:|@|&|\||!|>|<", RegexOptions.IgnoreCase);
+        private static Regex symbols = new Regex(@"|!=|>=|<=|\|\||--|\+\+|==|\{|\}|@@|=>|\(|\)|\[|\]|,|=|\+|-|\*|/|%|\^|\.|:|;|@|!|>|<", RegexOptions.IgnoreCase);
         private static Regex number = new Regex(@"[0-9]+|[0-9]*\.[0-9]+");
         private static Regex identifier = new Regex(@"[_a-zA-Z][_a-zA-Z0-9]*");
 
