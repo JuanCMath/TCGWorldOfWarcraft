@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Compiler
 {
-    public class VariableReferenceNode : StatementNodes
+    public class VariableReferenceNode : ExpresionNodes
     {
         public string Name { get; }
 

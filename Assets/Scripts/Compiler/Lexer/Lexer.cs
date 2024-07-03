@@ -31,7 +31,7 @@ namespace Compiler
     {
         //General Comands
         Number, String, Identifier, Semicolon, BraceL, BraceR, ParenL, ParenR, BracketL, BracketR, Comma, Equal,
-        Plus, Sub, Star, Div, Rem, Pow, Dot, Colon, At, And, Or, Lambda, Not, EOF, Concatenate,
+        Plus, Sub, Multiplication, Div, Rem, Pow, Dot, Colon, At, And, Or, Lambda, Not, EOF, Concatenate,
         GreaterThan, LessThan, GreatherOrEqual, LessOrEqual, NotEqual, Assignement,
         PlusOne, MinusOne,
         LogicalAnd, LogicalOr,
@@ -43,7 +43,7 @@ namespace Compiler
         CardDeclaration,  CardFaction, CardPower, CardRange, OnActivation, 
         EffectDeclaration, EffectAmount, EffectUnit, 
         PostActionDeclaration, PostActionType, PostActionSelector, PostActionSource, PostActionPredicate, PostActionUnit,
-        EffectParams, EffectAction
+        EffectParams, EffectAction, EffectsUsage
     }
 
     // Lexer class for tokenizing the input string
@@ -64,7 +64,7 @@ namespace Compiler
             { "++", TokenType.PlusOne},
             { "--", TokenType.MinusOne},
             { "-", TokenType.Sub },
-            { "*", TokenType.Star },
+            { "*", TokenType.Multiplication },
             { "/", TokenType.Div },
             { "%", TokenType.Rem },
             { "^", TokenType.Pow },
@@ -88,13 +88,14 @@ namespace Compiler
         private static Dictionary<string, TokenType> reservedWords = new Dictionary<string, TokenType>()
         {
             {"card", TokenType.CardDeclaration},
+            {"effect", TokenType.EffectDeclaration},
             {"Type", TokenType.TypeParam},
             {"Name", TokenType.Name},
             {"Faction", TokenType.CardFaction},
             {"Power", TokenType.CardPower},
             {"Range", TokenType.CardRange},
             {"OnActivation", TokenType.OnActivation},
-            {"Effect", TokenType.EffectDeclaration},
+            {"Effect", TokenType.EffectsUsage},
             {"Amount", TokenType.EffectAmount},
             {"Selector", TokenType.Selector},
             {"Source", TokenType.Source},
@@ -110,7 +111,7 @@ namespace Compiler
             {"false", TokenType.False}
         }; 
 
-        private static Regex symbols = new Regex(@"|!=|>=|<=|\|\||--|\+\+|==|\{|\}|@@|=>|\(|\)|\[|\]|,|=|\+|-|\*|/|%|\^|\.|:|;|@|!|>|<", RegexOptions.IgnoreCase);
+        private static Regex symbols = new Regex(@"|!=|>=|<=|\|\||--|\+\+|==|\{|\}|@@|=>|\(|\)|\[|\]|\.|,|=|\+|-|\*|/|%|\^|\.|:|;|@|!|>|<", RegexOptions.IgnoreCase);
         private static Regex number = new Regex(@"[0-9]+|[0-9]*\.[0-9]+");
         private static Regex identifier = new Regex(@"[_a-zA-Z][_a-zA-Z0-9]*");
 

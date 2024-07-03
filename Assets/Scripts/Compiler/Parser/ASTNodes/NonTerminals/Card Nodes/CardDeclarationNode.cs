@@ -10,9 +10,9 @@ namespace Compiler
         public StringNode Faction { get; set; }
         public NumberNode Power { get; set; }
         public StringNode[] Ranges { get; set; }
-        public List<OnActivationNode> OnActivation { get; set; }
+        public OnActivationNode OnActivation { get; set; }
 
-        public CardDeclarationNode(StringNode name, StringNode type, StringNode faction, NumberNode power, StringNode[] ranges, List<OnActivationNode> onActivation)
+        public CardDeclarationNode(StringNode name, StringNode type, StringNode faction, NumberNode power, StringNode[] ranges, OnActivationNode onActivation)
         {
             this.Name = name;
             this.Type = type;
@@ -31,11 +31,8 @@ namespace Compiler
             foreach (var range in Ranges)
             {
                 yield return range;
-            }
-            foreach (var activation in OnActivation)
-            {
-                yield return activation;
-            }
+            } 
+            yield return  OnActivation;
         }
     }
 }

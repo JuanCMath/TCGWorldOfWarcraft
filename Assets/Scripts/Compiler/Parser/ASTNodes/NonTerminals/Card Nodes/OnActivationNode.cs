@@ -6,22 +6,19 @@ namespace Compiler
 {
     public class OnActivationNode : StatementNodes
     {
-        public EffectActivationNode? EffectActivation;
-        public SelectorNode? SelectorNode;
-        public OnActivationNode? OnActivation;
+        public List<EffectsToBeActivateNode> effectActivations { get; set; }
 
-        public OnActivationNode (EffectActivationNode effectActivation, SelectorNode selectorNode, OnActivationNode onActivation)
+        public OnActivationNode(List<EffectsToBeActivateNode> effectActivations)
         {
-            this.EffectActivation = effectActivation;
-            this.SelectorNode = selectorNode;
-            this.OnActivation = onActivation;
+            this.effectActivations = effectActivations;
         }
 
         public override IEnumerable<ASTNode> GetChildren()
         {
-            yield return EffectActivation;
-            yield return SelectorNode;
-            yield return OnActivation;
+            foreach (var child in effectActivations)
+            {
+                yield return child;
+            }
         }
     }
 }

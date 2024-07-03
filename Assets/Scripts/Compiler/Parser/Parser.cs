@@ -3,6 +3,8 @@ using System;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using Enums;
+using UnityEngine;
+using Unity.VisualScripting.Antlr3.Runtime;
 
 namespace Compiler
 {
@@ -10,11 +12,32 @@ namespace Compiler
     {
         private int currentIndex;
         private List<Token> tokens;
+        Dictionary<TokenType, int> precedence = new Dictionary<TokenType, int>
+            {
+                { TokenType.Equal, 1 },
+                { TokenType.NotEqual, 1 },
+                { TokenType.LogicalAnd,1},
+                { TokenType.LogicalOr,1},
+                { TokenType.LessThan, 2 },
+                { TokenType.LessOrEqual, 2 },
+                { TokenType.GreaterThan, 2 },
+                { TokenType.GreatherOrEqual, 2 },
+                { TokenType.Plus, 3 },
+                { TokenType.Sub, 3 },
+                { TokenType.At,3},
+                { TokenType.Concatenate, 3},
+                { TokenType.Dot, 3},
+                { TokenType.Multiplication, 4 },
+                { TokenType.Div, 4 },
+                { TokenType.Pow,5},
+                { TokenType.Lambda, 1}
+            };
 
-        public void Parse (List<Token> tokens)
+        public void Parse (List<Token> tokens, Dictionary<TokenType, int> precedence)
         {
             this.tokens = tokens;
             currentIndex = 0;
+            this.precedence = precedence;
             MainProgramNode mainProgram = MainProgram();
         }
 
@@ -24,10 +47,19 @@ namespace Compiler
 
             while(!Match(TokenType.EOF))
             {
-                if (tokens[0].type == TokenType.CardDeclaration)
-                    body.Add(CardDeclarationParser());
-                else if (tokens[0].type == TokenType.EffectDeclaration)
-                    body.Add(EffectDeclarationParser());
+                var propertyName = ExpectIdentifier();
+
+                switch(propertyName)
+                {
+                    case TokenType.CardDeclaration:
+                        body.Add(CardDeclarationParser());
+                        break;
+                    case TokenType.EffectDeclaration:
+                        body.Add(EffectDeclarationParser());
+                        break;
+                    default:
+                        throw new Exception($"Unexpected property '{propertyName}'.");
+                }
             }
             return new MainProgramNode(body);
         }
@@ -39,14 +71,12 @@ namespace Compiler
             StringNode faction = null;
             NumberNode power = null;
             StringNode[] ranges = null;
-            List<OnActivationNode> onActivation = null;
+            OnActivationNode onActivation = null;
 
-            Expect(TokenType.CardDeclaration);
             Expect(TokenType.BracketL);
 
             while (!Match(TokenType.BracketR))
             {
-                
                 var propertyName = ExpectIdentifier();
                 Expect(TokenType.Colon);
 
@@ -54,25 +84,26 @@ namespace Compiler
                 {
                     case TokenType.Name:
                         name = new StringNode(ExpectString());
+                        Expect(TokenType.Comma);
                         break;
                     case TokenType.TypeParam:
                         type = new StringNode(ExpectString());
+                        Expect(TokenType.Comma);
                         break;
                     case TokenType.CardFaction:
                         faction = new StringNode(ExpectString());
+                        Expect(TokenType.Comma);
                         break;
                     case TokenType.CardPower:
                         power = new NumberNode(ExpectNumber());
+                        Expect(TokenType.Comma);
                         break;
                     case TokenType.CardRange:
                         ranges = ExpectStringArray();
+                        Expect(TokenType.Comma);
                         break;
                     case TokenType.OnActivation:
-                        onActivation = new List<OnActivationNode>();
-                        while (!Match(TokenType.BracketR))
-                        {
-                            onActivation.Add(OnActivationParser());
-                        }
+                        onActivation = OnActivationParser();
                         break;
                     default:
                         throw new Exception($"Unexpected property '{propertyName}'.");
@@ -80,41 +111,31 @@ namespace Compiler
             }
             return new CardDeclarationNode(name, type, faction, power, ranges, onActivation);
         }
+
         public OnActivationNode OnActivationParser()
         {
-            EffectActivationNode effectActivation = null;
-            SelectorNode selector = null;
-            OnActivationNode onActivation = null;
+            List<EffectsToBeActivateNode> effectActivation = null;
 
-            Expect(TokenType.BraceL);
+            Expect(TokenType.BracketL);
 
-            while (!Match(TokenType.BraceR))
-            {
-                var propertyName = ExpectIdentifier();
-                Expect(TokenType.BraceL);
-
-                switch (propertyName)
+            while (!Match(TokenType.BracketR))
+            {   
+                effectActivation.Add(EffectsToBeActivateParser());
+                if (Match(TokenType.Comma))
                 {
-                    case TokenType.EffectDeclaration:
-                        effectActivation = EffectActivationParser();
-                        break;
-                    case TokenType.Selector:
-                        selector = SelectorParser();
-                        break;
-                    case TokenType.PostActionDeclaration:
-                        onActivation = OnActivationParser();
-                        break;
-                    default:
-                        throw new Exception($"Unexpected property '{propertyName}'.");
+                    continue;
                 }
+                break;
             }
-            return new OnActivationNode(effectActivation, selector, onActivation);
+            Expect(TokenType.BracketR);
+            return new OnActivationNode(effectActivation);
         }
 
-        public EffectActivationNode EffectActivationParser()
+        public EffectsToBeActivateNode EffectsToBeActivateParser()
         {
-            StringNode name = null;
-            List<VariableAssignementNode> parameters = null;
+            EffectParametersAssignementNode effect = null;
+            SelectorNode selector = null;
+            PostActionNode postAction = null;
 
             Expect(TokenType.BraceL);
 
@@ -122,27 +143,224 @@ namespace Compiler
             {
                 var propertyName = ExpectIdentifier();
                 Expect(TokenType.Colon);
-                
-                VariableAssignementNode parameter = null;
+
                 switch (propertyName)
                 {
-                    case TokenType.Name:
-                        name = new StringNode(ExpectString());
+                    case TokenType.EffectsUsage:
+                        effect = EffectParametersAssignementParser();
+                        Expect(TokenType.Comma);
                         break;
-                    case TokenType.String:
-                        parameters.Add(new VariableAssignementNode(ExpectString(), );
+                    case TokenType.Selector:
+                        selector = SelectorParser();
+                        Expect(TokenType.Comma);
                         break;
-                    
+                    case TokenType.PostActionDeclaration:
+                        postAction = PostActionParser();
+                        break;
                     default:
                         throw new Exception($"Unexpected property '{propertyName}'.");
                 }
             }
-            return new EffectActivationNode(name, );
+            return new EffectsToBeActivateNode(effect, selector, postAction);
         }
-        public EffectDeclarationNode EffectDeclarationParser()
+        public EffectParametersAssignementNode EffectParametersAssignementParser()
         {
             
+            List<VariableAssignementNode> parameters = null;
+
+            TerminalNodes value = null; //Parametro a pasarle a parameters
+            StringNode name = null;
+
+            Expect(TokenType.BraceL);
+            while (!Match(TokenType.BraceR))
+            {
+                var propertyName = ExpectIdentifier();
+                
+                name = new StringNode(Expect(TokenType.Identifier).lexeme);
+                        
+                Expect(TokenType.Colon);
+                if (Match(TokenType.String))
+                {
+                    value = new StringNode(ExpectString());
+                }
+                else if (Match(TokenType.Number))
+                {
+                    value = new NumberNode(ExpectNumber());
+                }
+                else if (Match(TokenType.True) || Match(TokenType.False))
+                {
+                   value = new BooleanNode(ExpectBoolean());
+                }
+
+                parameters.Add(new VariableAssignementNode(name, value));
+            }
+            Expect(TokenType.BraceR);
+
+            return new EffectParametersAssignementNode(parameters);
         }
+
+        public SelectorNode SelectorParser()
+        {
+            GameObjectReferenceNode source = null;
+            BooleanNode single = null;
+            PredicateNode predicate = null;
+
+            Expect(TokenType.BraceL);
+
+            while(!Match(TokenType.BraceR))
+            {
+                var propertyName = ExpectIdentifier();
+
+                switch (propertyName)
+                {
+                    case TokenType.Source:
+                    source = new GameObjectReferenceNode(new StringNode(ExpectString()));
+                    Expect(TokenType.Comma);
+                    break;
+                    case TokenType.Single:
+                    single = new BooleanNode(ExpectBoolean());
+                    Expect(TokenType.Comma);
+                    break;
+                    case TokenType.Predicate:
+                    predicate = PredicateParser();
+                    break;
+                }
+            }
+            return new SelectorNode(source, single, predicate);
+        }
+        public PredicateNode PredicateParser()
+        {
+            
+            GameObjectReferenceNode indentifier = null;
+            ExpresionNodes condition = null;
+
+            Expect(TokenType.Colon);
+
+            Expect(TokenType.ParenL);
+            indentifier = new GameObjectReferenceNode(new StringNode(Expect(TokenType.Identifier).lexeme));
+            Expect(TokenType.ParenR);
+
+            Expect(TokenType.Lambda);
+            condition = ParseExpresion();
+
+            return new PredicateNode(indentifier, condition);
+        }
+        public PostActionNode PostActionParser()
+        {
+            EffectParametersAssignementNode parameters = null;
+            SelectorNode selector = null;
+
+            Expect(TokenType.BraceL);
+
+            while (!Match(TokenType.BraceR))
+            {
+                var propertyName = ExpectIdentifier();
+                Expect(TokenType.Colon);
+
+                switch (propertyName)
+                {
+                    case TokenType.TypeParam:
+                        parameters = EffectParametersAssignementParser();
+                        break;
+                    case TokenType.EffectsUsage:
+                        parameters = EffectParametersAssignementParser();
+                        Expect(TokenType.Comma);
+                        break;
+                    case TokenType.Selector:
+                        selector = SelectorParser();
+                        break;
+                    default:
+                        throw new Exception($"Unexpected property '{propertyName}'.");
+                }
+            }
+            return new PostActionNode(parameters, selector);
+        }
+
+        public EffectDeclarationNode EffectDeclarationParser()
+        {
+            return null;
+        }
+
+
+
+
+
+        public ExpresionNodes ParseExpresion()
+        {
+            return ParseBinaryExpresion(0);
+        }
+
+        public ExpresionNodes ParseBinaryExpresion(int minPrecedence)
+        {
+            ExpresionNodes left = ParsePrimaryExpresion();
+
+            while (true)
+            {
+                Token op = Peek();
+                TokenType opType = op.type;
+                if (!precedence.ContainsKey(opType) || precedence[opType] < minPrecedence)
+                {
+                    return left;
+                }
+                ExpresionNodes right = ParseBinaryExpresion(precedence[opType] + 1);
+                left = new BinaryExpressionNode(left, op, right);
+            }
+        }
+
+        public ExpresionNodes ParseUnaryExpresion()
+        {
+            if(Match(TokenType.Not))
+            {
+                Token op = Expect(TokenType.Not);
+                ExpresionNodes exp = ParseUnaryExpresion();
+                return new UnaryExpressionNode(op, exp);
+            }
+            else if (Match(TokenType.Sub))
+            {
+                Token op = Expect(TokenType.Sub);
+                ExpresionNodes exp = ParseUnaryExpresion();
+                return new UnaryExpressionNode(op, exp);
+            }
+            else
+            {
+                return ParsePrimaryExpresion();
+            }
+        }
+
+        public ExpresionNodes ParsePrimaryExpresion()
+        {
+            if (Match(TokenType.Number))
+            {
+                return new NumberNode(ExpectNumber());
+            }
+            else if (Match(TokenType.String))
+            {
+                return new StringNode(ExpectString());
+            }
+            else if (Match(TokenType.True) || Match(TokenType.False))
+            {
+                return new BooleanNode(ExpectBoolean());
+            }
+            else if (Match(TokenType.ParenL))
+            {
+                Expect(TokenType.ParenL);
+                ExpresionNodes exp = ParseExpresion();
+                Expect(TokenType.ParenR); 
+                return new GroupingNode(exp);
+            }
+            else if (Match(TokenType.Identifier))
+            {
+                Token identifier = Expect(TokenType.Identifier);     
+                return new VariableReferenceNode(identifier.lexeme);
+            }
+            else
+            {
+                throw new Exception("Expected expression but get " + Peek().type + " ("+Peek().lexeme+")"); 
+            }
+        }
+
+
+
 
 
 
@@ -255,6 +473,12 @@ namespace Compiler
             }
 
             return tokens[currentIndex].type == expectedToken;
+        }
+
+        private Token Peek()
+        { 
+            currentIndex++;
+            return tokens[currentIndex - 1];
         }
     }
 }

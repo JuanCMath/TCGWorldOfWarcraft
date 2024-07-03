@@ -12,5 +12,5 @@ namespace Compiler
 
     public abstract class ExpresionNodes : ASTNode {}
     public abstract class StatementNodes: ASTNode {}
-    public abstract class TerminalNodes: ASTNode  {}
+    public abstract class TerminalNodes: ExpresionNodes  {}
 }

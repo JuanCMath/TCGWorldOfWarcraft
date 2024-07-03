@@ -3,12 +3,12 @@ using UnityEditor.Experimental.GraphView;
 
 namespace Compiler
 {
-    public class VariableAssignementNode : StatementNodes
+    public class VariableAssignementNode : ExpresionNodes
     {
-        public string Name { get; set; }
+        public StringNode Name { get; set; }
         public ExpresionNodes Value { get; set; }
 
-        public VariableAssignementNode(string name, ExpresionNodes value) // Modify the constructor parameter type
+        public VariableAssignementNode(StringNode name, ExpresionNodes value) // Modify the constructor parameter type
         {
             this.Name = name;
             this.Value = value;

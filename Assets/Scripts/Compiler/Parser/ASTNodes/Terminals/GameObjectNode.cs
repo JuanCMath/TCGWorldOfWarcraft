@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace Compiler
 {
-    public class GameObjectNode : TerminalNodes
+    public class GameObjectReferenceNode : TerminalNodes
     {
-        public GameObject GameObject { get; set; }
+        public StringNode GameObject { get; set; }
 
-        public GameObjectNode (GameObject gameObject)
+        public GameObjectReferenceNode (StringNode gameObject)
         {
             this.GameObject = gameObject;
         }

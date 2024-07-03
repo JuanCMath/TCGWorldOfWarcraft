@@ -23,7 +23,7 @@ card {
 				Type: "ReturnToDeck",
 					Selector: 
 					{
-						Source: "parent"
+						Source: "parent",
 						Single: false,
 						Predicate: (unit) => unit.Power < 1
 					},

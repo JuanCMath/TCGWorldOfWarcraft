@@ -5,13 +5,12 @@ namespace Compiler
 {
     public class PredicateNode : StatementNodes
     {
-        public GameObjectNode unit { get; set; }
-        public ExpresionNodes filter { get; set; }
+        public GameObjectReferenceNode identifier { get; set; }
+        public ExpresionNodes Condition { get; set; }
 
-        public PredicateNode(GameObjectNode unit, ExpresionNodes filter)
+        public PredicateNode(GameObjectReferenceNode identifier, ExpresionNodes condition)
         {
-            this.unit = unit;
-            this.filter = filter;
-        }   
+            this.Condition = condition;
+        }
     }
 }

@@ -3,7 +3,7 @@ using Enums;
 
 namespace Compiler
 {
-    public class VariableDeclarationNode : StatementNodes
+    public class VariableDeclarationNode : ExpresionNodes
     {
         public string Name { get; set; }
         public VariableType Type { get; set; }
