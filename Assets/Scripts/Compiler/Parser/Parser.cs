@@ -451,7 +451,8 @@ namespace Compiler
             while (!Match(TokenType.BracketR))
             {
                 temporalRanges.Enqueue(new StringNode(ExpectString()));
-                Expect(TokenType.Colon);
+                if (!Match(TokenType.Comma)) break;
+                else Expect(TokenType.Comma); continue;
             }
             Expect(TokenType.BracketR);
             
