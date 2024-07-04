@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using Enums;
 using UnityEngine;
 using Unity.VisualScripting.Antlr3.Runtime;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace Compiler
 {
@@ -283,7 +284,61 @@ namespace Compiler
 
 
 
+        public ASTNode StatementParser()
+        {
+            if (Match(TokenType.WhileCycle))
+            {
+                Expect(TokenType.WhileCycle);
+                Expect(TokenType.ParenL);
+                ExpresionNodes condition = ParseExpresion();
+                Expect(TokenType.ParenR);
+                List<ASTNode> bodyStatements = ParseBlock();
 
+                return new WhileNode(condition, bodyStatements);
+            }
+            else if (Match(TokenType.Identifier))
+            {
+                Token identifier = Expect(TokenType.Identifier);
+                if (Match(TokenType.Assignement))
+                {
+                    Expect(TokenType.Assignement);
+                    ExpresionNodes value = ParseExpresion();
+                    return new VariableAssignementNode (new StringNode(identifier.lexeme), value);
+                }
+                return new VariableReferenceNode(new StringNode(identifier.lexeme));
+            }
+            else if (Match(TokenType.ForCycle))
+            {
+                Expect(TokenType.ForCycle);
+                GameObjectReferenceNode objectReference = new GameObjectReferenceNode(new StringNode(Expect(TokenType.Identifier).lexeme));
+                Expect(TokenType.inForCycle);
+                ExpresionNodes bodyStatements = ParseExpresion();
+
+                return new ForNode(objectReference, bodyStatements);
+            }
+            else if (Match(TokenType.BraceL))
+            {
+                return new BlockNode(ParseBlock());
+            }
+            else
+            {  
+                ASTNode exp = ParseExpresion();
+                return exp;
+            }
+        }
+
+        public List<ASTNode> ParseBlock()
+        {
+            List<ASTNode> bodyStatements = new List<ASTNode>();
+            Expect(TokenType.BraceL);
+            while (!Match(TokenType.BraceR))
+            {
+                bodyStatements.Add(StatementParser());
+            }
+            Expect(TokenType.BraceR);
+            
+            return bodyStatements;
+        }
 
         public ExpresionNodes ParseExpresion()
         {
@@ -301,6 +356,33 @@ namespace Compiler
                 if (!precedence.ContainsKey(opType) || precedence[opType] < minPrecedence)
                 {
                     return left;
+                }
+                else if (opType == TokenType.Dot)
+                {
+                    if (tokens[currentIndex + 1].type == TokenType.Identifier)
+                    {
+                        currentIndex++;
+                        Token identifier = Expect(TokenType.Identifier);
+                        left = new PropertyCallNode(new StringNode(identifier.lexeme), (GameObjectReferenceNode)left);
+                    }
+                    else if (tokens[currentIndex + 1].type == TokenType.ParenL)
+                    {
+                        currentIndex++;
+                        Expect(TokenType.ParenL);
+                        List<ExpresionNodes> arguments = new List<ExpresionNodes>();
+                        while (!Match(TokenType.ParenR))
+                        {
+                            arguments.Add(ParseExpresion());
+                            if (Match(TokenType.Comma))
+                            {
+                                Expect(TokenType.Comma);
+                                continue;
+                            }
+                            break;
+                        }
+                        Expect(TokenType.ParenR);
+                        left = new MethodCallNode(new StringNode(op.lexeme), (GameObjectReferenceNode)left, arguments.ToArray());
+                    }
                 }
                 ExpresionNodes right = ParseBinaryExpresion(precedence[opType] + 1);
                 left = new BinaryExpressionNode(left, op, right);
@@ -351,12 +433,35 @@ namespace Compiler
             else if (Match(TokenType.Identifier))
             {
                 Token identifier = Expect(TokenType.Identifier);     
-                return new VariableReferenceNode(identifier.lexeme);
+                return new VariableReferenceNode(new StringNode(identifier.lexeme));
             }
             else
             {
                 throw new Exception("Expected expression but get " + Peek().type + " ("+Peek().lexeme+")"); 
             }
+        }
+
+        // This method is used to check if the current token is the expected token (return rangeList, current++)
+         private StringNode[] ExpectStringArray()
+         {
+            Queue<StringNode> temporalRanges = new Queue<StringNode>();
+
+            Expect(TokenType.BracketL);
+            while (!Match(TokenType.BracketR))
+            {
+                temporalRanges.Enqueue(new StringNode(ExpectString()));
+                if (!Match(TokenType.Comma)) break;
+                else Expect(TokenType.Comma); continue;
+            }
+            Expect(TokenType.BracketR);
+            
+            StringNode[] rangeList = new StringNode[temporalRanges.Count];
+
+            for (int i = 0; i < temporalRanges.Count; i++)
+            {
+                rangeList[i] = temporalRanges.Dequeue();
+            }   
+            return rangeList;
         }
 
 
@@ -442,28 +547,7 @@ namespace Compiler
             return true;
         }
 
-        // This method is used to check if the current token is the expected token (return rangeList, current++)
-         private StringNode[] ExpectStringArray()
-         {
-            Queue<StringNode> temporalRanges = new Queue<StringNode>();
-
-            Expect(TokenType.BracketL);
-            while (!Match(TokenType.BracketR))
-            {
-                temporalRanges.Enqueue(new StringNode(ExpectString()));
-                if (!Match(TokenType.Comma)) break;
-                else Expect(TokenType.Comma); continue;
-            }
-            Expect(TokenType.BracketR);
-            
-            StringNode[] rangeList = new StringNode[temporalRanges.Count];
-
-            for (int i = 0; i < temporalRanges.Count; i++)
-            {
-                rangeList[i] = temporalRanges.Dequeue();
-            }   
-            return rangeList;
-        }
+        
 
         // This method is used to check if the current token is the expected token (return True if CurrentToken.Type == expectedToken, current++)
         private bool Match(TokenType expectedToken)

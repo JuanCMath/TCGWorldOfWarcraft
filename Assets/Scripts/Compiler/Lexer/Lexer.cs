@@ -36,7 +36,7 @@ namespace Compiler
         PlusOne, MinusOne,
         LogicalAnd, LogicalOr,
         ForCycle, WhileCycle,   
-        True, False,
+        True, False, inForCycle,
 
         //Card Comands
         Name, TypeParam, Selector, Source, Predicate, Single, 
@@ -108,7 +108,8 @@ namespace Compiler
             {"Params", TokenType.EffectParams},
             {"Action", TokenType.EffectAction},
             {"true", TokenType.True},
-            {"false", TokenType.False}
+            {"false", TokenType.False},
+            {"in", TokenType.inForCycle}
         }; 
 
         private static Regex symbols = new Regex(@"|!=|>=|<=|\|\||--|\+\+|==|\{|\}|@@|=>|\(|\)|\[|\]|\.|,|=|\+|-|\*|/|%|\^|\.|:|;|@|!|>|<", RegexOptions.IgnoreCase);

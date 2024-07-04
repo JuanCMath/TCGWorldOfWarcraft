@@ -4,9 +4,9 @@ namespace Compiler
 {
     public class VariableReferenceNode : ExpresionNodes
     {
-        public string Name { get; }
+        public StringNode Name { get; }
 
-        public VariableReferenceNode(string name)
+        public VariableReferenceNode(StringNode name)
         {
             Name = name;
         }

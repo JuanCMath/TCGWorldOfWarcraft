@@ -6,11 +6,11 @@ namespace Compiler
 {
     public class ActionDeclarationNode : StatementNodes
     {
-        public GameObjectNode Targets { get; }
-        public GameObjectNode Context { get; }
+        public GameObjectReferenceNode Targets { get; }
+        public GameObjectReferenceNode Context { get; }
         public StatementNodes Action { get; }
 
-        public ActionDeclarationNode(GameObjectNode targets, GameObjectNode context, StatementNodes action)
+        public ActionDeclarationNode(GameObjectReferenceNode targets, GameObjectReferenceNode context, StatementNodes action)
         {
             Targets = targets;
             Context = context;
