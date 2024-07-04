@@ -31,7 +31,6 @@ namespace Compiler
                 { TokenType.Multiplication, 4 },
                 { TokenType.Div, 4 },
                 { TokenType.Pow,5},
-                { TokenType.Lambda, 1}
             };
 
         public void Parse (List<Token> tokens, Dictionary<TokenType, int> precedence)
@@ -347,7 +346,7 @@ namespace Compiler
 
         public ExpresionNodes ParseBinaryExpresion(int minPrecedence)
         {
-            ExpresionNodes left = ParsePrimaryExpresion();
+            ExpresionNodes left = ParseUnaryExpresion();
 
             while (true)
             {
@@ -391,16 +390,16 @@ namespace Compiler
 
         public ExpresionNodes ParseUnaryExpresion()
         {
-            if(Match(TokenType.Not))
+            if(tokens[currentIndex + 1].type == TokenType.MinusOne)
             {
-                Token op = Expect(TokenType.Not);
                 ExpresionNodes exp = ParseUnaryExpresion();
+                Token op = Expect(TokenType.MinusOne);
                 return new UnaryExpressionNode(op, exp);
             }
-            else if (Match(TokenType.Sub))
+            else if (tokens[currentIndex + 1].type == TokenType.PlusOne)
             {
-                Token op = Expect(TokenType.Sub);
                 ExpresionNodes exp = ParseUnaryExpresion();
+                Token op = Expect(TokenType.PlusOne);
                 return new UnaryExpressionNode(op, exp);
             }
             else
