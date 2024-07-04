@@ -74,10 +74,12 @@
     <Compile Include="Assets\Scripts\Card Stuffs\Display Card.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\VariableReferenceNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\SelectorNode.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\Terminals\GameObjectReferenceNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\EffectsToBeActivateNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\ForNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\ActionDeclarationNode.cs" />
     <Compile Include="Assets\Scripts\Databases\Aspectos Deck.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\EffectParamsReferenceNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\ASTNode.cs" />
     <Compile Include="Assets\Scripts\Manager\Player Actions.cs" />
     <Compile Include="Assets\Scripts\Card Stuffs\Draggable.cs" />
@@ -102,7 +104,6 @@
     <Compile Include="Assets\Scripts\Panels Scripts\DropZoneGeneric.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\Terminals\StringNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Shitti Parser\Parsing.cs" />
-    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\Terminals\GameObjectNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\Terminals\NumberNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\PropertyCallNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\UnaryExpressionNode.cs" />
@@ -111,8 +112,8 @@
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\EffectParametersDeclarationNode.cs" />
     <Compile Include="Assets\Scripts\Events\Effect Manager.cs" />
     <Compile Include="Assets\Scripts\Databases\Arthas Deck.cs" />
-    <Compile Include="Assets\Scripts\Databases\Enums.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\BlockNode.cs" />
+    <Compile Include="Assets\Scripts\Databases\Enums.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\PostActionNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\MainProgramNode.cs" />
   </ItemGroup>

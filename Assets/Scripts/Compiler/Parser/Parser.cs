@@ -1,11 +1,5 @@
 using System.Collections.Generic;
 using System;
-using JetBrains.Annotations;
-using Unity.VisualScripting;
-using Enums;
-using UnityEngine;
-using Unity.VisualScripting.Antlr3.Runtime;
-using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace Compiler
 {
@@ -278,11 +272,72 @@ namespace Compiler
 
         public EffectDeclarationNode EffectDeclarationParser()
         {
-            return null;
+            StringNode name = null;
+            EffectParamsReferenceNode param = null;
+            ActionDeclarationNode action = null;
+
+            Expect(TokenType.BracketL);
+
+            while (!Match(TokenType.BracketR))
+            {
+                var propertyName = ExpectIdentifier();
+                Expect(TokenType.Colon);
+
+                switch (propertyName)
+                {
+                    case TokenType.Name:
+                        name = new StringNode(ExpectString());
+                        Expect(TokenType.Comma);
+                        break;
+                    case TokenType.EffectParams:
+                        param = EffectParamsReferenceParser();
+                        Expect(TokenType.Comma);
+                        break;
+                    case TokenType.EffectAction:
+                        action = ActionDeclarationParser();
+                        break;
+                    default:
+                        throw new Exception($"Unexpected property '{propertyName}'.");
+                }
+            }
+            return new EffectDeclarationNode(name, param, action);
         }
 
+        public EffectParamsReferenceNode EffectParamsReferenceParser()
+        {
+            List<VariableReferenceNode> param = null;
 
+            Expect(TokenType.BracketL);
 
+            while (!Match(TokenType.BracketR))
+            {
+                param.Add(new VariableReferenceNode(new StringNode(Expect(TokenType.Identifier).lexeme)));
+                if (Match(TokenType.Comma))
+                {
+                    Expect(TokenType.Comma);
+                    continue;
+                }
+                break;
+            }
+            Expect(TokenType.BracketR);
+            return new EffectParamsReferenceNode(param);
+        }
+
+        public ActionDeclarationNode ActionDeclarationParser()
+        {
+            Expect(TokenType.ParenL);
+            GameObjectReferenceNode target = new GameObjectReferenceNode(new StringNode(Expect(TokenType.Identifier).lexeme));
+            Expect(TokenType.Comma);
+            GameObjectReferenceNode context = new GameObjectReferenceNode(new StringNode(Expect(TokenType.Identifier).lexeme));
+            Expect(TokenType.ParenR);
+            Expect(TokenType.Lambda);
+
+            StatementNodes body = new BlockNode(ParseBlock());
+
+            return new ActionDeclarationNode(target, context, body);
+        }
+
+        
         public ASTNode StatementParser()
         {
             if (Match(TokenType.WhileCycle))
@@ -309,11 +364,12 @@ namespace Compiler
             else if (Match(TokenType.ForCycle))
             {
                 Expect(TokenType.ForCycle);
-                GameObjectReferenceNode objectReference = new GameObjectReferenceNode(new StringNode(Expect(TokenType.Identifier).lexeme));
+                GameObjectReferenceNode singleObect= new GameObjectReferenceNode(new StringNode(Expect(TokenType.Identifier).lexeme));
                 Expect(TokenType.inForCycle);
-                ExpresionNodes bodyStatements = ParseExpresion();
+                VariableReferenceNode objectReference = new VariableReferenceNode(new StringNode(Expect(TokenType.Identifier).lexeme));
+                List<ASTNode> bodyStatements = ParseBlock();
 
-                return new ForNode(objectReference, bodyStatements);
+                return new ForNode(singleObect, objectReference, bodyStatements);
             }
             else if (Match(TokenType.BraceL))
             {
@@ -333,6 +389,7 @@ namespace Compiler
             while (!Match(TokenType.BraceR))
             {
                 bodyStatements.Add(StatementParser());
+                Expect(TokenType.Semicolon);
             }
             Expect(TokenType.BraceR);
             

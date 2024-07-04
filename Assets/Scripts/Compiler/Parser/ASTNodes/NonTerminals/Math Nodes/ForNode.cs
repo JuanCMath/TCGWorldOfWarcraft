@@ -5,13 +5,15 @@ namespace Compiler
 {
     public class ForNode : StatementNodes
     {
-        public GameObjectReferenceNode Objetcs { get; }
-        public ExpresionNodes Collection { get; }
+        public GameObjectReferenceNode GameObject { get; set; }
+        public VariableReferenceNode Objetcs { get; }
+        public List<ASTNode> Body { get; }
     
-        public ForNode(GameObjectReferenceNode objects, ExpresionNodes collection)
+        public ForNode(GameObjectReferenceNode gameObject, VariableReferenceNode objects, List<ASTNode> body)
         {
+            GameObject = gameObject;
             Objetcs = objects;
-            Collection = collection;
+            Body = body;
         }
 
     }
