@@ -458,6 +458,14 @@ namespace Compiler
                         left = new MethodCallNode(new StringNode(op.lexeme), (GameObjectReferenceNode)left, arguments.ToArray());
                     }
                 }
+                else if (tokens[currentIndex + 1].type == TokenType.BracketL)
+                {
+                    currentIndex++;
+                    Expect(TokenType.BracketL);
+                    ExpresionNodes index = ParseExpresion();
+                    Expect(TokenType.BracketR);
+                    left = new IndexingOnListNode(left, index);
+                }
                 currentIndex ++;
                 ExpresionNodes right = ParseBinaryExpresion(precedence[opType] + 1);
                 left = new BinaryExpressionNode(left, op, right);

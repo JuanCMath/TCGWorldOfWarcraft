@@ -94,6 +94,7 @@
     <Compile Include="Assets\Scripts\Compiler\Lexer\TokenEnumerable.cs" />
     <Compile Include="Assets\Scripts\Compiler\Shitti Parser\AST.cs" />
     <Compile Include="Assets\Scripts\Manager\Pause Menu.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\IndexingOnListNode.cs" />
     <Compile Include="Assets\Scripts\Manager\Player 1 Manager.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\GroupingNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\BinaryExpressionNode.cs" />
