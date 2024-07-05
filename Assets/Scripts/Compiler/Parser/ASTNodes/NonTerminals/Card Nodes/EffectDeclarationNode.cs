@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+#nullable enable
 
 namespace Compiler
 {
     public class EffectDeclarationNode : StatementNodes
     {
         public StringNode Name { get; }
-        public EffectParamsReferenceNode Params {get; set;} 
+        public EffectParamsReferenceNode? Params {get; set;} 
         public ActionDeclarationNode Action { get; }
 
         public EffectDeclarationNode(StringNode name, EffectParamsReferenceNode param, ActionDeclarationNode action)

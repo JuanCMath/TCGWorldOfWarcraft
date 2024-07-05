@@ -1,14 +1,15 @@
 using System.Collections.Generic;
 using Enums;
 using Unity.VisualScripting;
+#nullable enable
 
 namespace Compiler
 {
     public class EffectsToBeActivateNode : StatementNodes
     {
         public EffectParametersAssignementNode Effect { get; }
-        public SelectorNode Selector { get; }
-        public PostActionNode PostAction { get; }
+        public SelectorNode? Selector { get; }
+        public PostActionNode? PostAction { get; }
 
         public EffectsToBeActivateNode(EffectParametersAssignementNode effect, SelectorNode selector, PostActionNode postAction)
         {
@@ -20,8 +21,8 @@ namespace Compiler
         public override IEnumerable<ASTNode> GetChildren()
         {
             yield return Effect;
-            yield return Selector;
-            yield return PostAction;
+            if (Selector != null) yield return Selector;
+            if (PostAction != null) yield return PostAction;
         }
     }
 }

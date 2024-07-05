@@ -99,6 +99,7 @@
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\BinaryExpressionNode.cs" />
     <Compile Include="Assets\Scripts\Card Stuffs\Card.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\WhileNode.cs" />
+    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\EffectParametersAssignementNode.cs" />
     <Compile Include="Assets\Scripts\Databases\LoadCard.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\MethodCallNode.cs" />
     <Compile Include="Assets\Scripts\Panels Scripts\DropZoneGeneric.cs" />
@@ -109,7 +110,6 @@
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\UnaryExpressionNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\EffectDeclarationNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\CardDeclarationNode.cs" />
-    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\EffectParametersDeclarationNode.cs" />
     <Compile Include="Assets\Scripts\Events\Effect Manager.cs" />
     <Compile Include="Assets\Scripts\Databases\Arthas Deck.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\BlockNode.cs" />

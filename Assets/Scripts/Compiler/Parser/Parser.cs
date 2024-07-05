@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System;
+using System.Diagnostics;
 
 namespace Compiler
 {
@@ -142,7 +143,7 @@ namespace Compiler
                 {
                     case TokenType.EffectsUsage:
                         effect = EffectParametersAssignementParser();
-                        Expect(TokenType.Comma);
+                        Expect(TokenType.Comma);                        
                         break;
                     case TokenType.Selector:
                         selector = SelectorParser();
@@ -150,6 +151,11 @@ namespace Compiler
                         break;
                     case TokenType.PostActionDeclaration:
                         postAction = PostActionParser();
+                        Expect(TokenType.Comma);
+                        break;
+                    case TokenType.TypeParam://azucar sintactica de ***
+                        effect = new EffectParametersAssignementNode(new StringNode(ExpectString()), null);
+                        Expect(TokenType.Comma);
                         break;
                     default:
                         throw new Exception($"Unexpected property '{propertyName}'.");
@@ -157,40 +163,50 @@ namespace Compiler
             }
             return new EffectsToBeActivateNode(effect, selector, postAction);
         }
+        
         public EffectParametersAssignementNode EffectParametersAssignementParser()
         {
-            
+            StringNode Name = null;
             List<VariableAssignementNode> parameters = null;
 
             TerminalNodes value = null; //Parametro a pasarle a parameters
-            StringNode name = null;
 
             Expect(TokenType.BraceL);
             while (!Match(TokenType.BraceR))
-            {
-                var propertyName = ExpectIdentifier();
-                
-                name = new StringNode(Expect(TokenType.Identifier).lexeme);
-                        
-                Expect(TokenType.Colon);
-                if (Match(TokenType.String))
+            {   
+                switch (tokens[currentIndex].type)
                 {
-                    value = new StringNode(ExpectString());
+                    case TokenType.Identifier:
+                        StringNode param = new StringNode(Expect(TokenType.Identifier).lexeme);
+                        Expect(TokenType.Colon);
+                        if(tokens[currentIndex].type == TokenType.String)
+                        {
+                            value = new StringNode(ExpectString());
+                        }
+                        else if(tokens[currentIndex].type == TokenType.Number)
+                        {
+                            value = new NumberNode(ExpectNumber());
+                        }
+                        else if(tokens[currentIndex].type == TokenType.True || tokens[currentIndex].type == TokenType.False)
+                        {
+                            value = new BooleanNode(ExpectBoolean());
+                        }
+                        parameters.Add(new VariableAssignementNode(param,value));
+                        Expect(TokenType.Comma);
+                        break;
+                    case TokenType.Name:
+                        Expect(TokenType.Name);
+                        Expect(TokenType.Colon);
+                        Name = new StringNode(ExpectString());
+                        Expect(TokenType.Comma);
+                        break;
+                    default:
+                        throw new Exception($"Unexpected property '{tokens[currentIndex].type}'.");
                 }
-                else if (Match(TokenType.Number))
-                {
-                    value = new NumberNode(ExpectNumber());
-                }
-                else if (Match(TokenType.True) || Match(TokenType.False))
-                {
-                   value = new BooleanNode(ExpectBoolean());
-                }
-
-                parameters.Add(new VariableAssignementNode(name, value));
             }
             Expect(TokenType.BraceR);
 
-            return new EffectParametersAssignementNode(parameters);
+            return new EffectParametersAssignementNode(Name, parameters);
         }
 
         public SelectorNode SelectorParser()
@@ -204,6 +220,7 @@ namespace Compiler
             while(!Match(TokenType.BraceR))
             {
                 var propertyName = ExpectIdentifier();
+                Expect(TokenType.Colon);
 
                 switch (propertyName)
                 {
@@ -224,11 +241,8 @@ namespace Compiler
         }
         public PredicateNode PredicateParser()
         {
-            
             GameObjectReferenceNode indentifier = null;
             ExpresionNodes condition = null;
-
-            Expect(TokenType.Colon);
 
             Expect(TokenType.ParenL);
             indentifier = new GameObjectReferenceNode(new StringNode(Expect(TokenType.Identifier).lexeme));
@@ -243,6 +257,7 @@ namespace Compiler
         {
             EffectParametersAssignementNode parameters = null;
             SelectorNode selector = null;
+            PostActionNode postAction = null;
 
             Expect(TokenType.BraceL);
 
@@ -254,7 +269,7 @@ namespace Compiler
                 switch (propertyName)
                 {
                     case TokenType.TypeParam:
-                        parameters = EffectParametersAssignementParser();
+                        parameters = new EffectParametersAssignementNode(new StringNode(ExpectString()), null);
                         break;
                     case TokenType.EffectsUsage:
                         parameters = EffectParametersAssignementParser();
@@ -263,11 +278,14 @@ namespace Compiler
                     case TokenType.Selector:
                         selector = SelectorParser();
                         break;
+                    case TokenType.PostActionDeclaration:
+                        postAction = PostActionParser();
+                        break;
                     default:
                         throw new Exception($"Unexpected property '{propertyName}'.");
                 }
             }
-            return new PostActionNode(parameters, selector);
+            return new PostActionNode(parameters, selector, postAction);
         }
 
         public EffectDeclarationNode EffectDeclarationParser()
@@ -407,7 +425,7 @@ namespace Compiler
 
             while (true)
             {
-                Token op = Peek();
+                Token op = tokens[currentIndex];
                 TokenType opType = op.type;
                 if (!precedence.ContainsKey(opType) || precedence[opType] < minPrecedence)
                 {
@@ -440,6 +458,7 @@ namespace Compiler
                         left = new MethodCallNode(new StringNode(op.lexeme), (GameObjectReferenceNode)left, arguments.ToArray());
                     }
                 }
+                currentIndex ++;
                 ExpresionNodes right = ParseBinaryExpresion(precedence[opType] + 1);
                 left = new BinaryExpressionNode(left, op, right);
             }

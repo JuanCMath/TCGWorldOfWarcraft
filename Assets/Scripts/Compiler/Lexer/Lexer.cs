@@ -96,7 +96,7 @@ namespace Compiler
             {"Range", TokenType.CardRange},
             {"OnActivation", TokenType.OnActivation},
             {"Effect", TokenType.EffectsUsage},
-            {"Amount", TokenType.EffectAmount},
+            //{"Amount", TokenType.EffectAmount},
             {"Selector", TokenType.Selector},
             {"Source", TokenType.Source},
             {"Predicate", TokenType.Predicate},
