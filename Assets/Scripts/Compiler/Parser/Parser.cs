@@ -11,6 +11,8 @@ namespace Compiler
         Dictionary<TokenType, int> precedence = new Dictionary<TokenType, int>
             {
                 { TokenType.Equal, 1 },
+                { TokenType.MinusEqual, 1},
+                { TokenType.PlusEqual, 1},
                 { TokenType.NotEqual, 1 },
                 { TokenType.LogicalAnd,1},
                 { TokenType.LogicalOr,1},
@@ -21,30 +23,29 @@ namespace Compiler
                 { TokenType.Plus, 3 },
                 { TokenType.Sub, 3 },
                 { TokenType.At,3},
+                { TokenType.Dot, 5},
+                { TokenType.ParenL, 5},
                 { TokenType.Concatenate, 3},
-                { TokenType.Dot, 3},
                 { TokenType.Multiplication, 4 },
                 { TokenType.Div, 4 },
                 { TokenType.Pow,5},
             };
-
-        public void Parse (List<Token> tokens, Dictionary<TokenType, int> precedence)
+        public Parser(List<Token> tokens, Dictionary<TokenType, int> precedence)
         {
             this.tokens = tokens;
             currentIndex = 0;
             this.precedence = precedence;
-            MainProgramNode mainProgram = MainProgram();
         }
 
-        public MainProgramNode MainProgram ()
+        public MainProgramNode MainProgram()
         {
             List<ASTNode> body = new List<ASTNode>();
 
-            while(!Match(TokenType.EOF))
+            while (!Match(TokenType.EOF))
             {
-                var propertyName = ExpectIdentifier();
+                var propertyName = ExpectKeyWord().type;
 
-                switch(propertyName)
+                switch (propertyName)
                 {
                     case TokenType.CardDeclaration:
                         body.Add(CardDeclarationParser());
@@ -68,11 +69,11 @@ namespace Compiler
             StringNode[] ranges = null;
             OnActivationNode onActivation = null;
 
-            Expect(TokenType.BracketL);
+            Expect(TokenType.BraceL);
 
-            while (!Match(TokenType.BracketR))
+            while (!Match(TokenType.BraceR))
             {
-                var propertyName = ExpectIdentifier();
+                var propertyName = ExpectKeyWord().type;
                 Expect(TokenType.Colon);
 
                 switch (propertyName)
@@ -104,20 +105,22 @@ namespace Compiler
                         throw new Exception($"Unexpected property '{propertyName}'.");
                 }
             }
+            Expect(TokenType.BraceR);
             return new CardDeclarationNode(name, type, faction, power, ranges, onActivation);
         }
 
         public OnActivationNode OnActivationParser()
         {
-            List<EffectsToBeActivateNode> effectActivation = null;
+            List<EffectsToBeActivateNode> effectActivation = new List<EffectsToBeActivateNode>();
 
             Expect(TokenType.BracketL);
 
             while (!Match(TokenType.BracketR))
-            {   
+            {
                 effectActivation.Add(EffectsToBeActivateParser());
                 if (Match(TokenType.Comma))
                 {
+                    Expect(TokenType.Comma);
                     continue;
                 }
                 break;
@@ -136,14 +139,21 @@ namespace Compiler
 
             while (!Match(TokenType.BraceR))
             {
-                var propertyName = ExpectIdentifier();
+                var propertyName = ExpectKeyWord().type;
                 Expect(TokenType.Colon);
 
                 switch (propertyName)
                 {
                     case TokenType.EffectsUsage:
-                        effect = EffectParametersAssignementParser();
-                        Expect(TokenType.Comma);                        
+                        if (Match(TokenType.String))
+                        {
+                            effect = new EffectParametersAssignementNode(new StringNode(ExpectString()), null);
+                        }
+                        else
+                        {
+                            effect = EffectParametersAssignementParser();
+                            Expect(TokenType.Comma);
+                         }
                         break;
                     case TokenType.Selector:
                         selector = SelectorParser();
@@ -151,7 +161,6 @@ namespace Compiler
                         break;
                     case TokenType.PostActionDeclaration:
                         postAction = PostActionParser();
-                        Expect(TokenType.Comma);
                         break;
                     case TokenType.TypeParam://azucar sintactica de ***
                         effect = new EffectParametersAssignementNode(new StringNode(ExpectString()), null);
@@ -161,37 +170,43 @@ namespace Compiler
                         throw new Exception($"Unexpected property '{propertyName}'.");
                 }
             }
+            Expect(TokenType.BraceR);
             return new EffectsToBeActivateNode(effect, selector, postAction);
         }
-        
+
         public EffectParametersAssignementNode EffectParametersAssignementParser()
         {
             StringNode Name = null;
-            List<VariableAssignementNode> parameters = null;
+            List<VariableAssignementNode> parameters = new List<VariableAssignementNode>();
 
             TerminalNodes value = null; //Parametro a pasarle a parameters
 
             Expect(TokenType.BraceL);
             while (!Match(TokenType.BraceR))
-            {   
+            {
                 switch (tokens[currentIndex].type)
                 {
                     case TokenType.Identifier:
                         StringNode param = new StringNode(Expect(TokenType.Identifier).lexeme);
+                        
                         Expect(TokenType.Colon);
-                        if(tokens[currentIndex].type == TokenType.String)
+                        if (tokens[currentIndex].type == TokenType.String)
                         {
                             value = new StringNode(ExpectString());
                         }
-                        else if(tokens[currentIndex].type == TokenType.Number)
+                        else if (tokens[currentIndex].type == TokenType.Number)
                         {
                             value = new NumberNode(ExpectNumber());
                         }
-                        else if(tokens[currentIndex].type == TokenType.True || tokens[currentIndex].type == TokenType.False)
+                        else if (tokens[currentIndex].type == TokenType.True || tokens[currentIndex].type == TokenType.False)
                         {
                             value = new BooleanNode(ExpectBoolean());
                         }
-                        parameters.Add(new VariableAssignementNode(param,value));
+                        else
+                        {
+                            value = new StringNode("");
+                        }
+                        parameters.Add(new VariableAssignementNode(param, value));
                         Expect(TokenType.Comma);
                         break;
                     case TokenType.Name:
@@ -205,7 +220,6 @@ namespace Compiler
                 }
             }
             Expect(TokenType.BraceR);
-
             return new EffectParametersAssignementNode(Name, parameters);
         }
 
@@ -217,26 +231,27 @@ namespace Compiler
 
             Expect(TokenType.BraceL);
 
-            while(!Match(TokenType.BraceR))
+            while (!Match(TokenType.BraceR))
             {
-                var propertyName = ExpectIdentifier();
+                var propertyName = ExpectKeyWord().type;
                 Expect(TokenType.Colon);
 
                 switch (propertyName)
                 {
                     case TokenType.Source:
-                    source = new GameObjectReferenceNode(new StringNode(ExpectString()));
-                    Expect(TokenType.Comma);
-                    break;
+                        source = new GameObjectReferenceNode(new StringNode(ExpectString()));
+                        Expect(TokenType.Comma);
+                        break;
                     case TokenType.Single:
-                    single = new BooleanNode(ExpectBoolean());
-                    Expect(TokenType.Comma);
-                    break;
+                        single = new BooleanNode(ExpectBoolean());
+                        Expect(TokenType.Comma);
+                        break;
                     case TokenType.Predicate:
-                    predicate = PredicateParser();
-                    break;
+                        predicate = PredicateParser();
+                        break;
                 }
             }
+            Expect(TokenType.BraceR);
             return new SelectorNode(source, single, predicate);
         }
         public PredicateNode PredicateParser()
@@ -263,13 +278,14 @@ namespace Compiler
 
             while (!Match(TokenType.BraceR))
             {
-                var propertyName = ExpectIdentifier();
+                var propertyName = ExpectKeyWord().type;
                 Expect(TokenType.Colon);
 
                 switch (propertyName)
                 {
                     case TokenType.TypeParam:
                         parameters = new EffectParametersAssignementNode(new StringNode(ExpectString()), null);
+                        Expect(TokenType.Comma);
                         break;
                     case TokenType.EffectsUsage:
                         parameters = EffectParametersAssignementParser();
@@ -277,6 +293,7 @@ namespace Compiler
                         break;
                     case TokenType.Selector:
                         selector = SelectorParser();
+                        Expect(TokenType.Comma);
                         break;
                     case TokenType.PostActionDeclaration:
                         postAction = PostActionParser();
@@ -285,6 +302,7 @@ namespace Compiler
                         throw new Exception($"Unexpected property '{propertyName}'.");
                 }
             }
+            Expect(TokenType.BraceR);
             return new PostActionNode(parameters, selector, postAction);
         }
 
@@ -294,11 +312,11 @@ namespace Compiler
             EffectParamsReferenceNode param = null;
             ActionDeclarationNode action = null;
 
-            Expect(TokenType.BracketL);
+            Expect(TokenType.BraceL);
 
-            while (!Match(TokenType.BracketR))
+            while (!Match(TokenType.BraceR))
             {
-                var propertyName = ExpectIdentifier();
+                var propertyName = ExpectKeyWord().type;
                 Expect(TokenType.Colon);
 
                 switch (propertyName)
@@ -318,18 +336,23 @@ namespace Compiler
                         throw new Exception($"Unexpected property '{propertyName}'.");
                 }
             }
+            Expect(TokenType.BraceR);
             return new EffectDeclarationNode(name, param, action);
         }
 
         public EffectParamsReferenceNode EffectParamsReferenceParser()
         {
-            List<VariableReferenceNode> param = null;
+            List<VariableAssignementNode> param = new List<VariableAssignementNode>();
 
-            Expect(TokenType.BracketL);
+            Expect(TokenType.BraceL);
 
-            while (!Match(TokenType.BracketR))
+            while (!Match(TokenType.BraceR))
             {
-                param.Add(new VariableReferenceNode(new StringNode(Expect(TokenType.Identifier).lexeme)));
+                StringNode key = new StringNode(Expect(TokenType.Identifier).lexeme);
+                Expect(TokenType.Colon);
+                ExpresionNodes value = ParseExpresion();
+
+                param.Add(new VariableAssignementNode(key, value));
                 if (Match(TokenType.Comma))
                 {
                     Expect(TokenType.Comma);
@@ -337,7 +360,7 @@ namespace Compiler
                 }
                 break;
             }
-            Expect(TokenType.BracketR);
+            Expect(TokenType.BraceR);
             return new EffectParamsReferenceNode(param);
         }
 
@@ -355,7 +378,7 @@ namespace Compiler
             return new ActionDeclarationNode(target, context, body);
         }
 
-        
+
         public ASTNode StatementParser()
         {
             if (Match(TokenType.WhileCycle))
@@ -375,14 +398,23 @@ namespace Compiler
                 {
                     Expect(TokenType.Assignement);
                     ExpresionNodes value = ParseExpresion();
-                    return new VariableAssignementNode (new StringNode(identifier.lexeme), value);
+                    return new VariableAssignementNode(new StringNode(identifier.lexeme), value);
                 }
-                return new VariableReferenceNode(new StringNode(identifier.lexeme));
+                if(Match(TokenType.Dot))
+                {
+                    currentIndex--;
+                    ASTNode exp = ParseExpresion();
+                    return exp;
+                }
+                else
+                {
+                    return new VariableReferenceNode(new StringNode(identifier.lexeme));
+                }
             }
             else if (Match(TokenType.ForCycle))
             {
                 Expect(TokenType.ForCycle);
-                GameObjectReferenceNode singleObect= new GameObjectReferenceNode(new StringNode(Expect(TokenType.Identifier).lexeme));
+                GameObjectReferenceNode singleObect = new GameObjectReferenceNode(new StringNode(Expect(TokenType.Identifier).lexeme));
                 Expect(TokenType.inForCycle);
                 VariableReferenceNode objectReference = new VariableReferenceNode(new StringNode(Expect(TokenType.Identifier).lexeme));
                 List<ASTNode> bodyStatements = ParseBlock();
@@ -394,7 +426,7 @@ namespace Compiler
                 return new BlockNode(ParseBlock());
             }
             else
-            {  
+            {
                 ASTNode exp = ParseExpresion();
                 return exp;
             }
@@ -407,18 +439,22 @@ namespace Compiler
             while (!Match(TokenType.BraceR))
             {
                 bodyStatements.Add(StatementParser());
-                Expect(TokenType.Semicolon);
+                if(Match(TokenType.Semicolon))
+                {
+                    Expect(TokenType.Semicolon);
+                    continue;
+                }
+                break;
             }
             Expect(TokenType.BraceR);
-            
+
             return bodyStatements;
         }
 
-        public ExpresionNodes ParseExpresion()
+        public ExpresionNodes ParseExpresion(int i = 0)
         {
-            return ParseBinaryExpresion(0);
+            return ParseBinaryExpresion(i);
         }
-
         public ExpresionNodes ParseBinaryExpresion(int minPrecedence)
         {
             ExpresionNodes left = ParseUnaryExpresion();
@@ -427,62 +463,52 @@ namespace Compiler
             {
                 Token op = tokens[currentIndex];
                 TokenType opType = op.type;
-                if (!precedence.ContainsKey(opType) || precedence[opType] < minPrecedence)
+
+                if (opType == TokenType.Dot && tokens[currentIndex + 2].type != TokenType.ParenL)
+                {
+                    currentIndex++;
+                    ExpresionNodes right = ParseExpresion(precedence[opType] + 1);
+                    left = new PropertyCallNode(left, right);
+                }
+                else if (opType == TokenType.Dot && tokens[currentIndex + 2].type == TokenType.ParenL)
+                {
+                    currentIndex++;
+                    ExpresionNodes right = ParseExpresion(precedence[opType] + 1);
+                    List<ExpresionNodes> arguments = new List<ExpresionNodes>();
+                    Expect(TokenType.ParenL);
+                    while (!Match(TokenType.ParenR))
+                    {
+                        arguments.Add(ParseExpresion());
+                        if (Match(TokenType.Comma)) continue;
+                        else break;
+                    }
+                    Expect(TokenType.ParenR);
+                    left = new MethodCallNode(left, right, arguments.ToArray());
+                }
+                else if (!precedence.ContainsKey(opType) || precedence[opType] < minPrecedence)
                 {
                     return left;
                 }
-                else if (opType == TokenType.Dot)
-                {
-                    if (tokens[currentIndex + 1].type == TokenType.Identifier)
-                    {
-                        currentIndex++;
-                        Token identifier = Expect(TokenType.Identifier);
-                        left = new PropertyCallNode(new StringNode(identifier.lexeme), (GameObjectReferenceNode)left);
-                    }
-                    else if (tokens[currentIndex + 1].type == TokenType.ParenL)
-                    {
-                        currentIndex++;
-                        Expect(TokenType.ParenL);
-                        List<ExpresionNodes> arguments = new List<ExpresionNodes>();
-                        while (!Match(TokenType.ParenR))
-                        {
-                            arguments.Add(ParseExpresion());
-                            if (Match(TokenType.Comma))
-                            {
-                                Expect(TokenType.Comma);
-                                continue;
-                            }
-                            break;
-                        }
-                        Expect(TokenType.ParenR);
-                        left = new MethodCallNode(new StringNode(op.lexeme), (GameObjectReferenceNode)left, arguments.ToArray());
-                    }
-                }
-                else if (tokens[currentIndex + 1].type == TokenType.BracketL)
+                else
                 {
                     currentIndex++;
-                    Expect(TokenType.BracketL);
-                    ExpresionNodes index = ParseExpresion();
-                    Expect(TokenType.BracketR);
-                    left = new IndexingOnListNode(left, index);
+                    ExpresionNodes right = ParseExpresion(precedence[opType] + 1);
+                    left = new BinaryExpressionNode(left, op, right);
                 }
-                currentIndex ++;
-                ExpresionNodes right = ParseBinaryExpresion(precedence[opType] + 1);
-                left = new BinaryExpressionNode(left, op, right);
             }
         }
 
         public ExpresionNodes ParseUnaryExpresion()
         {
-            if(tokens[currentIndex + 1].type == TokenType.MinusOne)
+            if (tokens[currentIndex + 1].type == TokenType.MinusOne)
             {
-                ExpresionNodes exp = ParseUnaryExpresion();
+                ExpresionNodes exp = ParsePrimaryExpresion();
                 Token op = Expect(TokenType.MinusOne);
                 return new UnaryExpressionNode(op, exp);
             }
             else if (tokens[currentIndex + 1].type == TokenType.PlusOne)
             {
-                ExpresionNodes exp = ParseUnaryExpresion();
+                ExpresionNodes exp = ParsePrimaryExpresion();
                 Token op = Expect(TokenType.PlusOne);
                 return new UnaryExpressionNode(op, exp);
             }
@@ -510,23 +536,29 @@ namespace Compiler
             {
                 Expect(TokenType.ParenL);
                 ExpresionNodes exp = ParseExpresion();
-                Expect(TokenType.ParenR); 
+                Expect(TokenType.ParenR);
                 return new GroupingNode(exp);
             }
             else if (Match(TokenType.Identifier))
             {
-                Token identifier = Expect(TokenType.Identifier);     
+                Token identifier = Expect(TokenType.Identifier);
                 return new VariableReferenceNode(new StringNode(identifier.lexeme));
+            }
+            else if(MatchKeyword())
+            {
+                currentIndex--;
+                Token keyword = ExpectKeyWord();
+                return new StringNode(keyword.lexeme);
             }
             else
             {
-                throw new Exception("Expected expression but get " + Peek().type + " ("+Peek().lexeme+")"); 
+                throw new Exception("Expected expression but get " + Peek().type + " (" + Peek().lexeme + ")");
             }
         }
 
         // This method is used to check if the current token is the expected token (return rangeList, current++)
-         private StringNode[] ExpectStringArray()
-         {
+        private StringNode[] ExpectStringArray()
+        {
             Queue<StringNode> temporalRanges = new Queue<StringNode>();
 
             Expect(TokenType.BracketL);
@@ -537,13 +569,13 @@ namespace Compiler
                 else Expect(TokenType.Comma); continue;
             }
             Expect(TokenType.BracketR);
-            
+
             StringNode[] rangeList = new StringNode[temporalRanges.Count];
 
             for (int i = 0; i < temporalRanges.Count; i++)
             {
                 rangeList[i] = temporalRanges.Dequeue();
-            }   
+            }
             return rangeList;
         }
 
@@ -559,7 +591,7 @@ namespace Compiler
 
 
         // This method is used to check if the current token is the expected token (return token, current++)
-        private Token Expect(TokenType expectedToken) 
+        private Token Expect(TokenType expectedToken)
         {
             if (currentIndex >= tokens.Count)
             {
@@ -578,6 +610,74 @@ namespace Compiler
             return token;
         }
 
+        private Token ExpectKeyWord()
+        {
+            var token = Expect(tokens[currentIndex].type);
+
+            if (token.type == TokenType.CardDeclaration
+                || token.type == TokenType.EffectDeclaration
+                || token.type == TokenType.TypeParam
+                || token.type == TokenType.Name
+                || token.type == TokenType.CardFaction
+                || token.type == TokenType.CardPower
+                || token.type == TokenType.CardRange
+                || token.type == TokenType.OnActivation
+                || token.type == TokenType.EffectsUsage
+                || token.type == TokenType.Selector
+                || token.type == TokenType.Source
+                || token.type == TokenType.Predicate
+                || token.type == TokenType.EffectUnit
+                || token.type == TokenType.PostActionDeclaration
+                || token.type == TokenType.Single
+                || token.type == TokenType.ForCycle
+                || token.type == TokenType.WhileCycle
+                || token.type == TokenType.EffectParams
+                || token.type == TokenType.EffectAction
+                || token.type == TokenType.True
+                || token.type == TokenType.False
+                || token.type == TokenType.inForCycle)
+            {
+                return token;
+            }
+            else
+            {
+                throw new Exception($"Expected keyword, but found '{token}'.");
+            }
+        }
+        private bool MatchKeyword()
+        {
+            var token = Expect(tokens[currentIndex].type);
+
+            if (token.type == TokenType.CardDeclaration
+                || token.type == TokenType.EffectDeclaration
+                || token.type == TokenType.TypeParam
+                || token.type == TokenType.Name
+                || token.type == TokenType.CardFaction
+                || token.type == TokenType.CardPower
+                || token.type == TokenType.CardRange
+                || token.type == TokenType.OnActivation
+                || token.type == TokenType.EffectsUsage
+                || token.type == TokenType.Selector
+                || token.type == TokenType.Source
+                || token.type == TokenType.Predicate
+                || token.type == TokenType.EffectUnit
+                || token.type == TokenType.PostActionDeclaration
+                || token.type == TokenType.Single
+                || token.type == TokenType.ForCycle
+                || token.type == TokenType.WhileCycle
+                || token.type == TokenType.EffectParams
+                || token.type == TokenType.EffectAction
+                || token.type == TokenType.True
+                || token.type == TokenType.False
+                || token.type == TokenType.inForCycle)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         // This method is used to check if the current token is Identifier token (return token.type, current++)
         private TokenType ExpectIdentifier()
         {
@@ -614,7 +714,7 @@ namespace Compiler
                 throw new Exception($"Expected number, but found '{token}'.");
             }
 
-            return  int.Parse(token.lexeme);
+            return int.Parse(token.lexeme);
         }
 
         // This method is used to check if the current token is the expected token (return true, current++)
@@ -630,7 +730,7 @@ namespace Compiler
             return true;
         }
 
-        
+
 
         // This method is used to check if the current token is the expected token (return True if CurrentToken.Type == expectedToken, current++)
         private bool Match(TokenType expectedToken)
@@ -644,7 +744,7 @@ namespace Compiler
         }
 
         private Token Peek()
-        { 
+        {
             currentIndex++;
             return tokens[currentIndex - 1];
         }

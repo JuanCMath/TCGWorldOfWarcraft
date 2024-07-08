@@ -4,9 +4,9 @@ namespace Compiler
 {
     public class EffectParamsReferenceNode : StatementNodes
     {
-        public List<VariableReferenceNode> Params { get; }
+        public List<VariableAssignementNode> Params { get; }
 
-        public EffectParamsReferenceNode(List<VariableReferenceNode> param)
+        public EffectParamsReferenceNode(List<VariableAssignementNode> param)
         {
             Params = param;
         }

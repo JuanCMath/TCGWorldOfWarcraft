@@ -4,10 +4,11 @@ namespace Compiler
 {
     public class PropertyCallNode : ExpresionNodes
     {
-        public StringNode PropertyName { get; }
-        public GameObjectReferenceNode Target { get; }
+        public ExpresionNodes Target { get; }
+        public ExpresionNodes PropertyName { get; }
+        
 
-        public PropertyCallNode(StringNode propertyName, GameObjectReferenceNode target)
+        public PropertyCallNode(ExpresionNodes target, ExpresionNodes propertyName)
         {
             PropertyName = propertyName;
             Target = target;

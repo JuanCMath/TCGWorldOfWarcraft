@@ -1,18 +1,15 @@
 using System.Collections.Generic;
-using Enums;
 
 namespace Compiler
 {
     public class VariableDeclarationNode : ExpresionNodes
     {
         public string Name { get; set; }
-        public VariableType Type { get; set; }
         public ExpresionNodes Initializer { get; set; }
 
-        public VariableDeclarationNode(string identifier, VariableType type, ExpresionNodes initializer)
+        public VariableDeclarationNode(string identifier, ExpresionNodes initializer)
         {
             this.Name = identifier;
-            this.Type = type;
             this.Initializer = initializer;
         }
 

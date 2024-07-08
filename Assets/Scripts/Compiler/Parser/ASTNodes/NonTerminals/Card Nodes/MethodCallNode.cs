@@ -1,14 +1,15 @@
 using System.Collections.Generic;
+#nullable enable
 
 namespace Compiler
 {
     public class MethodCallNode : ExpresionNodes
     {
-        public StringNode MethodName { get; }
-        public GameObjectReferenceNode Target { get; }
-        public ExpresionNodes[] Arguments { get; }
+        public ExpresionNodes Target { get; }
+        public ExpresionNodes MethodName { get; }
+        public ExpresionNodes[]? Arguments { get; }
 
-        public MethodCallNode(StringNode methodName, GameObjectReferenceNode target, ExpresionNodes[] arguments)
+        public MethodCallNode(ExpresionNodes target, ExpresionNodes methodName, ExpresionNodes[] arguments)
         {
             MethodName = methodName;
             Target = target;

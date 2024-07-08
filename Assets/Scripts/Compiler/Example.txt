@@ -51,7 +51,7 @@ effect {
 }
 
 effect {
-	Name: "Draw"
+	Name: "Draw",
 	Action: (targets, context) => {
 		topCard = context.Deck.Pop();
 		context.Hand.Add(topCard);

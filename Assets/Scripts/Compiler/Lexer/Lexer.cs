@@ -1,5 +1,5 @@
 using System.Data;
-using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 namespace Compiler
@@ -35,15 +35,18 @@ namespace Compiler
         GreaterThan, LessThan, GreatherOrEqual, LessOrEqual, NotEqual, Assignement,
         PlusOne, MinusOne,
         LogicalAnd, LogicalOr,
-        ForCycle, WhileCycle,   
+        ForCycle, WhileCycle,
         True, False, inForCycle,
+        MinusEqual, PlusEqual,
 
         //Card Comands
-        Name, TypeParam, Selector, Source, Predicate, Single, 
-        CardDeclaration,  CardFaction, CardPower, CardRange, OnActivation, 
-        EffectDeclaration, EffectAmount, EffectUnit, 
+        Name, TypeParam, Selector, Source, Predicate, Single,
+        CardDeclaration, CardFaction, CardPower, CardRange, OnActivation,
+        EffectDeclaration, EffectAmount, EffectUnit,
         PostActionDeclaration, PostActionType, PostActionSelector, PostActionSource, PostActionPredicate, PostActionUnit,
-        EffectParams, EffectAction, EffectsUsage
+        EffectParams, EffectAction, EffectsUsage,
+
+        Fk
     }
 
     // Lexer class for tokenizing the input string
@@ -59,6 +62,8 @@ namespace Compiler
             { "[", TokenType.BracketL },
             { "]", TokenType.BracketR },
             { ",", TokenType.Comma },
+            { "-=", TokenType.MinusEqual },
+            { "+=", TokenType.PlusEqual},
             { "=", TokenType.Assignement },
             { "+", TokenType.Plus },
             { "++", TokenType.PlusOne},
@@ -100,7 +105,7 @@ namespace Compiler
             {"Selector", TokenType.Selector},
             {"Source", TokenType.Source},
             {"Predicate", TokenType.Predicate},
-            {"unit", TokenType.EffectUnit},
+            //{"unit", TokenType.EffectUnit},
             {"PostAction", TokenType.PostActionDeclaration},
             {"Single", TokenType.Single},
             {"for", TokenType.ForCycle},
@@ -112,7 +117,7 @@ namespace Compiler
             {"in", TokenType.inForCycle}
         }; 
 
-        private static Regex symbols = new Regex(@"|!=|>=|<=|\|\||--|\+\+|==|\{|\}|@@|=>|\(|\)|\[|\]|\.|,|=|\+|-|\*|/|%|\^|\.|:|;|@|!|>|<", RegexOptions.IgnoreCase);
+        private static Regex symbols = new Regex(@"\+=@|-=|!=|>=|<=|\|\||--|\+\+|==|\{|\}|@@|=>|\(|\)|\[|\]|\.|,|=|\+|-|\*|/|%|\^|:|;|@|!|>|<", RegexOptions.IgnoreCase);
         private static Regex number = new Regex(@"[0-9]+|[0-9]*\.[0-9]+");
         private static Regex identifier = new Regex(@"[_a-zA-Z][_a-zA-Z0-9]*");
 
@@ -123,7 +128,7 @@ namespace Compiler
 
             int line = 1;
             int column = 1;
-
+            
             while (input.Length > 0)
             {
                 // Skip whitespace characters
@@ -199,6 +204,7 @@ namespace Compiler
                     input = input.Substring(i + 1);
                     continue;
                 }
+                
 
                 // Skip comments
                 if (input[0] == '/' && input[1] == '/')
