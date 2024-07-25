@@ -6,18 +6,18 @@ namespace Compiler
     {
         public GameObjectReferenceNode Targets { get; }
         public GameObjectReferenceNode Context { get; }
-        public StatementNodes Action { get; }
+        public BlockNode Body { get; }
 
-        public ActionDeclarationNode(GameObjectReferenceNode targets, GameObjectReferenceNode context, StatementNodes action)
+        public ActionDeclarationNode(GameObjectReferenceNode targets, GameObjectReferenceNode context, BlockNode body)
         {
             Targets = targets;
             Context = context;
-            Action = action;
+            Body = body;
         }
 
         public override IEnumerable<ASTNode> GetChildren()
         {
-            yield return Action;
+            yield return Body;
         }
     }
 }

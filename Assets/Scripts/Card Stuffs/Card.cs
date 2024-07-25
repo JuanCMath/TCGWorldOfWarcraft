@@ -24,10 +24,12 @@ public class Card : MonoBehaviour
     [Header("Card Data")]
     public int cardID;
     public string cardName;
-    public faction cardFaction;
+    //public faction cardFaction;
+    public string cardFaction;
     public string cardDescription;
     public bool isHero;
-    public slot cardSlot;
+    //public slot cardSlot;
+    public string[] cardSlot;
     public type cardType;
     
     public int attackPower;
@@ -52,7 +54,7 @@ public class Card : MonoBehaviour
         cardFaction = cardData.cardFaction;
         cardDescription = cardData.cardDescription;
         isHero = cardData.isHero;
-        cardSlot = cardData.cardSlot;
+        cardSlot = cardData.slots;
         cardType = cardData.cardType;
         attackPower = cardData.attackPower;
 

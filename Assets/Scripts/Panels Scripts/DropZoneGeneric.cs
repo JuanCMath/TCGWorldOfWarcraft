@@ -52,8 +52,8 @@ public class DropZoneGeneric : MonoBehaviour, IDropHandler, IPointerEnterHandler
             if (maxCards >= gameObject.transform.childCount                                              &&
                 GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable > 0 &&
                 playerCanPlaceCard == true                                                               &&
-                allowedTypeCard.Contains(dropedCard.GetComponent<Card>().cardType)                       &&
-                allowedCards.Contains(dropedCard.GetComponent<Card>().cardSlot))
+                allowedTypeCard.Contains(dropedCard.GetComponent<Card>().cardType))                       //&&
+                //allowedCards.Contains(dropedCard.GetComponent<Card>().cardSlot))
             {
                 if (dropedCard.transform.tag == "Card Player1" && GameManager.player1 == true || dropedCard.transform.tag == "Card Player2" && GameManager.player2 == true)
                     return true;

@@ -1,21 +1,24 @@
+using Compiler;
 using Enums;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Card_", menuName = "Create/NewCard")]
 public class CardData : ScriptableObject
 {   
-    public int cardID;
+    public type cardType;
+    public bool isHero;
     public string cardName;
-    public faction cardFaction;
+    public string cardFaction;
+    public int attackPower;
+    public string[] slots;
+    public OnActivationNode effect;
+    
+
 
     [Multiline] //adds more space to the string field
     public string cardDescription;
-
-    public bool isHero;
-    public slot cardSlot;
-    public type cardType;
     
-    public int attackPower;
-    
+    //public slot cardSlot;
+    public int cardID;
     public Sprite art;
 }

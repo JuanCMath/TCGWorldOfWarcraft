@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace Compiler
 {
-    public class Parser
+    public class Parse
     {
         private int currentIndex;
         private List<Token> tokens;
@@ -30,7 +30,7 @@ namespace Compiler
                 { TokenType.Div, 4 },
                 { TokenType.Pow,5},
             };
-        public Parser(List<Token> tokens, Dictionary<TokenType, int> precedence)
+        public Parse(List<Token> tokens, Dictionary<TokenType, int> precedence)
         {
             this.tokens = tokens;
             currentIndex = 0;
@@ -111,13 +111,13 @@ namespace Compiler
 
         public OnActivationNode OnActivationParser()
         {
-            List<EffectsToBeActivateNode> effectActivation = new List<EffectsToBeActivateNode>();
+            List<EffectsToBeActivateNode> effectActivations = new List<EffectsToBeActivateNode>();
 
             Expect(TokenType.BracketL);
 
             while (!Match(TokenType.BracketR))
             {
-                effectActivation.Add(EffectsToBeActivateParser());
+                effectActivations.Add(EffectsToBeActivateParser());
                 if (Match(TokenType.Comma))
                 {
                     Expect(TokenType.Comma);
@@ -126,7 +126,7 @@ namespace Compiler
                 break;
             }
             Expect(TokenType.BracketR);
-            return new OnActivationNode(effectActivation);
+            return new OnActivationNode(effectActivations);
         }
 
         public EffectsToBeActivateNode EffectsToBeActivateParser()
@@ -373,7 +373,7 @@ namespace Compiler
             Expect(TokenType.ParenR);
             Expect(TokenType.Lambda);
 
-            StatementNodes body = new BlockNode(ParseBlock());
+            BlockNode body = new BlockNode(ParseBlock());
 
             return new ActionDeclarationNode(target, context, body);
         }
@@ -400,7 +400,7 @@ namespace Compiler
                     ExpresionNodes value = ParseExpresion();
                     return new VariableAssignementNode(new StringNode(identifier.lexeme), value);
                 }
-                if(Match(TokenType.Dot))
+                else if(Match(TokenType.Dot))
                 {
                     currentIndex--;
                     ASTNode exp = ParseExpresion();

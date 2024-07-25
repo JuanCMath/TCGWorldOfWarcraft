@@ -10,5 +10,12 @@ namespace Compiler
         {
             Params = param;
         }
+
+        public override IEnumerable<ASTNode> GetChildren()
+        {
+            if (Params != null)
+            foreach (var parameter in Params)
+                yield return parameter;
+        }
     }
 }

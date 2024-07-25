@@ -20,9 +20,12 @@ namespace Compiler
         {
             yield return MethodName;
             yield return Target;
-            foreach (var argument in Arguments)
+            if (Arguments != null)
             {
-                yield return argument;
+                foreach (var argument in Arguments)
+                {
+                    yield return argument;
+                }
             }
         }
     }
