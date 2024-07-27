@@ -2,39 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Enums;
+using UnityEditor.UI;
+using System.Diagnostics;
 
-public class Player1Manager : MonoBehaviour
+public class PlayerManager : MonoBehaviour
 {
     #region Variables
-    public int powerPlayer1;
+    public int power;
     private GameObject lastClickedCard = null;
 
     [Header("Prefabs")]
-    public GameObject cardPrefab1;
+    public GameObject cardPrefab;
     public GameObject cardLeadPrefab;
     
     [Header("Setup Panels")]
-    public GameObject deckPlayer1;
-    public GameObject graveyardPlayer1;
-    public GameObject handPlayer1; 
-    public GameObject leadSpotPlayer1;
+    public GameObject deck;
+    public GameObject graveyard;
+    public GameObject hand; 
+    public GameObject lead;
+    
 
     [Header("Game Panels")]
-    public GameObject aumentoMZonePlayer1;
-    public GameObject aumentoRZonePlayer1; 
-    public GameObject aumentoSZonePlayer1;
-    public GameObject climaZonePlayer1;
-    public GameObject meleeZonePlayer1;
-    public GameObject rangeZonePlayer1;
-    public GameObject siegeZonePlayer1;
+    public GameObject field;
+    public GameObject aumentoMZone;
+    public GameObject aumentoRZone; 
+    public GameObject aumentoSZone;
+    public GameObject climaZone;
+    public GameObject meleeZone;
+    public GameObject rangeZone;
+    public GameObject siegeZone;
 
     [Header ("Hand Counter")]
     public int startingHandSize = 10;
     public int maxHandSize = 10;
 
     [Header ("UI")]
-    public TextMeshProUGUI deckTextPlayer1;
-    public TextMeshProUGUI discardTextPlayer1;
+    public TextMeshProUGUI deckText;
+    public TextMeshProUGUI discardText;
     #endregion
 
     //Eliminar todas las cartas del campo
@@ -45,11 +50,11 @@ public class Player1Manager : MonoBehaviour
         foreach (GameObject carta in cartas)
         {
             //Si esta en la mano no la destruyas
-            if (carta.transform.IsChildOf(handPlayer1.transform)) continue;
-            else if (carta.transform.IsChildOf(leadSpotPlayer1.transform)) continue;
+            if (carta.transform.IsChildOf(hand.transform)) continue;
+            else if (carta.transform.IsChildOf(lead.transform)) continue;
 
             //Si no esta en la mano destruyela, Aqui podriamos poner despues que se vayan al cementerio
-            carta.transform.SetParent(graveyardPlayer1.transform);
+            carta.transform.SetParent(graveyard.transform);
             carta.transform.localPosition = new Vector3(0,0,0);
         }
         
@@ -111,9 +116,9 @@ public class Player1Manager : MonoBehaviour
     public void SelectCardInHand(GameObject card)
     {   
         //Si no esta en la mano no guardamos la informacion, solo queremos cartas de la mano
-        if (card.transform.IsChildOf(handPlayer1.transform) != handPlayer1)
+        if (card.transform.IsChildOf(hand.transform) != hand)
         {
-            Debug.Log("Debe seleccionar una carta de la mano");
+            UnityEngine.Debug.Log("Debe seleccionar una carta de la mano");
         }
         else
         {
@@ -129,16 +134,16 @@ public class Player1Manager : MonoBehaviour
         //Eliminamos la carta de la mano
         Destroy(card);
         //Añadimos el scriptable object con el nombre de la carta a la lista de cartas del deck
-        deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck.Add(Resources.Load<CardData>("Scriptable Objects/Aspectos Deck/" + name));
+        deck.GetComponent<Deck>().deck.Add(Resources.Load<CardData>("Scriptable Objects/Aspectos Deck/" + name)); //TODOOOOOO
         //Barajeamos el deck
-        ShuffleDeck(deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck);
+        ShuffleDeck(deck.GetComponent<Deck>().deck);
     }
 
     //Poniendo carta lider en el campo
     public void SetLead()
     {
-        GameObject g = Instantiate(cardLeadPrefab, leadSpotPlayer1.transform);
-        g.GetComponent<Card>().cardData = deckPlayer1.GetComponent<AspectosDeck>().aspectosLeadCard;
+        GameObject g = Instantiate(cardLeadPrefab, lead.transform);
+        g.GetComponent<Card>().cardData = deck.GetComponent<Deck>().leadCard;
         g.name = g.GetComponent<Card>().cardData.cardName;
     }
     //Robar Carta del Deck
@@ -146,26 +151,26 @@ public class Player1Manager : MonoBehaviour
     {
         for (int i = 0; i < amount; i++)     
         {   
-            if (handPlayer1.transform.GetComponentsInChildren<Card>(true).Length < 10)
+            if (hand.transform.GetComponentsInChildren<Card>(true).Length < 10)
             {       
                 //Instanciando la carta con el prefab y en la posicion de la mano
-                GameObject g = Instantiate(cardPrefab1, handPlayer1.transform);                         
+                GameObject g = Instantiate(cardPrefab, hand.transform);                         
                 //Dandole a cada prefab de carta los datos de los scriptable objects
-                g.GetComponent<Card>().cardData = deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck[i];
+                g.GetComponent<Card>().cardData = deck.GetComponent<Deck>().deck[i];
                 //Eliminando la carta robada
-                deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck.RemoveAt(i);                          
+                deck.GetComponent<Deck>().deck.RemoveAt(i);                          
                 //Dandole un nombre a la carta en el inspector
                 g.name = g.GetComponent<Card>().cardData.cardName;  
             }
             else
             {
                 //Instanciando la carta con el prefab y en la posicion del cementerio
-                GameObject g = Instantiate(cardPrefab1, graveyardPlayer1.transform);           
+                GameObject g = Instantiate(cardPrefab, graveyard.transform);           
                 g.transform.localPosition = new Vector3(0,0,0);              
                 //Dandole a cada prefab de carta los datos de los scriptable objects
-                g.GetComponent<Card>().cardData = deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck[i];
+                g.GetComponent<Card>().cardData = deck.GetComponent<Deck>().deck[i];
                 //Eliminando la carta robada
-                deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck.RemoveAt(i);                          
+                deck.GetComponent<Deck>().deck.RemoveAt(i);                          
                 //Dandole un nombre a la carta en el inspector
                 g.name = g.GetComponent<Card>().cardData.cardName;
             }                   
@@ -191,92 +196,127 @@ public class Player1Manager : MonoBehaviour
     public void CountAttackOnField()
     {   
         applyAumento();
-        foreach (Transform child in meleeZonePlayer1.transform)
+        foreach (Transform child in meleeZone.transform)
         {
-            powerPlayer1 += child.GetComponent<Card>().attackPower;
+            power += child.GetComponent<Card>().attackPower;
         }
-        foreach (Transform child in rangeZonePlayer1.transform)
+        foreach (Transform child in rangeZone.transform)
         {
-            powerPlayer1 += child.GetComponent<Card>().attackPower;
+            power += child.GetComponent<Card>().attackPower;
         }
-        foreach (Transform child in siegeZonePlayer1.transform)
+        foreach (Transform child in siegeZone.transform)
         {
-            powerPlayer1 += child.GetComponent<Card>().attackPower;
+            power += child.GetComponent<Card>().attackPower;
         }
     }
 
     public void applyClima()
     {
         int amountOfChange;
-        int amounOfClimas = climaZonePlayer1.transform.childCount;
+        int amounOfClimas = climaZone.transform.childCount;
         
         for (int i = 0; i < amounOfClimas; i ++)
         {
-            amountOfChange = climaZonePlayer1.transform.GetChild(i).GetComponent<Card>().effectNumber;
-            EffectsManager.ClimateEffect(climaZonePlayer1, amountOfChange);
+            amountOfChange = climaZone.transform.GetChild(i).GetComponent<Card>().effectNumber;
+            EffectsManager.ClimateEffect(climaZone, amountOfChange);
         }
     }
 
     public void applyAumento()
     {
         int amountOfChangeM;
-        if (aumentoMZonePlayer1.transform.childCount != 0) 
+        if (aumentoMZone.transform.childCount != 0) 
         {
-            amountOfChangeM = aumentoMZonePlayer1.transform.GetChild(0).GetComponent<Card>().effectNumber;
-            EffectsManager.IncreaseEffect(meleeZonePlayer1, amountOfChangeM);
+            amountOfChangeM = aumentoMZone.transform.GetChild(0).GetComponent<Card>().effectNumber;
+            EffectsManager.IncreaseEffect(meleeZone, amountOfChangeM);
         }
         int amountOfChangeR;
-        if (aumentoRZonePlayer1.transform.childCount != 0) 
+        if (aumentoRZone.transform.childCount != 0) 
         {
-            amountOfChangeR = aumentoRZonePlayer1.transform.GetChild(0).GetComponent<Card>().effectNumber;
-            EffectsManager.IncreaseEffect(rangeZonePlayer1, amountOfChangeR);
+            amountOfChangeR = aumentoRZone.transform.GetChild(0).GetComponent<Card>().effectNumber;
+            EffectsManager.IncreaseEffect(rangeZone, amountOfChangeR);
         }
 
         int amountOfChangeS;
-        if (aumentoSZonePlayer1.transform.childCount != 0) 
+        if (aumentoSZone.transform.childCount != 0) 
         {
-            amountOfChangeS = aumentoSZonePlayer1.transform.GetChild(0).GetComponent<Card>().effectNumber;
-            EffectsManager.IncreaseEffect(siegeZonePlayer1, amountOfChangeS);
+            amountOfChangeS = aumentoSZone.transform.GetChild(0).GetComponent<Card>().effectNumber;
+            EffectsManager.IncreaseEffect(siegeZone, amountOfChangeS);
         }
     }
 
-    public static void ShowCardBack()
+    public void ShowCardBack()
     {
-        GameObject[] cards = GameObject.FindGameObjectsWithTag("Card Player1");
-
-        foreach (GameObject card in cards)
+        if (transform.name == "Player1")
         {
-            if (card.transform.parent.name != "Hand p1") continue;
-            else
+            GameObject[] cards = GameObject.FindGameObjectsWithTag("Card Player1");
+
+            foreach (GameObject card in cards)
             {
-                card.GetComponent<Card>().displayCardBack = true;
+                if (card.transform.parent.name != "Hand p1") continue;
+                else
+                {
+                    card.GetComponent<Card>().displayCardBack = true;
+                }
             }
         }
-    }
-    public static void HideCardBack()
-    {
-        GameObject[] cards = GameObject.FindGameObjectsWithTag("Card Player1");
 
-        foreach (GameObject card in cards)
+        else if (transform.name == "Player2")
         {
-            if (card.transform.parent.name != "Hand p1") continue;
-            else
+            GameObject[] cards = GameObject.FindGameObjectsWithTag("Card Player2");
+
+            foreach (GameObject card in cards)
             {
-                card.GetComponent<Card>().displayCardBack = false;
+                if (card.transform.parent.name != "Hand p2") continue;
+                else
+                {
+                    card.GetComponent<Card>().displayCardBack = true;
+                }
+            }
+        }
+        
+        
+    }
+    public void HideCardBack()
+    {
+        if (transform.name == "Player1")
+        {
+            GameObject[] cards = GameObject.FindGameObjectsWithTag("Card Player1");
+
+            foreach (GameObject card in cards)
+            {
+                if (card.transform.parent.name != "Hand p1") continue;
+                else
+                {
+                    card.GetComponent<Card>().displayCardBack = false;
+                }
+            }
+        }
+        else if (transform.name == "Player2")
+        {
+            GameObject[] cards = GameObject.FindGameObjectsWithTag("Card Player2");
+
+            foreach (GameObject card in cards)
+            {
+                if (card.transform.parent.name != "Hand p2") continue;
+                else
+                {
+                    card.GetComponent<Card>().displayCardBack = false;
+                }
             }
         }
     }
     
     public void Start()
     {
-       ShuffleDeck(deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck);
+       ShuffleDeck(deck.GetComponent<Deck>().deck);
        SetLead();
     }
 
     
     public void Update()
     {
-       deckTextPlayer1.text = deckPlayer1.GetComponent<AspectosDeck>().aspectosDeck.Count.ToString();
-       discardTextPlayer1.text = (graveyardPlayer1.transform.childCount - 1).ToString();
+       deckText.text = deck.GetComponent<Deck>().deck.Count.ToString();
+       deckText.text = (graveyard.transform.childCount - 1).ToString();
     }
  }

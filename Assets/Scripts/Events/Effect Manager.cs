@@ -99,8 +99,8 @@ public class EffectsManager : MonoBehaviour
     //Efecto de robo de carta
     public static void DrawACard()
     {
-        if (GameManager.player1 == true)  GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().DrawCard(1);  
-        else if (GameManager.player2 == true) GameObject.Find("Player2 Manager").GetComponent<Player1Manager>().DrawCard(1);
+        if (GameManager.player1 == true)  GameObject.Find("Player1").GetComponent<PlayerManager>().DrawCard(1);  
+        else if (GameManager.player2 == true) GameObject.Find("Player2").GetComponent<PlayerManager>().DrawCard(1);
     }
 
     //Efecto Destruir Carta con menor poder de ataque del oponente
@@ -240,13 +240,13 @@ public class EffectsManager : MonoBehaviour
         int amountOfCardsInPanelToDestroyedPanel = 0;
         GameObject panelToDestroyed = null;
 
-        GameObject meleePlayer1 = GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().meleeZonePlayer1;
-        GameObject rangePlayer1 = GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().rangeZonePlayer1;
-        GameObject siegePlayer1 = GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().siegeZonePlayer1;
+        GameObject meleePlayer1 = GameObject.Find("Player1").GetComponent<PlayerManager>().meleeZone;
+        GameObject rangePlayer1 = GameObject.Find("Player1").GetComponent<PlayerManager>().rangeZone;
+        GameObject siegePlayer1 = GameObject.Find("Player1").GetComponent<PlayerManager>().siegeZone;
         
-        GameObject meleePlayer2 = GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().meleeZonePlayer2;
-        GameObject rangePlayer2 = GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().meleeZonePlayer2;
-        GameObject siegePlayer2 = GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().meleeZonePlayer2;
+        GameObject meleePlayer2 = GameObject.Find("Player2").GetComponent<PlayerManager>().meleeZone;
+        GameObject rangePlayer2 = GameObject.Find("Player2").GetComponent<PlayerManager>().meleeZone;
+        GameObject siegePlayer2 = GameObject.Find("Player2").GetComponent<PlayerManager>().meleeZone;
 
         GameObject[] panels = new GameObject[] {meleePlayer1, rangePlayer1, siegePlayer1, meleePlayer2, rangePlayer2, siegePlayer2};
 
@@ -366,12 +366,12 @@ public class EffectsManager : MonoBehaviour
         {
             if (card.transform.parent.parent.name == "Panels p1")
             {
-                card.transform.SetParent(GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().graveyardPlayer1.transform);
+                card.transform.SetParent(GameObject.Find("Player1").GetComponent<PlayerManager>().graveyard.transform);
                 card.transform.localPosition = new Vector3 (0,0,0);
             }
             else if (card.transform.parent.parent.name == "Panels p2")
             {
-                card.transform.SetParent(GameObject.Find("Player2 Manager").GetComponent<Player1Manager>().graveyardPlayer1.transform);
+                card.transform.SetParent(GameObject.Find("Player2").GetComponent<PlayerManager>().graveyard.transform);
                 card.transform.localPosition = new Vector3 (0,0,0);
             }
         }

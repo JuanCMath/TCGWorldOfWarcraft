@@ -111,13 +111,13 @@ public class GameManager : MonoBehaviour
     public void WhoWinsRound()
     {   
         //Comparamos ataque total en el campo de cada jugador
-        if (GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().powerPlayer1 > GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().powerPlayer2) 
+        if (GameObject.Find("Player1").GetComponent<PlayerManager>().power > GameObject.Find("Player2").GetComponent<PlayerManager>().power) 
         {
             //Player 1 Wins!
             player1StartTheRound = true;
             player1WinedRounds ++;
         }
-        else if (GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().powerPlayer1 < GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().powerPlayer2)
+        else if (GameObject.Find("Player1").GetComponent<PlayerManager>().power < GameObject.Find("Player2").GetComponent<PlayerManager>().power)
         {
             //PLayer 2 Wins!
             player1StartTheRound = false;
@@ -148,11 +148,11 @@ public class GameManager : MonoBehaviour
     public void EndRound()  //Seteamos las condiciones para el final de ronda
     {
         //Aplicamos clima
-        GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().applyClima();
-        GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().applyClima();
+        GameObject.Find("Player1").GetComponent<PlayerManager>().applyClima();
+        GameObject.Find("Player2").GetComponent<PlayerManager>().applyClima();
         //Contamos el ataque de cada jugador en el campo
-        GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().CountAttackOnField();
-        GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().CountAttackOnField();
+        GameObject.Find("Player1").GetComponent<PlayerManager>().CountAttackOnField();
+        GameObject.Find("Player2").GetComponent<PlayerManager>().CountAttackOnField();
 
         state = gameTracker.FinalOfRound;
         WhoWinsRound();
@@ -303,13 +303,13 @@ public class GameManager : MonoBehaviour
                 player1Pass = false;
                 player2Pass = false;      
                 //Reseteando los atacksPower
-                GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().powerPlayer1 = 0;
-                GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().powerPlayer2 = 0;
+                GameObject.Find("Player1").GetComponent<PlayerManager>().power = 0;
+                GameObject.Find("Player2").GetComponent<PlayerManager>().power = 0;
                 //Si es la primera ronda todos roban 10 cartas
                 if (numberOfRounds == 1)
                 {
-                    GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().DrawCard(10);
-                    GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().DrawCard(10);
+                    GameObject.Find("Player1").GetComponent<PlayerManager>().DrawCard(10);
+                    GameObject.Find("Player2").GetComponent<PlayerManager>().DrawCard(10);
                 } 
                 //Si no roban 2
                 else 
@@ -317,17 +317,17 @@ public class GameManager : MonoBehaviour
                     //Habilidad lider, si deathwing esta en el campo el poseedor roba una mas
                     if (leadP1.transform.GetChild(0).GetComponent<Card>().cardName == "Deathwing")
                     {
-                        GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().DrawCard(1);
+                        GameObject.Find("Player1").GetComponent<PlayerManager>().DrawCard(1);
                     }
                     else if (leadP2.transform.GetChild(0).GetComponent<Card>().cardName == "Deathwing")
                     {
-                       GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().DrawCard(1);
+                       GameObject.Find("Player2").GetComponent<PlayerManager>().DrawCard(1);
                     }
 
-                    GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().CleanField();
-                    GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().CleanField();                  
-                    GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().DrawCard(2);
-                    GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().DrawCard(2);
+                    GameObject.Find("Player1").GetComponent<PlayerManager>().CleanField();
+                    GameObject.Find("Player2").GetComponent<PlayerManager>().CleanField();                  
+                    GameObject.Find("Player1").GetComponent<PlayerManager>().DrawCard(2);
+                    GameObject.Find("Player2").GetComponent<PlayerManager>().DrawCard(2);
                 }
 
                 //Dandole el turno a quien gano la ronda anterior, en caso de que la ronda sea la primera entonces es Player1Turn por Default
@@ -344,8 +344,8 @@ public class GameManager : MonoBehaviour
 
             case gameTracker.Player1Turn: //Turno del jugador 1
                 //Mostrando sus cartas y escondiendo las del oponente
-                Player2Manager.ShowCardBack();
-                Player1Manager.HideCardBack();
+                GameObject.Find("Player2").GetComponent<PlayerManager>().ShowCardBack();
+                GameObject.Find("Player1").GetComponent<PlayerManager>().HideCardBack();
 
                 player1 = true;
                 player2 = false;
@@ -353,8 +353,8 @@ public class GameManager : MonoBehaviour
 
             case gameTracker.Player2Turn: //Turno del jugador 2
                 //Mostrando sus cartas y escondiendo las del oponente
-                Player1Manager.ShowCardBack();
-                Player2Manager.HideCardBack();
+                GameObject.Find("Player1").GetComponent<PlayerManager>().ShowCardBack();
+                GameObject.Find("Player2").GetComponent<PlayerManager>().HideCardBack();
 
                 player1 = false;
                 player2 = true;
@@ -366,8 +366,8 @@ public class GameManager : MonoBehaviour
                 //Si algun jugador gano 2 rondas veremos quien fue el ganador
                 if (player1WinedRounds == 2 || player2WinedRounds == 2) 
                 {
-                    GameObject.Find("Player1 Manager").GetComponent<Player1Manager>().CleanField();
-                    GameObject.Find("Player2 Manager").GetComponent<Player2Manager>().CleanField();
+                    GameObject.Find("Player1").GetComponent<PlayerManager>().CleanField();
+                    GameObject.Find("Player2").GetComponent<PlayerManager>().CleanField();
                     WhoWinsTheGame();
                     state = gameTracker.GameOver;
                 }

@@ -115,6 +115,7 @@ namespace Compiler
                     }
                     ExitScope();
                     return null;
+
                 case UnaryExpressionNode unaryExpression:
                     return EvaluateUnaryExpressionNode(unaryExpression);
 
@@ -123,8 +124,9 @@ namespace Compiler
 
                 case PropertyCallNode propertyNode:
                     return EvaluatePropertyCallNode(propertyNode);
-                case MethodCallNode:
-                    //TODO
+                    
+                case MethodCallNode methodCallNode:
+                    return EvaluateMethodCallNode(methodCallNode);
 
                 default:
                     throw new System.Exception("Unknown node type");
@@ -538,41 +540,123 @@ namespace Compiler
             {
                 switch(propertyName)
                 {
-                    case "Power": //TODO todas las propiedades de las cartas
+                    case "Power": 
                         return objectReferenceNode.GetComponent<Card>().attackPower;
+                    case "Owner":
+                        if(objectReferenceNode.tag == "Card Player1")
+                            return "player 1";
+                        else
+                            return "player2";
                     default:
                         throw new Exception("Unknown property name");
                 }
             }
-            else //Entonces es context
+            else if(objectReferenceNode.GetComponent<Context>() != null) //TODO, crear el object context con su script asociado
             {
-                    switch(propertyName)
+                switch(propertyName)
                 {
                     case "TriggerPlayer":
-                        //TODO
+                        if (GameObject.Find("Game Manger").GetComponent<GameManager>().state == gameTracker.Player1Turn)
+                            return GameObject.Find("Player1 Manager");
+                        else
+                            return GameObject.Find("Player2 Manager");
+                            
                     case "Board":
-                        //TODO
-                    case "Owner":
-                        //TODO
+                        List<GameObject> cards = new List<GameObject>();
+
+                        foreach (Transform child in GameObject.Find("Panels p1").transform)
+                        {
+                            if(child.GetComponent<Card>() != null) cards.Add(child.gameObject);
+                        }
+                        foreach (Transform child in GameObject.Find("Panels p2").transform)
+                        {
+                            if(child.GetComponent<Card>() != null) cards.Add(child.gameObject);
+                        }
+
+                        return cards;
                     default:
                         throw new Exception("Unknown property name");
                 }
             }
-            
+            else 
+            {
+                throw new Exception("This GameObject cant be called with a property");
+            }
         }
 
         public object EvaluateMethodCallNode(MethodCallNode node)
         {
-            throw new NotImplementedException();
+            object obj = Evaluate(node.Target) is GameObject objectReferenceNode ? objectReferenceNode : throw new Exception("Target of property call must be a GameObject.");
+            object MethodName = node.MethodName is StringNode stringNode ? EvaluateString(stringNode) : throw new Exception("Property name must be a PropertyName.");
+            GameObject argument = EvaluateObjectReference(node.Arguments);
+
+            
+            if(objectReferenceNode.GetComponent<Context>() != null) //TODO, crear el object context con su script asociado
+            {
+                switch(MethodName)
+                {
+                    case "HandOfPlayer":
+                        List<GameObject> cardsOnHand = GetCardsInObject(argument.GetComponent<PlayerManager>().hand);
+                        return cardsOnHand;
+
+                    case "FieldOfPlayer":
+                        List<GameObject> cardsOnField = GetCardsInObject(argument.GetComponent<PlayerManager>().field);
+                        return cardsOnField;
+
+                    case "GraveyardOfPlayer":
+                        List<GameObject> cardsOnGraveyard = GetCardsInObject(argument.GetComponent<PlayerManager>().graveyard);
+                        return cardsOnGraveyard;
+
+                    case "DeckOfplayer":
+                        List<GameObject> cardsOnDeck = GetCardsInObject(argument.GetComponent<PlayerManager>().deck);
+                        return cardsOnDeck;
+
+                    default:
+                        throw new Exception("Unknown Method name");
+                }
+            }
+            else if(objectReferenceNode.GetComponent<CardContainer>() != null)
+            {
+                List<GameObject> cards = new List<GameObject>();
+
+                foreach (Transform child in objectReferenceNode.transform)
+                {
+                    if(child.GetComponent<Card>() != null) cards.Add(child.gameObject);
+                }
+
+                switch(MethodName)
+                {
+                    case "Find": //En el proximo capitulo
+                    case "Push":
+                    case "SendBottom":
+                    case "Pop":
+                    case "Remove":
+                    case "Shuffle":
+                    default:
+                        throw new Exception("Unknown Method name");
+                }
+            }
+            else 
+            {
+                throw new Exception("This GameObject cant be called with a Method");
+            }
         }
     
 
 
 
 
+        public List<GameObject> GetCardsInObject (GameObject panel)
+        {
+            List<GameObject> cards = new List<GameObject>();
 
+            foreach (Transform transform in panel.transform)
+            {
+                if (transform.GetComponent<Card>() != null) cards.Add(transform.gameObject);
+            }
 
-
+            return cards;
+        }
 
         public void EnterScope()
         {

@@ -66,7 +66,6 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Card Stuffs\CardData.cs" />
     <Compile Include="Assets\Scripts\Compiler\Semantic Analyzer\Semantic.cs" />
-    <Compile Include="Assets\Scripts\Manager\Player 2 Manager.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\Terminals\BooleanNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\VariableAssignementNode.cs" />
     <Compile Include="Assets\Scripts\Events\Card Click Event.cs" />
@@ -75,15 +74,15 @@
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\VariableReferenceNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\SelectorNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\Terminals\GameObjectReferenceNode.cs" />
+    <Compile Include="Assets\Scripts\Databases\Deck.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\EffectsToBeActivateNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\ForNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\ActionDeclarationNode.cs" />
-    <Compile Include="Assets\Scripts\Databases\Aspectos Deck.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\EffectParamsReferenceNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\ASTNode.cs" />
-    <Compile Include="Assets\Scripts\Manager\Player Actions.cs" />
     <Compile Include="Assets\Scripts\Card Stuffs\Draggable.cs" />
     <Compile Include="Assets\Scripts\Compiler\Lexer\Lexer.cs" />
+    <Compile Include="Assets\Scripts\CardContainer.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\ConditionalExpresionNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\PredicateNode.cs" />
     <Compile Include="Assets\Scripts\Manager\Main Menu.cs" />
@@ -94,15 +93,16 @@
     <Compile Include="Assets\Scripts\Compiler\Lexer\TokenEnumerable.cs" />
     <Compile Include="Assets\Scripts\Manager\Pause Menu.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\IndexingOnListNode.cs" />
-    <Compile Include="Assets\Scripts\Manager\Player 1 Manager.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\GroupingNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\BinaryExpressionNode.cs" />
+    <Compile Include="Assets\Scripts\Context.cs" />
     <Compile Include="Assets\Scripts\Card Stuffs\Card.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\WhileNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\EffectParametersAssignementNode.cs" />
     <Compile Include="Assets\Scripts\Databases\LoadCard.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\MethodCallNode.cs" />
     <Compile Include="Assets\Scripts\Panels Scripts\DropZoneGeneric.cs" />
+    <Compile Include="Assets\Scripts\Manager\PlayerManager.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\Terminals\StringNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\Terminals\NumberNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\PropertyCallNode.cs" />
@@ -110,7 +110,6 @@
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\EffectDeclarationNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\CardDeclarationNode.cs" />
     <Compile Include="Assets\Scripts\Events\Effect Manager.cs" />
-    <Compile Include="Assets\Scripts\Databases\Arthas Deck.cs" />
     <Compile Include="Assets\Scripts\Compiler\Evaluator\Evaluator.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\BlockNode.cs" />
     <Compile Include="Assets\Scripts\Databases\Enums.cs" />

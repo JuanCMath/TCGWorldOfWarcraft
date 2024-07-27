@@ -474,16 +474,11 @@ namespace Compiler
                 {
                     currentIndex++;
                     ExpresionNodes right = ParseExpresion(precedence[opType] + 1);
-                    List<ExpresionNodes> arguments = new List<ExpresionNodes>();
+                    
                     Expect(TokenType.ParenL);
-                    while (!Match(TokenType.ParenR))
-                    {
-                        arguments.Add(ParseExpresion());
-                        if (Match(TokenType.Comma)) continue;
-                        else break;
-                    }
+                    GameObjectReferenceNode arguments = new GameObjectReferenceNode(new StringNode(Expect(TokenType.Identifier).lexeme));
                     Expect(TokenType.ParenR);
-                    left = new MethodCallNode(left, right, arguments.ToArray());
+                    left = new MethodCallNode(left, right, arguments);
                 }
                 else if (!precedence.ContainsKey(opType) || precedence[opType] < minPrecedence)
                 {
