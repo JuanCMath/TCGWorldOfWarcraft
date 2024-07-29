@@ -1,21 +1,15 @@
 using System.Collections.Generic;
 using System;
-using System.Data;
 using Enums;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
-using System.Runtime.CompilerServices;
-using UnityEngine.SocialPlatforms.Impl;
-using System.Runtime.InteropServices.WindowsRuntime;
 #nullable enable
+
 
 namespace Compiler
 {
     public class Evaluator
     {
-        public Stack<Dictionary<string, object>> scopes;
-        public Dictionary<string, EffectDeclarationNode> availableEffects;
+        public Stack<Dictionary<string, object>> scopes =  new Stack<Dictionary<string, object>>();
 
         public void EvaluateMain(MainProgramNode node)
         {
@@ -86,9 +80,9 @@ namespace Compiler
                         loopConditionValue = Evaluate(whileNode.Condition);
                     }
                     return null;
+
                 case ForNode forNode:
                     EnterScope();
-                    List<GameObject> temp = new List<GameObject>();
 
                     object forObject = Evaluate(forNode.Objetcs);
 
@@ -107,6 +101,7 @@ namespace Compiler
                     
                     ExitScope();
                     return null;
+
                 case BlockNode blockNode:
                     EnterScope();
                     foreach (ASTNode statement in blockNode.Statements)
@@ -223,7 +218,7 @@ namespace Compiler
 
         public void EvaluateEffectsToBeActivate(EffectsToBeActivateNode node)
         {
-            EvaluateSelector(node.Selector);
+            if (node.Selector !=null) EvaluateSelector(node.Selector);
             EvaluateEffect(node.Effect);
 
             if(node.PostAction != null)
@@ -236,15 +231,7 @@ namespace Compiler
         {
             GameObject Source = (GameObject)Evaluate(node.source);
 
-            List<GameObject> cards = new List<GameObject>();
-
-            foreach (Transform child in Source.transform)
-            {
-                if (child.gameObject.GetComponent<Card>() != null)
-                {
-                    cards.Add(child.gameObject);
-                }
-            }
+            List<GameObject> cards = GetCardsInObject(Source);
 
             bool getOne = (bool)Evaluate(node.single);
 
@@ -258,18 +245,22 @@ namespace Compiler
         {
             EnterScope();
             Queue<GameObject> filteredCards = new Queue<GameObject>();
+            bool getOne = (bool)FindVariableScope("Single")["Single"];
             
             string temp = (string)Evaluate(node.identifier.GameObject);
 
             foreach (GameObject card in (List<GameObject>)FindVariableScope("CardToPredicate")["CardsToPredicate"])
             {
-                node.identifier.GameObject.Value = card.gameObject.name;
+                //node.identifier.GameObject.Value = card.gameObject.name;
                 scopes.Peek().Add(temp, Evaluate(node.identifier));
                 
                 if ((bool)Evaluate(node.Condition))
                 {
                     filteredCards.Enqueue(card);
+
+                    if (getOne) break;
                 }
+
                 scopes.Peek().Remove(temp);
             }
             ExitScope();
@@ -279,7 +270,7 @@ namespace Compiler
 
         public void EvaluatePostActionNode(PostActionNode node)
         {
-            EvaluateSelector(node.selector);
+            if (node.selector !=null) EvaluateSelector(node.selector);
             EvaluateEffect(node.parameters);
 
             if(node.postAction != null)
@@ -295,7 +286,8 @@ namespace Compiler
             {
                 Evaluate(parameter);
             }
-            Evaluate(availableEffects[effectname]);
+
+            Evaluate(Effects.availableEffects[effectname]);
         }
 
         public void EvaluateEffectDeclarationNode(EffectDeclarationNode node)
@@ -321,17 +313,13 @@ namespace Compiler
             
             string temp = (string)Evaluate(node.Targets.GameObject);
 
-            foreach (GameObject card in (List<GameObject>)FindVariableScope("FilteredCards")["FilteredCards"])
-            {
-                node.Targets.GameObject.Value = card.gameObject.name;
-                scopes.Peek().Add(temp, Evaluate(node.Targets));
+            scopes.Peek().Add(temp, (List<GameObject>)FindVariableScope("FilteredCards")["FilteredCards"]);
 
-                //Context TODO, crear un objecto context que tenga todos los datos necesarios en unity
-                foreach (StatementNodes statement in node.Body.Statements)
-                {
-                    Evaluate(statement);
-                }
+            foreach (StatementNodes statement in node.Body.Statements)
+            {
+                Evaluate(statement);
             }
+            
             ExitScope();
         }
 
@@ -615,19 +603,17 @@ namespace Compiler
                         throw new Exception("Unknown Method name");
                 }
             }
-            else if(objectReferenceNode.GetComponent<CardContainer>() != null)
+            else if(objectReferenceNode.GetComponent<CardContainer>() != null && argument.GetComponent<Card>() != null)
             {
-                List<GameObject> cards = new List<GameObject>();
-
-                foreach (Transform child in objectReferenceNode.transform)
-                {
-                    if(child.GetComponent<Card>() != null) cards.Add(child.gameObject);
-                }
+                List<GameObject> cards = GetCardsInObject(objectReferenceNode);
+                Transform panelOfDestiny = cards[cards.Count % 2].transform.parent;
 
                 switch(MethodName)
                 {
                     case "Find": //En el proximo capitulo
                     case "Push":
+                        argument.transform.SetParent(panelOfDestiny);
+                        return null;
                     case "SendBottom":
                     case "Pop":
                     case "Remove":

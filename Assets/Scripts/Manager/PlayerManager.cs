@@ -10,6 +10,7 @@ public class PlayerManager : MonoBehaviour
 {
     #region Variables
     public int power;
+    public player owner;
     private GameObject lastClickedCard = null;
 
     [Header("Prefabs")]
@@ -247,7 +248,7 @@ public class PlayerManager : MonoBehaviour
 
     public void ShowCardBack()
     {
-        if (transform.name == "Player1")
+        if (owner == player.Player1)
         {
             GameObject[] cards = GameObject.FindGameObjectsWithTag("Card Player1");
 
@@ -261,7 +262,7 @@ public class PlayerManager : MonoBehaviour
             }
         }
 
-        else if (transform.name == "Player2")
+        else if (owner == player.Player2)
         {
             GameObject[] cards = GameObject.FindGameObjectsWithTag("Card Player2");
 
@@ -279,7 +280,7 @@ public class PlayerManager : MonoBehaviour
     }
     public void HideCardBack()
     {
-        if (transform.name == "Player1")
+        if (owner == player.Player1)
         {
             GameObject[] cards = GameObject.FindGameObjectsWithTag("Card Player1");
 
@@ -292,7 +293,7 @@ public class PlayerManager : MonoBehaviour
                 }
             }
         }
-        else if (transform.name == "Player2")
+        else if (owner == player.Player2)
         {
             GameObject[] cards = GameObject.FindGameObjectsWithTag("Card Player2");
 

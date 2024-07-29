@@ -5,7 +5,11 @@ namespace Enums
         Double,
         String,
     }
-
+    public enum player
+    {
+        Player1,
+        Player2
+    }
     public enum slot 
     {
         M,   // Melee

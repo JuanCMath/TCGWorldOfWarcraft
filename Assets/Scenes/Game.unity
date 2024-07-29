@@ -1871,6 +1871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   power: 0
+  owner: 1
   cardPrefab: {fileID: 5710362436332554621, guid: 193d7fa1a705c1c45b8de4c705e6f1d7, type: 3}
   cardLeadPrefab: {fileID: 5710362436332554621, guid: 9e3de4bb9337a10458d2c77aa18d3001, type: 3}
   deck: {fileID: 1222444520}
@@ -3872,6 +3873,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   power: 0
+  owner: 0
   cardPrefab: {fileID: 5710362436332554621, guid: d85dbb108131e9941b6f1711e1d924a1, type: 3}
   cardLeadPrefab: {fileID: 5710362436332554621, guid: 9e3de4bb9337a10458d2c77aa18d3001, type: 3}
   deck: {fileID: 1438966709}
@@ -4965,8 +4967,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Player2Manager, Assembly-CSharp
+      - m_Target: {fileID: 334112064}
+        m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
         m_MethodName: SwapCards
         m_Mode: 1
         m_Arguments:
@@ -5039,6 +5041,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5849f6ed65c9d3040bd8e36c9a552628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  owner: 1
   deck: []
   leadCard: {fileID: 0}
 --- !u!1 &1254979320
@@ -5810,8 +5813,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Player1Manager, Assembly-CSharp
+      - m_Target: {fileID: 858685630}
+        m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
         m_MethodName: SwapCards
         m_Mode: 1
         m_Arguments:
@@ -5884,6 +5887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5849f6ed65c9d3040bd8e36c9a552628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  owner: 0
   deck: []
   leadCard: {fileID: 0}
 --- !u!1 &1452820403

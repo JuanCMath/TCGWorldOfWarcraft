@@ -37,7 +37,7 @@ namespace Compiler
             this.precedence = precedence;
         }
 
-        public MainProgramNode MainProgram()
+        public MainProgramNode Parsing()
         {
             List<ASTNode> body = new List<ASTNode>();
 
