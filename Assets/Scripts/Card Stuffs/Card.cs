@@ -37,11 +37,11 @@ public class Card : MonoBehaviour
 
     private void Start()
     {
-        CollectInfoFromSO();
+        CollectInfo();
         ProcesDescription();
     }
 
-    private void CollectInfoFromSO()
+    private void CollectInfo()
     {
         if(cardData == null)
         {

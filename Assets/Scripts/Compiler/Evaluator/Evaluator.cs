@@ -2,12 +2,15 @@ using System.Collections.Generic;
 using System;
 using Enums;
 using UnityEngine;
+using System.IO;
+using System.Linq.Expressions;
+using UnityEditor;
 #nullable enable
 
 
 namespace Compiler
 {
-    public class Evaluator
+    public class Evaluator : MonoBehaviour
     {
         public Stack<Dictionary<string, object>> scopes =  new Stack<Dictionary<string, object>>();
 
@@ -47,7 +50,7 @@ namespace Compiler
 
                 case VariableAssignementNode variableNode:
                     string variableName = EvaluateString(variableNode.Name);
-                    object value = Evaluate(variableNode.Value);
+                    object value = Evaluate(variableNode.Value) ?? throw new ArgumentNullException(nameof(value));
 
                     if (scopes.Peek().ContainsKey(variableName))
                     {
@@ -84,7 +87,7 @@ namespace Compiler
                 case ForNode forNode:
                     EnterScope();
 
-                    object forObject = Evaluate(forNode.Objetcs);
+                    object forObject = Evaluate(forNode.Objetcs) ?? throw new ArgumentNullException(nameof(forObject));
 
                     if (forObject is List<GameObject> objects)
                     {
@@ -135,9 +138,9 @@ namespace Compiler
 
             data.cardType = EvaluateType(cardnode.Type);
             data.isHero = EvaluateIsHero(cardnode.Type);
-            data.name = (string)Evaluate(cardnode.Name);
-            data.cardFaction = (string)Evaluate(cardnode.Faction);
-            data.attackPower = (int)Evaluate(cardnode.Power);
+            data.name = Evaluate(cardnode.Name) as string;
+            data.cardFaction = Evaluate(cardnode.Faction) as string;
+            data.attackPower = Evaluate(cardnode.Power) as int? ?? 0;
             data.slots = EvaluateRanges(cardnode.Ranges);
             data.effect = SaveOnActivationBlock(cardnode.OnActivation);
 
@@ -229,11 +232,11 @@ namespace Compiler
 
         public void EvaluateSelector(SelectorNode node)
         {
-            GameObject Source = (GameObject)Evaluate(node.source);
+            GameObject Source = Evaluate(node.source) as GameObject ?? throw new Exception("Source evaluation returned null.");
 
             List<GameObject> cards = GetCardsInObject(Source);
 
-            bool getOne = (bool)Evaluate(node.single);
+            bool getOne = (bool?)Evaluate(node.single) ?? false;
 
             scopes.Peek().Add("Sinlge", getOne);
             scopes.Peek().Add("CardsToPredicate", cards);
@@ -247,14 +250,19 @@ namespace Compiler
             Queue<GameObject> filteredCards = new Queue<GameObject>();
             bool getOne = (bool)FindVariableScope("Single")["Single"];
             
-            string temp = (string)Evaluate(node.identifier.GameObject);
+            string temp = Evaluate(node.identifier.GameObject) as string ?? throw new Exception("Identifier evaluation returned null.");
 
             foreach (GameObject card in (List<GameObject>)FindVariableScope("CardToPredicate")["CardsToPredicate"])
             {
-                //node.identifier.GameObject.Value = card.gameObject.name;
-                scopes.Peek().Add(temp, Evaluate(node.identifier));
+                node.identifier.GameObject.Value = card.gameObject.name;
+                var value = Evaluate(node.identifier);
+                if (value != null)
+                {
+                    scopes.Peek().Add(temp, value);
+                }
+                else throw new Exception("Predicate evaluation returned null.");
                 
-                if ((bool)Evaluate(node.Condition))
+                if (Evaluate(node.Condition) is bool condition && condition)
                 {
                     filteredCards.Enqueue(card);
 
@@ -282,9 +290,12 @@ namespace Compiler
         public void EvaluateEffect(EffectParametersAssignementNode node)
         {
             string effectname = EvaluateString(node.Name);
-            foreach (VariableAssignementNode parameter in node.Parameters)
+            if (node.Parameters != null)
             {
-                Evaluate(parameter);
+                foreach (VariableAssignementNode parameter in node.Parameters)
+                {
+                    Evaluate(parameter);
+                }
             }
 
             Evaluate(Effects.availableEffects[effectname]);
@@ -292,15 +303,18 @@ namespace Compiler
 
         public void EvaluateEffectDeclarationNode(EffectDeclarationNode node)
         {
-            foreach (VariableAssignementNode parameter in node.Params.Params)
+            if (node.Params != null)
             {
-                if (scopes.Peek().ContainsKey(EvaluateString(parameter.Name)))
+                foreach (VariableAssignementNode parameter in node.Params.Params)
                 {
-                    continue;
-                }
-                else
-                {
-                    throw new Exception($"Variable '{EvaluateString(parameter.Name)}' does not exist, and we need it for the effect execution.");
+                    if (scopes.Peek().ContainsKey(EvaluateString(parameter.Name)))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        throw new Exception($"Variable '{EvaluateString(parameter.Name)}' does not exist, and we need it for the effect execution.");
+                    }
                 }
             }
 
@@ -311,7 +325,7 @@ namespace Compiler
         {
             EnterScope();
             
-            string temp = (string)Evaluate(node.Targets.GameObject);
+            string temp = Evaluate(node.Targets.GameObject) as string ?? throw new Exception("Target evaluation returned null.");
 
             scopes.Peek().Add(temp, (List<GameObject>)FindVariableScope("FilteredCards")["FilteredCards"]);
 
@@ -325,7 +339,7 @@ namespace Compiler
 
         public double EvaluateUnaryExpressionNode(UnaryExpressionNode node)
         {
-            object operand = Evaluate(node.Expression);
+            object? operand = Evaluate(node.Expression);
 
             switch(node.Operator.type)
             {
@@ -354,8 +368,8 @@ namespace Compiler
 
         public object EvaluateBinaryExpressionNode(BinaryExpressionNode node)
         {
-            object left = Evaluate(node.Left);
-            object right = Evaluate(node.Right);
+            object? left = Evaluate(node.Left);
+            object? right = Evaluate(node.Right);
 
             switch(node.Operator.type)
             {
@@ -612,12 +626,67 @@ namespace Compiler
                 {
                     case "Find": //En el proximo capitulo
                     case "Push":
-                        argument.transform.SetParent(panelOfDestiny);
+                        if(panelOfDestiny.name == "Deck p1" || panelOfDestiny.name == "Deck p2")
+                        {
+                            string cardName = argument.GetComponent<Card>().name;
+                            CardData card = GetCardOfName(cardName);
+
+                            Destroy(argument);
+                            GameObject.Find(panelOfDestiny.name).GetComponent<Deck>().PushCard(card);
+                        }
+                        else
+                        {
+                            argument.transform.SetParent(panelOfDestiny);
+                        }
                         return null;
+                        
                     case "SendBottom":
+                        if(panelOfDestiny.name == "Deck p1" || panelOfDestiny.name == "Deck p2")
+                        {
+                            string cardName = argument.GetComponent<Card>().name;
+                            CardData card = GetCardOfName(cardName);
+
+                            Destroy(argument);
+                            GameObject.Find(panelOfDestiny.name).GetComponent<Deck>().SendBottom(card);
+                        }
+                        else
+                        {
+                            argument.transform.SetParent(panelOfDestiny);
+                        }
+                        return null;
+                        
                     case "Pop":
+                        if(panelOfDestiny.name == "Deck p1" || panelOfDestiny.name == "Deck p2")
+                        {
+                            return GameObject.Find(panelOfDestiny.name).GetComponent<Deck>().PopCard();
+                        }
+                        else
+                        {
+                            Destroy(argument);
+                        }
+                        return null;
+                        
                     case "Remove":
+                        if(panelOfDestiny.name == "Deck p1" || panelOfDestiny.name == "Deck p2")
+                        {
+                            string cardName = argument.GetComponent<Card>().name;
+                            CardData card = GetCardOfName(cardName);
+
+                            GameObject.Find(panelOfDestiny.name).GetComponent<Deck>().RemoveCard(card);
+                        }
+                        else
+                        {
+                            Destroy(argument);
+                        }
+                        return null;
+                        
                     case "Shuffle":
+                        if(panelOfDestiny.name == "Deck p1" || panelOfDestiny.name == "Deck p2")
+                        {
+                            GameObject.Find(panelOfDestiny.name).GetComponent<Deck>().ShuffleDeck();
+                        }
+                        return null;
+
                     default:
                         throw new Exception("Unknown Method name");
                 }
@@ -631,6 +700,39 @@ namespace Compiler
 
 
 
+        public CardData GetCardOfName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentException("Name cannot be null or empty", nameof(name));
+            }
+
+            string directory = "Assets/Resources/Decks";
+            DirectoryInfo di = new DirectoryInfo(directory);
+
+            FileInfo[] files = di.GetFiles("*.txt");
+
+            foreach (FileInfo file in files)
+            {
+                if (file.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+                {
+                    using (StreamReader sr = new StreamReader(file.FullName))
+                    {
+                        object? returnedValue = Compiler.ProcessInput(sr.ReadToEnd());
+                        if (returnedValue is CardData card)
+                        {
+                            return card;
+                        }
+                        else
+                        {
+                            throw new InvalidOperationException("The file content is not a valid card");
+                        }
+                    }
+                }
+            }   
+
+            throw new FileNotFoundException("The specified card does not exist", name);
+        }
 
         public List<GameObject> GetCardsInObject (GameObject panel)
         {
@@ -664,17 +766,7 @@ namespace Compiler
                 }
             }
 
-            // If the variable is not found in the local scope,
-            // recursively search in the parent scope (the previous scope in the stack).
-            // if (scopes.Count > 1)
-            // {
-            //     scopes.Pop();
-            //     Dictionary<string, object> parentScope = FindVariableScope(variableName);
-            //     scopes.Push(parentScope);
-            //     return parentScope;
-            // }
-
-            return null;
+            throw new Exception($"Variable '{variableName}' does not exist.");
         }
     }
 }

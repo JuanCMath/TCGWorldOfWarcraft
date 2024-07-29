@@ -137,7 +137,7 @@ public class PlayerManager : MonoBehaviour
         //Añadimos el scriptable object con el nombre de la carta a la lista de cartas del deck
         deck.GetComponent<Deck>().deck.Add(Resources.Load<CardData>("Scriptable Objects/Aspectos Deck/" + name)); //TODOOOOOO
         //Barajeamos el deck
-        ShuffleDeck(deck.GetComponent<Deck>().deck);
+        deck.GetComponent<Deck>().ShuffleDeck();
     }
 
     //Poniendo carta lider en el campo
@@ -176,21 +176,6 @@ public class PlayerManager : MonoBehaviour
                 g.name = g.GetComponent<Card>().cardData.cardName;
             }                   
         }     
-    }
-
-    //Barajear el Deck
-    static void ShuffleDeck(List<CardData> deck)    
-    {
-        System.Random rng = new System.Random();  
-        int n = deck.Count;  
-        while (n > 1)
-        {
-            n--;
-            int k = rng.Next(n + 1);
-            CardData value = deck[k];
-            deck[k] = deck[n];
-            deck[n] = value;
-        }
     }
 
     //Contar la cantidad de ataque que existe en el campo
@@ -310,7 +295,7 @@ public class PlayerManager : MonoBehaviour
     
     public void Start()
     {
-       ShuffleDeck(deck.GetComponent<Deck>().deck);
+       deck.GetComponent<Deck>().ShuffleDeck();
        SetLead();
     }
 
