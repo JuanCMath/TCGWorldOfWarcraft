@@ -7,7 +7,6 @@ public class Effects
 {
     public static Dictionary<string, EffectDeclarationNode> availableEffects = new Dictionary<string, EffectDeclarationNode>();
 
-    private string folderPath = "Assets/Resources/Effects";
 
     public void Awake()
     {
@@ -16,7 +15,7 @@ public class Effects
 
     private void LoadEffects()
     {
-        string[] files = Directory.GetFiles(folderPath, "*.txt");
+        string[] files = Directory.GetFiles("Assets/Resources/Effects", "*.txt");
 
         foreach (string file in files)
         {

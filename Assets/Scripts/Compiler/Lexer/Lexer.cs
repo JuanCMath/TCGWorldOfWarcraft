@@ -46,7 +46,11 @@ namespace Compiler
         PostActionDeclaration, PostActionType, PostActionSelector, PostActionSource, PostActionPredicate, PostActionUnit,
         EffectParams, EffectAction, EffectsUsage,
 
-        Fk
+
+        //Methods
+        Find, Push, SendBottom, Pop, Remove, Shuffle, 
+        HandOfPlayer, FieldOfPlayer, GraveyardOfPlayer, DeckOfplayer, 
+        Hand, Field, Graveyard, Owner, Power, TriggerPlayer, Board
     }
 
     // Lexer class for tokenizing the input string
@@ -101,11 +105,9 @@ namespace Compiler
             {"Range", TokenType.CardRange},
             {"OnActivation", TokenType.OnActivation},
             {"Effect", TokenType.EffectsUsage},
-            //{"Amount", TokenType.EffectAmount},
             {"Selector", TokenType.Selector},
             {"Source", TokenType.Source},
             {"Predicate", TokenType.Predicate},
-            //{"unit", TokenType.EffectUnit},
             {"PostAction", TokenType.PostActionDeclaration},
             {"Single", TokenType.Single},
             {"for", TokenType.ForCycle},
@@ -114,7 +116,24 @@ namespace Compiler
             {"Action", TokenType.EffectAction},
             {"true", TokenType.True},
             {"false", TokenType.False},
-            {"in", TokenType.inForCycle}
+            {"in", TokenType.inForCycle},
+            {"Hand", TokenType.Hand},
+            {"HandOfPlayer", TokenType.HandOfPlayer},
+            {"Find", TokenType.Find},
+            {"Push", TokenType.Push},
+            {"SendBottom", TokenType.SendBottom},
+            {"Pop", TokenType.Pop},
+            {"Remove", TokenType.Remove},
+            {"Shuffle", TokenType.Shuffle},
+            {"Field", TokenType.Field},
+            {"FieldOfPlayer", TokenType.FieldOfPlayer},
+            {"Graveyard", TokenType.Graveyard},
+            {"GraveyardOfPlayer", TokenType.GraveyardOfPlayer},
+            {"DeckOfPlayer", TokenType.DeckOfplayer},
+            {"Owner", TokenType.Owner},
+            {"Power", TokenType.Power},
+            {"TriggerPlayer", TokenType.TriggerPlayer},
+            {"Board", TokenType.Board}
         }; 
 
         private static Regex symbols = new Regex(@"\+=@|-=|!=|>=|<=|\|\||--|\+\+|==|\{|\}|@@|=>|\(|\)|\[|\]|\.|,|=|\+|-|\*|/|%|\^|:|;|@|!|>|<", RegexOptions.IgnoreCase);

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Enums;
-using UnityEditor.UI;
-using System.Diagnostics;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -135,7 +133,7 @@ public class PlayerManager : MonoBehaviour
         //Eliminamos la carta de la mano
         Destroy(card);
         //Añadimos el scriptable object con el nombre de la carta a la lista de cartas del deck
-        deck.GetComponent<Deck>().deck.Add(Resources.Load<CardData>("Scriptable Objects/Aspectos Deck/" + name)); //TODOOOOOO
+        deck.GetComponent<Deck>().deck.Add(Cards.availableCards.Find(card => card.cardName == name)); //TODOOOOOO
         //Barajeamos el deck
         deck.GetComponent<Deck>().ShuffleDeck();
     }

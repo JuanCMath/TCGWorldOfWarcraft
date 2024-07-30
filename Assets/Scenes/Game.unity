@@ -673,7 +673,6 @@ GameObject:
   - component: {fileID: 170981888}
   - component: {fileID: 170981887}
   - component: {fileID: 170981886}
-  - component: {fileID: 170981889}
   m_Layer: 5
   m_Name: Graveyard 2
   m_TagString: Untagged
@@ -783,18 +782,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 170981884}
   m_CullTransparentMesh: 1
---- !u!114 &170981889
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 170981884}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c18ab8ac554494babdf692a3168f9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &171783803
 GameObject:
   m_ObjectHideFlags: 0
@@ -1064,7 +1051,6 @@ GameObject:
   - component: {fileID: 216967030}
   - component: {fileID: 216967029}
   - component: {fileID: 216967028}
-  - component: {fileID: 216967032}
   m_Layer: 5
   m_Name: Hand p1
   m_TagString: Untagged
@@ -1169,18 +1155,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 216967025}
   m_CullTransparentMesh: 1
---- !u!114 &216967032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 216967025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c18ab8ac554494babdf692a3168f9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &230203697
 GameObject:
   m_ObjectHideFlags: 0
@@ -1943,7 +1917,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 376274186}
-  - component: {fileID: 376274187}
   m_Layer: 5
   m_Name: Field p2
   m_TagString: Untagged
@@ -1977,18 +1950,6 @@ RectTransform:
   m_AnchoredPosition: {x: -178.35571, y: 271.2271}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &376274187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 376274185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c18ab8ac554494babdf692a3168f9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &394863525
 GameObject:
   m_ObjectHideFlags: 0
@@ -3701,7 +3662,6 @@ GameObject:
   - component: {fileID: 843968480}
   - component: {fileID: 843968479}
   - component: {fileID: 843968478}
-  - component: {fileID: 843968481}
   m_Layer: 5
   m_Name: Graveyard
   m_TagString: Untagged
@@ -3811,18 +3771,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 843968476}
   m_CullTransparentMesh: 1
---- !u!114 &843968481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 843968476}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c18ab8ac554494babdf692a3168f9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &858685628
 GameObject:
   m_ObjectHideFlags: 0
@@ -4894,7 +4842,6 @@ GameObject:
   - component: {fileID: 1222444524}
   - component: {fileID: 1222444523}
   - component: {fileID: 1222444522}
-  - component: {fileID: 1222444526}
   - component: {fileID: 1222444527}
   m_Layer: 5
   m_Name: Deck p2
@@ -5017,18 +4964,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1222444520}
   m_CullTransparentMesh: 1
---- !u!114 &1222444526
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1222444520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c18ab8ac554494babdf692a3168f9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1222444527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5041,7 +4976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5849f6ed65c9d3040bd8e36c9a552628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: 1
+  faction: 
   deck: []
   leadCard: {fileID: 0}
 --- !u!1 &1254979320
@@ -5740,7 +5675,6 @@ GameObject:
   - component: {fileID: 1438966713}
   - component: {fileID: 1438966712}
   - component: {fileID: 1438966711}
-  - component: {fileID: 1438966715}
   - component: {fileID: 1438966716}
   m_Layer: 5
   m_Name: Deck p1
@@ -5863,18 +5797,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1438966709}
   m_CullTransparentMesh: 1
---- !u!114 &1438966715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1438966709}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c18ab8ac554494babdf692a3168f9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1438966716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5887,7 +5809,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5849f6ed65c9d3040bd8e36c9a552628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: 0
+  faction: 
   deck: []
   leadCard: {fileID: 0}
 --- !u!1 &1452820403
@@ -6037,7 +5959,6 @@ GameObject:
   - component: {fileID: 1453628173}
   - component: {fileID: 1453628172}
   - component: {fileID: 1453628171}
-  - component: {fileID: 1453628175}
   m_Layer: 5
   m_Name: Hand p2
   m_TagString: Untagged
@@ -6142,18 +6063,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1453628168}
   m_CullTransparentMesh: 1
---- !u!114 &1453628175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1453628168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c18ab8ac554494babdf692a3168f9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1455698160
 GameObject:
   m_ObjectHideFlags: 0
@@ -6238,8 +6147,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1651074406}
-  - component: {fileID: 1651074408}
-  - component: {fileID: 1651074407}
   m_Layer: 5
   m_Name: Field p1
   m_TagString: Untagged
@@ -6273,30 +6180,6 @@ RectTransform:
   m_AnchoredPosition: {x: -33.410645, y: 6.687866}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1651074407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1651074405}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c18ab8ac554494babdf692a3168f9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1651074408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1651074405}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c18ab8ac554494babdf692a3168f9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1681513801
 GameObject:
   m_ObjectHideFlags: 0

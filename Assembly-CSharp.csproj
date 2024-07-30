@@ -72,10 +72,10 @@
     <Compile Include="Assets\Scripts\Events\Card Click Event.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\OnActivationNode.cs" />
     <Compile Include="Assets\Scripts\Card Stuffs\Display Card.cs" />
+    <Compile Include="Assets\Scripts\Manager\Deck.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\VariableReferenceNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\SelectorNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\Terminals\GameObjectReferenceNode.cs" />
-    <Compile Include="Assets\Scripts\Databases\Deck.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\EffectsToBeActivateNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\ForNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\ActionDeclarationNode.cs" />
@@ -92,6 +92,7 @@
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\ASTPrinter.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\Parser.cs" />
     <Compile Include="Assets\Scripts\Compiler\Lexer\TokenEnumerable.cs" />
+    <Compile Include="Assets\Scripts\Databases\LoadCards.cs" />
     <Compile Include="Assets\Scripts\Compiler\Compiler.cs" />
     <Compile Include="Assets\Scripts\Manager\Pause Menu.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\IndexingOnListNode.cs" />
@@ -101,7 +102,6 @@
     <Compile Include="Assets\Scripts\Card Stuffs\Card.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\WhileNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\EffectParametersAssignementNode.cs" />
-    <Compile Include="Assets\Scripts\Databases\LoadCard.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\MethodCallNode.cs" />
     <Compile Include="Assets\Scripts\Manager\PlayerManager.cs" />
     <Compile Include="Assets\Scripts\Panels Scripts\DropZoneGeneric.cs" />

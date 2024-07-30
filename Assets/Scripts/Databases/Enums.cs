@@ -1,10 +1,5 @@
 namespace Enums
 {
-    public enum VariableType
-    {
-        Double,
-        String,
-    }
     public enum player
     {
         Player1,
@@ -21,11 +16,6 @@ namespace Enums
         MRS, // Melee & Range & Siege
         X    // Special Cards
     }
-    public enum faction
-    {
-        Aspectos, 
-        Arthas
-    }
     public enum type
     {
         Unidad,
@@ -38,6 +28,7 @@ namespace Enums
     public enum gameTracker
     {
         StartingTheGame, 
+        ChoosingFaction,
         StartingRound, 
         Player1Turn, 
         Player2Turn,

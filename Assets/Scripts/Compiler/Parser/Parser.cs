@@ -630,7 +630,24 @@ namespace Compiler
                 || token.type == TokenType.EffectAction
                 || token.type == TokenType.True
                 || token.type == TokenType.False
-                || token.type == TokenType.inForCycle)
+                || token.type == TokenType.inForCycle
+                || token.type == TokenType.Find
+                || token.type == TokenType.Push
+                || token.type == TokenType.SendBottom
+                || token.type == TokenType.Pop
+                || token.type == TokenType.Remove
+                || token.type == TokenType.Shuffle
+                || token.type == TokenType.HandOfPlayer
+                || token.type == TokenType.FieldOfPlayer
+                || token.type == TokenType.GraveyardOfPlayer
+                || token.type == TokenType.DeckOfplayer
+                || token.type == TokenType.Hand
+                || token.type == TokenType.Field
+                || token.type == TokenType.Graveyard
+                || token.type == TokenType.Owner
+                || token.type == TokenType.Power
+                || token.type == TokenType.TriggerPlayer
+                || token.type == TokenType.Board)
             {
                 return token;
             }
@@ -664,7 +681,24 @@ namespace Compiler
                 || token.type == TokenType.EffectAction
                 || token.type == TokenType.True
                 || token.type == TokenType.False
-                || token.type == TokenType.inForCycle)
+                || token.type == TokenType.inForCycle
+                || token.type == TokenType.Find
+                || token.type == TokenType.Push
+                || token.type == TokenType.SendBottom
+                || token.type == TokenType.Pop
+                || token.type == TokenType.Remove
+                || token.type == TokenType.Shuffle
+                || token.type == TokenType.HandOfPlayer
+                || token.type == TokenType.FieldOfPlayer
+                || token.type == TokenType.GraveyardOfPlayer
+                || token.type == TokenType.DeckOfplayer
+                || token.type == TokenType.Hand
+                || token.type == TokenType.Field
+                || token.type == TokenType.Graveyard
+                || token.type == TokenType.Owner
+                || token.type == TokenType.Power
+                || token.type == TokenType.TriggerPlayer
+                || token.type == TokenType.Board)
             {
                 return true;
             }

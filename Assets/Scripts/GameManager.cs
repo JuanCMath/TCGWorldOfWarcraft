@@ -297,6 +297,10 @@ public class GameManager : MonoBehaviour
                 state = gameTracker.StartingRound;
                 break;
 
+            case gameTracker.ChoosingFaction: //Aqui se mostrara la pantalla de seleccion de faccion
+                //TODO
+                break;
+
             //Seteando condiciones necesarias para el inicio de cada ronda
             case gameTracker.StartingRound:
                 //Reseteando los pass
