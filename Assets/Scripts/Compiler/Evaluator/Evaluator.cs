@@ -583,9 +583,9 @@ namespace Compiler
                     
                     case "Deck":
                         if (GameObject.Find("Game Manger").GetComponent<GameManager>().state == gameTracker.Player1Turn)
-                            return GameObject.Find("Player1 Manager").GetComponent<PlayerManager>().deck;
+                            return GetCardsInObject(GameObject.Find("Player1 Manager").GetComponent<PlayerManager>().deck);
                         else
-                            return GameObject.Find("Player2 Manager").GetComponent<PlayerManager>().deck;
+                            return GetCardsInObject(GameObject.Find("Player2 Manager").GetComponent<PlayerManager>().deck);
 
                     case "Board":
                         List<GameObject> cards = new List<GameObject>();
@@ -659,6 +659,7 @@ namespace Compiler
                         else
                         {
                             argument.transform.SetParent(panelOfTheList);
+                            argument.transform.SetAsFirstSibling();
                         }
                         return null;
                         
@@ -674,21 +675,30 @@ namespace Compiler
                         else
                         {
                             argument.transform.SetParent(panelOfTheList);
+                            argument.transform.SetAsLastSibling();
                         }
                         return null;
                         
                     case "Pop":
                         if(panelOfTheList.gameObject.GetComponent<Deck>() != null)
                         {
-                            return panelOfTheList.gameObject.GetComponent<Deck>().PopCard();
+                            CardData temp = panelOfTheList.gameObject.GetComponent<Deck>().PopCard();
+
+                            gameObjectListReference.Remove(argument);
+
+                            return InstantiateCard(temp, GameObject.Find("Utility").transform);;
                         }
                         else
                         {
-                            GameObject temp = gameObjectListReference[0];
-                            
-                            Destroy(gameObjectListReference[0]);
-                            return temp;
+                            while ( GameObject.Find("Utility").transform.childCount > 0)
+                            { 
+                                Destroy(GameObject.Find("Utility").transform.GetChild(0).gameObject);
+                            }
+
+                            gameObjectListReference[0].transform.SetParent(GameObject.Find("Utility").transform );       
+                            return GameObject.Find("Utility").transform.GetChild(0).gameObject;
                         }
+
                     case "Remove":
                         if(panelOfTheList.gameObject.GetComponent<Deck>() != null)
                         {
@@ -708,6 +718,10 @@ namespace Compiler
                         {
                             GameObject.Find(panelOfTheList.name).GetComponent<Deck>().ShuffleDeck();
                         }
+                        else
+                        {
+                            ShuffleCards(panelOfTheList.gameObject);
+                        }
                         return null;
 
                     default:
@@ -722,6 +736,26 @@ namespace Compiler
     
 
 
+        public GameObject InstantiateCard(CardData data, Transform panel)
+        {
+            GameObject prefab; 
+
+            if (GameObject.Find("Game Manger").GetComponent<GameManager>().state == gameTracker.Player1Turn)
+            {
+                prefab = GameObject.Find("player 1").GetComponent<PlayerManager>().cardPrefab;
+            }
+            else
+            {
+                prefab = GameObject.Find("player 2").GetComponent<PlayerManager>().cardPrefab;
+            }
+
+            GameObject card = Instantiate(prefab , panel);
+            card.GetComponent<Card>().cardData = data;
+            card.name = card.GetComponent<Card>().cardData.cardName;
+
+
+            return card;
+        }
 
         public CardData GetCardOfName(string name)
         {
@@ -740,6 +774,20 @@ namespace Compiler
 
             throw new FileNotFoundException("The specified card does not exist", name);
         }
+
+
+        public void ShuffleCards(GameObject panel)
+        {
+            int childCount = panel.transform.childCount;
+            System.Random rand = new System.Random();
+    
+            for (int i = 0; i < childCount; i++)
+            {
+                int randomIndex = rand.Next(childCount);
+                panel.transform.GetChild(i).SetSiblingIndex(randomIndex);
+            }            
+        }
+
 
         public List<GameObject> GetCardsInObject (GameObject panel)
         {

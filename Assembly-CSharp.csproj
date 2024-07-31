@@ -89,7 +89,6 @@
     <Compile Include="Assets\Scripts\Manager\Main Menu.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Events\Event Manager.cs" />
-    <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\ASTPrinter.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\Parser.cs" />
     <Compile Include="Assets\Scripts\Compiler\Lexer\TokenEnumerable.cs" />
     <Compile Include="Assets\Scripts\Databases\LoadCards.cs" />
