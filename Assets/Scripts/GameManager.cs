@@ -294,11 +294,14 @@ public class GameManager : MonoBehaviour
             //Empezando el juego, aqui pondre algunas animaciones e inputs a los usuarios para poner su nombre
             case gameTracker.StartingTheGame:
                 endGameMenu.SetActive(false);
-                state = gameTracker.StartingRound;
+                state = gameTracker.ChoosingFaction;
                 break;
 
             case gameTracker.ChoosingFaction: //Aqui se mostrara la pantalla de seleccion de faccion
                 //TODO
+                GameObject.Find("Deck p1").GetComponent<Deck>().LoadDeck();
+                GameObject.Find("Deck p2").GetComponent<Deck>().LoadDeck();
+                state = gameTracker.StartingRound;
                 break;
 
             //Seteando condiciones necesarias para el inicio de cada ronda

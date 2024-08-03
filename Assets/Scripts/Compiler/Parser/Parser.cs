@@ -8,7 +8,7 @@ namespace Compiler
     {
         private int currentIndex;
         private List<Token> tokens;
-        Dictionary<TokenType, int> precedence = new Dictionary<TokenType, int>
+        Dictionary<TokenType, int> defaultprecedence = new Dictionary<TokenType, int>
             {
                 { TokenType.Equal, 1 },
                 { TokenType.MinusEqual, 1},
@@ -30,34 +30,25 @@ namespace Compiler
                 { TokenType.Div, 4 },
                 { TokenType.Pow,5},
             };
-        public Parse(List<Token> tokens, Dictionary<TokenType, int> precedence)
+        public Parse(List<Token> tokens)
         {
             this.tokens = tokens;
             currentIndex = 0;
-            this.precedence = precedence;
         }
 
-        public MainProgramNode Parsing()
+        public ASTNode Parsing()
         {
-            List<ASTNode> body = new List<ASTNode>();
+            var propertyName = ExpectKeyWord().type;
 
-            while (!Match(TokenType.EOF))
+            switch (propertyName)
             {
-                var propertyName = ExpectKeyWord().type;
-
-                switch (propertyName)
-                {
-                    case TokenType.CardDeclaration:
-                        body.Add(CardDeclarationParser());
-                        break;
-                    case TokenType.EffectDeclaration:
-                        body.Add(EffectDeclarationParser());
-                        break;
-                    default:
-                        throw new Exception($"Unexpected property '{propertyName}'.");
-                }
+                case TokenType.CardDeclaration:
+                    return CardDeclarationParser();
+                case TokenType.EffectDeclaration:
+                    return EffectDeclarationParser();
+                default:
+                    throw new Exception($"Unexpected property '{propertyName}'.");    
             }
-            return new MainProgramNode(body);
         }
 
         public CardDeclarationNode CardDeclarationParser()
@@ -464,30 +455,30 @@ namespace Compiler
                 Token op = tokens[currentIndex];
                 TokenType opType = op.type;
 
-                if (opType == TokenType.Dot && tokens[currentIndex + 2].type != TokenType.ParenL)
+                if (!defaultprecedence.ContainsKey(opType) || defaultprecedence[opType] < minPrecedence)
                 {
-                    currentIndex++;
-                    ExpresionNodes right = ParseExpresion(precedence[opType] + 1);
-                    left = new PropertyCallNode(left, right);
+                    return left;
                 }
                 else if (opType == TokenType.Dot && tokens[currentIndex + 2].type == TokenType.ParenL)
                 {
                     currentIndex++;
-                    ExpresionNodes right = ParseExpresion(precedence[opType] + 1);
+                    ExpresionNodes right = ParseExpresion(defaultprecedence[opType] + 1);
                     
                     Expect(TokenType.ParenL);
-                    GameObjectReferenceNode arguments = new GameObjectReferenceNode(new StringNode(Expect(TokenType.Identifier).lexeme));
+                    ExpresionNodes arguments = ParseExpresion();
                     Expect(TokenType.ParenR);
                     left = new MethodCallNode(left, right, arguments);
                 }
-                else if (!precedence.ContainsKey(opType) || precedence[opType] < minPrecedence)
+                else if (opType == TokenType.Dot && tokens[currentIndex + 2].type != TokenType.ParenL)
                 {
-                    return left;
+                    currentIndex++;
+                    ExpresionNodes right = ParseExpresion(defaultprecedence[opType] + 1);
+                    left = new PropertyCallNode(left, right);
                 }
                 else
                 {
                     currentIndex++;
-                    ExpresionNodes right = ParseExpresion(precedence[opType] + 1);
+                    ExpresionNodes right = ParseExpresion(defaultprecedence[opType] + 1);
                     left = new BinaryExpressionNode(left, op, right);
                 }
             }
@@ -554,24 +545,18 @@ namespace Compiler
         // This method is used to check if the current token is the expected token (return rangeList, current++)
         private StringNode[] ExpectStringArray()
         {
-            Queue<StringNode> temporalRanges = new Queue<StringNode>();
+            List<StringNode> temporalRanges = new List<StringNode>();
 
             Expect(TokenType.BracketL);
             while (!Match(TokenType.BracketR))
             {
-                temporalRanges.Enqueue(new StringNode(ExpectString()));
+                temporalRanges.Add(new StringNode(ExpectString()));
                 if (!Match(TokenType.Comma)) break;
-                else Expect(TokenType.Comma); continue;
+                Expect(TokenType.Comma);
             }
             Expect(TokenType.BracketR);
 
-            StringNode[] rangeList = new StringNode[temporalRanges.Count];
-
-            for (int i = 0; i < temporalRanges.Count; i++)
-            {
-                rangeList[i] = temporalRanges.Dequeue();
-            }
-            return rangeList;
+            return temporalRanges.ToArray();
         }
 
 

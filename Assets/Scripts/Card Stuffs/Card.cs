@@ -29,8 +29,8 @@ public class Card : MonoBehaviour
     public string cardDescription;
     public bool isHero;
     //public slot cardSlot;
-    public string[] cardSlot;
     public type cardType;
+    public string[] cardSlot;
     
     public int attackPower;
     public Image art;
@@ -55,7 +55,6 @@ public class Card : MonoBehaviour
         cardDescription = cardData.cardDescription;
         isHero = cardData.isHero;
         cardSlot = cardData.slots;
-        cardType = cardData.cardType;
         attackPower = cardData.attackPower;
 
         UpdateDisplay();
@@ -64,7 +63,6 @@ public class Card : MonoBehaviour
     public void UpdateDisplay()
     {
         cardDescText.text = cardDescription;
-        cardTypeText.text = cardType.ToString();
         cardAttack.text = attackPower.ToString();
         cardPositionText.text = cardSlot.ToString();
         art.sprite = cardData.art;

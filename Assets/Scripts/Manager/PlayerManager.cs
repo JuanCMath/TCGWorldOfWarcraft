@@ -141,9 +141,9 @@ public class PlayerManager : MonoBehaviour
     //Poniendo carta lider en el campo
     public void SetLead()
     {
-        GameObject g = Instantiate(cardLeadPrefab, lead.transform);
-        g.GetComponent<Card>().cardData = deck.GetComponent<Deck>().leadCard;
-        g.name = g.GetComponent<Card>().cardData.cardName;
+        //GameObject g = Instantiate(cardLeadPrefab, lead.transform);
+        //g.GetComponent<Card>().cardData = deck.GetComponent<Deck>().leadCard;
+        //g.name = g.GetComponent<Card>().cardData.cardName;
     }
     //Robar Carta del Deck
     public void DrawCard(int amount)       

@@ -3,18 +3,19 @@ using UnityEngine;
 using System.IO;
 using Compiler;
 
-public class Cards
+public class Cards : MonoBehaviour
 {
     public static List<CardData> availableCards = new List<CardData>();
 
-    public void Awake()
+    void Awake()
     {
         LoadCards();
     }
 
     private void LoadCards()
     {
-        string[] files = Directory.GetFiles("Assets/Resources/Cards", "*.txt");
+
+        string[] files = Directory.GetFiles(@"D:\Unity\TCGWorldOfWarcraft\Assets\Resources\Cards", "*.txt");
 
         foreach (string file in files)
         {
@@ -27,5 +28,8 @@ public class Cards
                 }
             }
         }
+        
+        Debug.Log(availableCards.Count);
     }
+
 }

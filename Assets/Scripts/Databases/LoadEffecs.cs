@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using Compiler;
 using System.IO;
+using UnityEngine;
 
-public class Effects
+public class Effects : MonoBehaviour
 {
     public static Dictionary<string, EffectDeclarationNode> availableEffects = new Dictionary<string, EffectDeclarationNode>();
 

@@ -23,12 +23,6 @@ namespace Compiler
         {
             switch(node)
             {
-                case MainProgramNode mainNode:
-                    EnterScope();
-                    EvaluateBlock(mainNode.Body);
-                    ExitScope();
-                    return null;
-
                 case CardDeclarationNode cardNode:
                     return EvaluateCardDeclarationNode(cardNode);
                 
@@ -143,7 +137,7 @@ namespace Compiler
             data.attackPower = Evaluate(cardnode.Power) as int? ?? 0;
             data.slots = EvaluateRanges(cardnode.Ranges);
             data.effect = SaveOnActivationBlock(cardnode.OnActivation);
-
+ 
             return data;
         }
 
@@ -192,6 +186,7 @@ namespace Compiler
             {
                 ranges[i] = EvaluateString(nodes[i]);
             }
+            
             return ranges;
         }
 
@@ -614,9 +609,12 @@ namespace Compiler
         {
             object obj = Evaluate(node.Target);
             object MethodName = node.MethodName is StringNode stringNode ? EvaluateString(stringNode) : throw new Exception("Property name must be a PropertyName.");
-            GameObject argument = EvaluateObjectReference(node.Arguments);
-
-            if(obj is GameObject objectReferenceNode && objectReferenceNode.GetComponent<Context>() != null) //TODO, crear el object context con su script asociado
+            GameObject? argument = Evaluate(node.Arguments) as GameObject;
+            
+            if(obj is GameObject objectReferenceNode                && 
+               objectReferenceNode.GetComponent<Context>() != null  
+               )
+             //TODO, crear el object context con su script asociado
             {
                 switch(MethodName)
                 {
@@ -639,7 +637,7 @@ namespace Compiler
                     default:
                         throw new Exception("Unknown Method name");
                 }
-            }
+            } 
             else if(obj is List<GameObject> gameObjectListReference && argument.GetComponent<Card>() != null)
             {
                 Transform panelOfTheList = gameObjectListReference[gameObjectListReference.Count % 2].transform.parent;
@@ -787,7 +785,6 @@ namespace Compiler
                 panel.transform.GetChild(i).SetSiblingIndex(randomIndex);
             }            
         }
-
 
         public List<GameObject> GetCardsInObject (GameObject panel)
         {

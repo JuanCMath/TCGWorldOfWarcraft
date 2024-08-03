@@ -497,6 +497,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 122889366}
+  - component: {fileID: 122889368}
+  - component: {fileID: 122889367}
   m_Layer: 0
   m_Name: Game Trackers
   m_TagString: Untagged
@@ -527,6 +529,30 @@ Transform:
   - {fileID: 99047142}
   m_Father: {fileID: 180033779}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &122889367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122889365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcd0b37cb2a97c547aec2c572ca12efa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &122889368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122889365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e13164bd1a7d59943b591743eca824b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &137599599
 GameObject:
   m_ObjectHideFlags: 0
@@ -1807,7 +1833,7 @@ GameObject:
   - component: {fileID: 334112063}
   - component: {fileID: 334112064}
   m_Layer: 0
-  m_Name: player2
+  m_Name: Player2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3783,7 +3809,7 @@ GameObject:
   - component: {fileID: 858685629}
   - component: {fileID: 858685630}
   m_Layer: 0
-  m_Name: player1
+  m_Name: Player1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4977,7 +5003,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5849f6ed65c9d3040bd8e36c9a552628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  faction: 
+  faction: Northern Realms
   deck: []
   leadCard: {fileID: 0}
 --- !u!1 &1254979320
@@ -5372,7 +5398,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1438.1919, y: -39.263}
+  m_AnchoredPosition: {x: 1438.1919, y: -39.26294}
   m_SizeDelta: {x: -1523.4882, y: -1007.4152}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1373358144
@@ -5885,7 +5911,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5849f6ed65c9d3040bd8e36c9a552628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  faction: 
+  faction: Northern Realms
   deck: []
   leadCard: {fileID: 0}
 --- !u!1 &1452820403

@@ -101,7 +101,6 @@ namespace Compiler
             {"Type", TokenType.TypeParam},
             {"Name", TokenType.Name},
             {"Faction", TokenType.CardFaction},
-            {"Power", TokenType.CardPower},
             {"Range", TokenType.CardRange},
             {"OnActivation", TokenType.OnActivation},
             {"Effect", TokenType.EffectsUsage},
@@ -131,7 +130,7 @@ namespace Compiler
             {"GraveyardOfPlayer", TokenType.GraveyardOfPlayer},
             {"DeckOfPlayer", TokenType.DeckOfplayer},
             {"Owner", TokenType.Owner},
-            {"Power", TokenType.Power},
+            {"Power", TokenType.CardPower},
             {"TriggerPlayer", TokenType.TriggerPlayer},
             {"Board", TokenType.Board}
         }; 

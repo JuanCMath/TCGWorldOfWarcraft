@@ -1,34 +1,26 @@
 using System;
 using System.Collections.Generic;
-using Enums;
 using UnityEngine;
-using System.IO;
-using System.Buffers;
 
 public class Deck : MonoBehaviour
 {
     public string faction;
 
-    
     public List<CardData> deck = new List<CardData>();
     public CardData leadCard;
-
-
-    public void Awake()
-    {
-        LoadLead();
-        LoadDeck();
-    }
     
-    private void LoadDeck()
+    public void LoadDeck()
     {
         foreach (CardData card in Cards.availableCards)
         {
-            if (card.cardFaction.Equals(faction, StringComparison.OrdinalIgnoreCase))
+            Debug.Log(card.cardFaction == faction);
+            if (card.cardFaction == faction)
             {
                 deck.Add(card);
             }
         }
+
+        LoadLead();
     }
 
     private void LoadLead()
