@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#nullable enable
 
 namespace Compiler
 {
@@ -12,7 +13,10 @@ namespace Compiler
         public StringNode[] Ranges { get; set; }
         public OnActivationNode OnActivation { get; set; }
 
-        public CardDeclarationNode(StringNode name, StringNode type, StringNode faction, NumberNode power, StringNode[] ranges, OnActivationNode onActivation)
+        public StringNode? artName { get; set; }
+        public StringNode? description { get; set;}
+
+        public CardDeclarationNode(StringNode name, StringNode type, StringNode faction, NumberNode power, StringNode[] ranges, OnActivationNode onActivation, StringNode? artName, StringNode? description)
         {
             this.Name = name;
             this.Type = type;
@@ -20,6 +24,8 @@ namespace Compiler
             this.Power = power;
             this.Ranges = ranges;
             this.OnActivation = onActivation;
+            this.artName = artName;
+            this.description = description;
         }
 
         public override IEnumerable<ASTNode> GetChildren()

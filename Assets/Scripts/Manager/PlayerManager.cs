@@ -179,7 +179,7 @@ public class PlayerManager : MonoBehaviour
     //Contar la cantidad de ataque que existe en el campo
     public void CountAttackOnField()
     {   
-        applyAumento();
+        //applyAumento();
         foreach (Transform child in meleeZone.transform)
         {
             power += child.GetComponent<Card>().attackPower;
@@ -193,7 +193,7 @@ public class PlayerManager : MonoBehaviour
             power += child.GetComponent<Card>().attackPower;
         }
     }
-
+    /*
     public void applyClima()
     {
         int amountOfChange;
@@ -228,7 +228,7 @@ public class PlayerManager : MonoBehaviour
             EffectsManager.IncreaseEffect(siegeZone, amountOfChangeS);
         }
     }
-
+    */
     public void ShowCardBack()
     {
         if (owner == player.Player1)
@@ -300,7 +300,7 @@ public class PlayerManager : MonoBehaviour
     
     public void Update()
     {
-       deckText.text = deck.GetComponent<Deck>().deck.Count.ToString();
-       deckText.text = (graveyard.transform.childCount - 1).ToString();
+        deckText.text = deck.GetComponent<Deck>().deck.Count.ToString();
+        discardText.text = (graveyard.transform.childCount - 1).ToString();
     }
  }

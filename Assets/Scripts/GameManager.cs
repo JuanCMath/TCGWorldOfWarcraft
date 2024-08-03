@@ -148,8 +148,8 @@ public class GameManager : MonoBehaviour
     public void EndRound()  //Seteamos las condiciones para el final de ronda
     {
         //Aplicamos clima
-        GameObject.Find("Player1").GetComponent<PlayerManager>().applyClima();
-        GameObject.Find("Player2").GetComponent<PlayerManager>().applyClima();
+        //GameObject.Find("Player1").GetComponent<PlayerManager>().applyClima();
+        //GameObject.Find("Player2").GetComponent<PlayerManager>().applyClima();
         //Contamos el ataque de cada jugador en el campo
         GameObject.Find("Player1").GetComponent<PlayerManager>().CountAttackOnField();
         GameObject.Find("Player2").GetComponent<PlayerManager>().CountAttackOnField();

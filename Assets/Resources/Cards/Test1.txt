@@ -3,7 +3,9 @@ card {
 	Name: "Beluga",
 	Faction: "Northern Realms",
 	Power: 10,
-	Range: ["Melee", "Ranged"],
+	Range: ["Melee", "Range"],
+	ArtName: "Aspectos - Dragones Clima 1 - Assault",
+	Description: "Es Pato",
 	OnActivation: 
 	[
 		{

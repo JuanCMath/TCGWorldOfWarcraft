@@ -19,6 +19,12 @@ public class DropZoneGeneric : MonoBehaviour, IDropHandler, IPointerEnterHandler
 
         public bool CardCanBePlaced(GameObject dropedCard)
         {
+            Debug.Log(maxCards >= gameObject.transform.childCount);                          
+            Debug.Log(    GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable > 0);
+            Debug.Log(playerCanPlaceCard == true);
+            Debug.Log(    allowedCardsType.Contains(dropedCard.GetComponent<Card>().cardType));
+            Debug.Log(    dropedCard.GetComponent<Card>().cardSlot.Contains(allowedCards));
+
             if (maxCards >= gameObject.transform.childCount                                              &&
                 GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable > 0 &&
                 playerCanPlaceCard == true                                                               &&
@@ -101,11 +107,11 @@ public class DropZoneGeneric : MonoBehaviour, IDropHandler, IPointerEnterHandler
 
     public void Update()
     {
-        if (GameManager.player1 == true && gameObject.transform.parent.name == "Panels p1")
+        if (GameManager.player1 == true && gameObject.transform.parent.name == "Field p1")
         {
             playerCanPlaceCard = true;
         }
-        else if (GameManager.player2 == true && gameObject.transform.parent.name == "Panels p2")
+        else if (GameManager.player2 == true && gameObject.transform.parent.name == "Field p2")
         {
             playerCanPlaceCard = true;
         }

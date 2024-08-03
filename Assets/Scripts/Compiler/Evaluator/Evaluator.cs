@@ -132,11 +132,14 @@ namespace Compiler
 
             data.cardType = EvaluateType(cardnode.Type);
             data.isHero = EvaluateIsHero(cardnode.Type);
-            data.name = Evaluate(cardnode.Name) as string;
+            data.cardName = Evaluate(cardnode.Name) as string;
             data.cardFaction = Evaluate(cardnode.Faction) as string;
             data.attackPower = Evaluate(cardnode.Power) as int? ?? 0;
             data.slots = EvaluateRanges(cardnode.Ranges);
             data.effect = SaveOnActivationBlock(cardnode.OnActivation);
+
+            if(cardnode.description != null) data.cardDescription = Evaluate(cardnode.description) as string;
+            if(cardnode.artName != null) data.art = Resources.Load<Sprite>(EvaluateString(cardnode.artName));
  
             return data;
         }

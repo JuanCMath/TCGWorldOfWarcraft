@@ -2,7 +2,6 @@ using Enums;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Text.RegularExpressions;
 
 public class Card : MonoBehaviour
 {
@@ -11,8 +10,6 @@ public class Card : MonoBehaviour
     public GameObject cardBack;
 
     public bool displayCardBack;
-
-    public int effectNumber;
 
     [Header("Card Info")]
     //public TextMeshProUGUI carNametext;
@@ -24,11 +21,9 @@ public class Card : MonoBehaviour
     [Header("Card Data")]
     public int cardID;
     public string cardName;
-    //public faction cardFaction;
     public string cardFaction;
     public string cardDescription;
     public bool isHero;
-    //public slot cardSlot;
     public type cardType;
     public string[] cardSlot;
     
@@ -38,7 +33,6 @@ public class Card : MonoBehaviour
     private void Start()
     {
         CollectInfo();
-        ProcesDescription();
     }
 
     private void CollectInfo()
@@ -60,22 +54,16 @@ public class Card : MonoBehaviour
         UpdateDisplay();
     }
 
-    public void UpdateDisplay()
+    private void UpdateDisplay()
     {
         cardDescText.text = cardDescription;
         cardAttack.text = attackPower.ToString();
-        cardPositionText.text = cardSlot.ToString();
+        cardPositionText.text = ProcessCardSlot();
+        cardTypeText.text = cardType.ToString();
         art.sprite = cardData.art;
     }
-    public void ProcesDescription()
-    {
-        Regex regex = new Regex(@"\b\d\b");
-        Match match = regex.Match(cardDescription);
 
-        if (match.Success)
-            effectNumber = int.Parse(match.Value);
-    }
-    public void DisplayCardBack()
+    private void DisplayCardBack()
     {
         if (displayCardBack == true)
         {
@@ -86,6 +74,34 @@ public class Card : MonoBehaviour
             cardBack.SetActive(false);
         }
     }
+
+    private string ProcessCardSlot()
+    {
+        string slot = "";
+
+        foreach (string position in cardSlot)
+        {
+            if (position == "Melee")
+            {
+                slot += "M";
+            }
+            else if (position == "Range")
+            {
+                slot += "R";
+            }
+            else if (position == "Siege")
+            {
+                slot += "S";
+            }
+            else
+            {
+                slot += "X";
+            }
+        }
+
+        return slot;
+    }
+
     public void Update()
     {
         UpdateDisplay();

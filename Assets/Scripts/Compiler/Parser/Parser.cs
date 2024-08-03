@@ -60,6 +60,9 @@ namespace Compiler
             StringNode[] ranges = null;
             OnActivationNode onActivation = null;
 
+            StringNode artName = null;
+            StringNode description = null;
+
             Expect(TokenType.BraceL);
 
             while (!Match(TokenType.BraceR))
@@ -92,12 +95,20 @@ namespace Compiler
                     case TokenType.OnActivation:
                         onActivation = OnActivationParser();
                         break;
+                    case TokenType.ArtName:
+                        artName = new StringNode(ExpectString());
+                        Expect(TokenType.Comma);
+                        break;
+                    case TokenType.Description:
+                        description = new StringNode(ExpectString());
+                        Expect(TokenType.Comma);
+                        break;
                     default:
                         throw new Exception($"Unexpected property '{propertyName}'.");
                 }
             }
             Expect(TokenType.BraceR);
-            return new CardDeclarationNode(name, type, faction, power, ranges, onActivation);
+            return new CardDeclarationNode(name, type, faction, power, ranges, onActivation, artName, description);
         }
 
         public OnActivationNode OnActivationParser()
@@ -632,6 +643,8 @@ namespace Compiler
                 || token.type == TokenType.Owner
                 || token.type == TokenType.Power
                 || token.type == TokenType.TriggerPlayer
+                || token.type == TokenType.ArtName
+                || token.type == TokenType.Description
                 || token.type == TokenType.Board)
             {
                 return token;
@@ -683,6 +696,8 @@ namespace Compiler
                 || token.type == TokenType.Owner
                 || token.type == TokenType.Power
                 || token.type == TokenType.TriggerPlayer
+                || token.type == TokenType.ArtName
+                || token.type == TokenType.Description
                 || token.type == TokenType.Board)
             {
                 return true;

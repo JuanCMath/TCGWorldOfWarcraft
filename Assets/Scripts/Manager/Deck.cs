@@ -13,7 +13,6 @@ public class Deck : MonoBehaviour
     {
         foreach (CardData card in Cards.availableCards)
         {
-            Debug.Log(card.cardFaction == faction);
             if (card.cardFaction == faction)
             {
                 deck.Add(card);

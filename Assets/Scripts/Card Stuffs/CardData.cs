@@ -18,7 +18,6 @@ public class CardData : ScriptableObject
     [Multiline] //adds more space to the string field
     public string cardDescription;
     
-    //public slot cardSlot;
     public int cardID;
     public Sprite art;
 }

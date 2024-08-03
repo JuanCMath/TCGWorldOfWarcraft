@@ -44,7 +44,7 @@ namespace Compiler
         CardDeclaration, CardFaction, CardPower, CardRange, OnActivation,
         EffectDeclaration, EffectAmount, EffectUnit,
         PostActionDeclaration, PostActionType, PostActionSelector, PostActionSource, PostActionPredicate, PostActionUnit,
-        EffectParams, EffectAction, EffectsUsage,
+        EffectParams, EffectAction, EffectsUsage, ArtName, Description,
 
 
         //Methods
@@ -102,6 +102,8 @@ namespace Compiler
             {"Name", TokenType.Name},
             {"Faction", TokenType.CardFaction},
             {"Range", TokenType.CardRange},
+            {"ArtName", TokenType.ArtName},
+            {"Description", TokenType.Description},
             {"OnActivation", TokenType.OnActivation},
             {"Effect", TokenType.EffectsUsage},
             {"Selector", TokenType.Selector},
