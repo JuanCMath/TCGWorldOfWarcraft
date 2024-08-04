@@ -44,9 +44,9 @@ public class PlayerManager : MonoBehaviour
     //Eliminar todas las cartas del campo
     public void CleanField()
     {
-        GameObject[] cartas = GameObject.FindGameObjectsWithTag("Card Player1");
+        GameObject[] cards = owner == player.Player1 ? GameObject.FindGameObjectsWithTag("Card Player1") : GameObject.FindGameObjectsWithTag("Card Player2");
 
-        foreach (GameObject carta in cartas)
+        foreach (GameObject carta in cards)
         {
             //Si esta en la mano no la destruyas
             if (carta.transform.IsChildOf(hand.transform)) continue;
@@ -56,22 +56,39 @@ public class PlayerManager : MonoBehaviour
             carta.transform.SetParent(graveyard.transform);
             carta.transform.localPosition = new Vector3(0,0,0);
         }
-        
     }
 
     //Cambiar Cartas
     public void SwapCards() //Aqui en algun momento pondre la cantidad de cartas a Swapear si es necesario
     {
-        if (GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable == 1)
+        if (owner == player.Player1)
         {
-            if (GameManager.player1CanSwapCards == true)
+            if (GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable == 1)
             {
-                GameManager.player1CanSwapCards = false;
-                for (int i = 0; i < 2; i++)
+                if (GameManager.player1CanSwapCards == true)
                 {
-                    StartingTheCardSwap(); //Iniciando el cambio de cartas
                     GameManager.player1CanSwapCards = false;
-                }               
+                    for (int i = 0; i < 2; i++)
+                    {
+                        StartingTheCardSwap(); //Iniciando el cambio de cartas
+                        GameManager.player1CanSwapCards = false;
+                    }               
+                }
+            }
+        }
+        else if (owner == player.Player2)
+        {
+            if (GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable == 1)
+            {
+                if (GameManager.player2CanSwapCards == true)
+                {
+                    GameManager.player2CanSwapCards = false;
+                    for (int i = 0; i < 2; i++)
+                    {
+                        StartingTheCardSwap(); //Iniciando el cambio de cartas
+                        GameManager.player2CanSwapCards = false;
+                    }               
+                }
             }
         }
     }
@@ -117,7 +134,7 @@ public class PlayerManager : MonoBehaviour
         //Si no esta en la mano no guardamos la informacion, solo queremos cartas de la mano
         if (card.transform.IsChildOf(hand.transform) != hand)
         {
-            UnityEngine.Debug.Log("Debe seleccionar una carta de la mano");
+            Debug.Log("Debe seleccionar una carta de la mano");
         }
         else
         {
@@ -133,7 +150,7 @@ public class PlayerManager : MonoBehaviour
         //Eliminamos la carta de la mano
         Destroy(card);
         //Añadimos el scriptable object con el nombre de la carta a la lista de cartas del deck
-        deck.GetComponent<Deck>().deck.Add(Cards.availableCards.Find(card => card.cardName == name)); //TODOOOOOO
+        deck.GetComponent<Deck>().deck.Add(Cards.availableCards.Find(card => card.cardName == name));
         //Barajeamos el deck
         deck.GetComponent<Deck>().ShuffleDeck();
     }

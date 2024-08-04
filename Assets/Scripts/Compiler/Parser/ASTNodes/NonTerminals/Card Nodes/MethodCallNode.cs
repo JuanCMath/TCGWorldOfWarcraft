@@ -7,9 +7,9 @@ namespace Compiler
     {
         public ExpresionNodes Target { get; }
         public ExpresionNodes MethodName { get; }
-        public ExpresionNodes? Arguments { get; }
+        public ASTNode? Arguments { get; }
 
-        public MethodCallNode(ExpresionNodes target, ExpresionNodes methodName, ExpresionNodes arguments)
+        public MethodCallNode(ExpresionNodes target, ExpresionNodes methodName, ASTNode arguments)
         {
             MethodName = methodName;
             Target = target;

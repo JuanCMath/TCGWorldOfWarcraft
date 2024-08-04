@@ -14,11 +14,6 @@ namespace Compiler
     {
         public Stack<Dictionary<string, object>> scopes =  new Stack<Dictionary<string, object>>();
 
-        public void EvaluateMain(MainProgramNode node)
-        {
-            Evaluate(node);
-        }
-
         public object? Evaluate(ASTNode node)
         {
             switch(node)
@@ -144,22 +139,22 @@ namespace Compiler
             return data;
         }
 
-        public string EvaluateString(StringNode node)
+        private string EvaluateString(StringNode node)
         {
             return node.Value;
         }
 
-        public double EvaluateNumber(NumberNode node)
+        private double EvaluateNumber(NumberNode node)
         {
             return node.Value;
         }
 
-        public bool EvaluateBool(BooleanNode node)
+        private bool EvaluateBool(BooleanNode node)
         {
             return node.Value;
         }
 
-        public type EvaluateType(StringNode node)
+        private type EvaluateType(StringNode node)
         {
             string value = EvaluateString(node);    
 
@@ -182,7 +177,7 @@ namespace Compiler
             }
         }
 
-        public string[] EvaluateRanges(StringNode[] nodes)
+        private string[] EvaluateRanges(StringNode[] nodes)
         {
             string[] ranges = new string[nodes.Length];
             for (int i = 0; i < nodes.Length; i++)
@@ -193,23 +188,23 @@ namespace Compiler
             return ranges;
         }
 
-        public bool EvaluateIsHero(StringNode node)
+        private bool EvaluateIsHero(StringNode node)
         {
             string value = EvaluateString(node);
             return value == "Oro";
         }
 
-        public GameObject EvaluateObjectReference(GameObjectReferenceNode node)
+        private GameObject EvaluateObjectReference(GameObjectReferenceNode node)
         {
             return GameObject.Find(EvaluateString(node.GameObject));
         }
 
-        public OnActivationNode SaveOnActivationBlock(OnActivationNode node)
+        private OnActivationNode SaveOnActivationBlock(OnActivationNode node)
         {
             return node;
         }
 
-        public void EvaluateOnActivationBlock(OnActivationNode node)
+        private void EvaluateOnActivationBlock(OnActivationNode node)
         {
             foreach (EffectsToBeActivateNode effect in node.effectActivations)
             {
@@ -217,7 +212,7 @@ namespace Compiler
             }
         }
 
-        public void EvaluateEffectsToBeActivate(EffectsToBeActivateNode node)
+        private void EvaluateEffectsToBeActivate(EffectsToBeActivateNode node)
         {
             if (node.Selector !=null) EvaluateSelector(node.Selector);
             EvaluateEffect(node.Effect);
@@ -228,7 +223,7 @@ namespace Compiler
             }
         }
 
-        public void EvaluateSelector(SelectorNode node)
+        private void EvaluateSelector(SelectorNode node)
         {
             GameObject Source = Evaluate(node.source) as GameObject ?? throw new Exception("Source evaluation returned null.");
 
@@ -242,7 +237,7 @@ namespace Compiler
             EvaluatePredicate(node.predicate);
         }
 
-        public void EvaluatePredicate(PredicateNode node)
+        private void EvaluatePredicate(PredicateNode node)
         {
             EnterScope();
             Queue<GameObject> filteredCards = new Queue<GameObject>();
@@ -274,7 +269,7 @@ namespace Compiler
             scopes.Peek().Add("FilteredCards", filteredCards);
         }
 
-        public void EvaluatePostActionNode(PostActionNode node)
+        private void EvaluatePostActionNode(PostActionNode node)
         {
             if (node.selector !=null) EvaluateSelector(node.selector);
             EvaluateEffect(node.parameters);
@@ -285,7 +280,7 @@ namespace Compiler
             }
         }
 
-        public void EvaluateEffect(EffectParametersAssignementNode node)
+        private void EvaluateEffect(EffectParametersAssignementNode node)
         {
             string effectname = EvaluateString(node.Name);
             if (node.Parameters != null)
@@ -299,7 +294,7 @@ namespace Compiler
             Evaluate(Effects.availableEffects[effectname]);
         }
 
-        public void EvaluateEffectDeclarationNode(EffectDeclarationNode node)
+        private void EvaluateEffectDeclarationNode(EffectDeclarationNode node)
         {
             if (node.Params != null)
             {
@@ -319,7 +314,7 @@ namespace Compiler
             EvaluateActionNode(node.Action);
         }   
 
-        public void EvaluateActionNode(ActionDeclarationNode node)
+        private void EvaluateActionNode(ActionDeclarationNode node)
         {
             EnterScope();
             
@@ -335,7 +330,7 @@ namespace Compiler
             ExitScope();
         }
 
-        public double EvaluateUnaryExpressionNode(UnaryExpressionNode node)
+        private double EvaluateUnaryExpressionNode(UnaryExpressionNode node)
         {
             object? operand = Evaluate(node.Expression);
 
@@ -364,7 +359,7 @@ namespace Compiler
             }
         }
 
-        public object EvaluateBinaryExpressionNode(BinaryExpressionNode node)
+        private object EvaluateBinaryExpressionNode(BinaryExpressionNode node)
         {
             object? left = Evaluate(node.Left);
             object? right = Evaluate(node.Right);
@@ -523,7 +518,7 @@ namespace Compiler
                 }
         }
 
-        public void EvaluateBlock(List<ASTNode> statements)
+        private void EvaluateBlock(List<ASTNode> statements)
         {
             foreach (ASTNode statement in statements)
             {
@@ -531,7 +526,7 @@ namespace Compiler
             }
         }
 
-        public object EvaluatePropertyCallNode(PropertyCallNode node)
+        private object EvaluatePropertyCallNode(PropertyCallNode node)
         {
             object obj = Evaluate(node.Target) is GameObject objectReferenceNode ? objectReferenceNode : throw new Exception("Target of property call must be a GameObject.");
             object propertyName = node.PropertyName is StringNode stringNode ? EvaluateString(stringNode) : throw new Exception("Property name must be a PropertyName.");
@@ -608,11 +603,12 @@ namespace Compiler
             }
         }
 
-        public object EvaluateMethodCallNode(MethodCallNode node)
+        private object EvaluateMethodCallNode(MethodCallNode node)
         {
             object obj = Evaluate(node.Target);
             object MethodName = node.MethodName is StringNode stringNode ? EvaluateString(stringNode) : throw new Exception("Property name must be a PropertyName.");
             GameObject? argument = Evaluate(node.Arguments) as GameObject;
+            
             
             if(obj is GameObject objectReferenceNode                && 
                objectReferenceNode.GetComponent<Context>() != null  
@@ -737,7 +733,7 @@ namespace Compiler
     
 
 
-        public GameObject InstantiateCard(CardData data, Transform panel)
+        private GameObject InstantiateCard(CardData data, Transform panel)
         {
             GameObject prefab; 
 
@@ -758,7 +754,7 @@ namespace Compiler
             return card;
         }
 
-        public CardData GetCardOfName(string name)
+        private CardData GetCardOfName(string name)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -777,7 +773,7 @@ namespace Compiler
         }
 
 
-        public void ShuffleCards(GameObject panel)
+        private void ShuffleCards(GameObject panel)
         {
             int childCount = panel.transform.childCount;
             System.Random rand = new System.Random();
@@ -789,7 +785,7 @@ namespace Compiler
             }            
         }
 
-        public List<GameObject> GetCardsInObject (GameObject panel)
+        private List<GameObject> GetCardsInObject (GameObject panel)
         {
             List<GameObject> cards = new List<GameObject>();
 
@@ -801,12 +797,12 @@ namespace Compiler
             return cards;
         }
 
-        public void EnterScope()
+        private void EnterScope()
         {
             scopes.Push(new Dictionary<string, object>());
         }
 
-        public void ExitScope()
+        private void ExitScope()
         {
             scopes.Pop();
         }

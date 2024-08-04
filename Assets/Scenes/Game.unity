@@ -3690,7 +3690,7 @@ GameObject:
   - component: {fileID: 843968479}
   - component: {fileID: 843968478}
   m_Layer: 5
-  m_Name: Graveyard
+  m_Name: Graveyard 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

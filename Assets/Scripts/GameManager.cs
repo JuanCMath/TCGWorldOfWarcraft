@@ -1,6 +1,7 @@
 using UnityEngine;
 using Enums;
 using TMPro;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 { 
@@ -126,21 +127,9 @@ public class GameManager : MonoBehaviour
         else //Esto significa que quedo en empate
         {
             player1StartTheRound = false;
-            //Revisamos si algun lider es The Lich King, si lo es entonces el dueño de el gana la ronda
-            if (leadP1.transform.GetChild(0).GetComponent<Card>().cardName == "The Lick King")
-            {
-                player1WinedRounds ++;
-            }
-            else if (leadP2.transform.GetChild(0).GetComponent<Card>().cardName == "The Lick King")
-            {
-                player2WinedRounds ++;
-            }
-            //Si nadie lo tiene entonces empate 
-            else
-            {
-                player1WinedRounds ++;
-                player2WinedRounds ++;
-            }       
+            
+            player1WinedRounds ++;
+            player2WinedRounds ++;
         }
     }
 
@@ -278,6 +267,9 @@ public class GameManager : MonoBehaviour
         player1CanSwapCards = true;
         player2CanSwapCards = true;
         player1StartTheRound = true;
+        GameObject.Find("Player1").GetComponent<PlayerManager>().deck.GetComponent<Deck>().deck.Clear();
+        GameObject.Find("Player2").GetComponent<PlayerManager>().deck.GetComponent<Deck>().deck.Clear();
+        Cards.availableCards.Clear();
     }
 
     //Inicial el juego
@@ -321,16 +313,7 @@ public class GameManager : MonoBehaviour
                 //Si no roban 2
                 else 
                 {
-                    //Habilidad lider, si deathwing esta en el campo el poseedor roba una mas
-                    if (leadP1.transform.GetChild(0).GetComponent<Card>().cardName == "Deathwing")
-                    {
-                        GameObject.Find("Player1").GetComponent<PlayerManager>().DrawCard(1);
-                    }
-                    else if (leadP2.transform.GetChild(0).GetComponent<Card>().cardName == "Deathwing")
-                    {
-                       GameObject.Find("Player2").GetComponent<PlayerManager>().DrawCard(1);
-                    }
-
+                    
                     GameObject.Find("Player1").GetComponent<PlayerManager>().CleanField();
                     GameObject.Find("Player2").GetComponent<PlayerManager>().CleanField();                  
                     GameObject.Find("Player1").GetComponent<PlayerManager>().DrawCard(2);
