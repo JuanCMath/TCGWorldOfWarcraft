@@ -28,7 +28,10 @@ public class GameManager : MonoBehaviour
     public GameObject handP2;
     public GameObject cardDisplayPrefab;
     public GameObject panelCardDsiplay;
+    public GameObject deckSelectorMenu;
     public GameObject endGameMenu;
+    public GameObject deckSelectorP1;
+    public GameObject deckSelectorP2;
 
     [Header("Game Trackers")]
     public gameTracker state;
@@ -286,14 +289,25 @@ public class GameManager : MonoBehaviour
             //Empezando el juego, aqui pondre algunas animaciones e inputs a los usuarios para poner su nombre
             case gameTracker.StartingTheGame:
                 endGameMenu.SetActive(false);
+
                 state = gameTracker.ChoosingFaction;
                 break;
 
             case gameTracker.ChoosingFaction: //Aqui se mostrara la pantalla de seleccion de faccion
                 //TODO
-                GameObject.Find("Deck p1").GetComponent<Deck>().LoadDeck();
-                GameObject.Find("Deck p2").GetComponent<Deck>().LoadDeck();
-                state = gameTracker.StartingRound;
+                deckSelectorMenu.SetActive(true);
+                DeckSelectorMenu.LoadFactions();
+
+                if(deckSelectorP1.GetComponent<DeckSelectorMenu>().Choosed &&
+                   deckSelectorP2.GetComponent<DeckSelectorMenu>().Choosed)
+                {
+                    GameObject.Find("Deck p1").GetComponent<Deck>().faction = deckSelectorP1.GetComponent<DeckSelectorMenu>().ChoosedFaction;
+                    GameObject.Find("Deck p2").GetComponent<Deck>().faction = deckSelectorP2.GetComponent<DeckSelectorMenu>().ChoosedFaction;
+
+                    GameObject.Find("Deck p1").GetComponent<Deck>().LoadDeck();
+                    GameObject.Find("Deck p2").GetComponent<Deck>().LoadDeck();
+                    state = gameTracker.StartingRound;
+                }
                 break;
 
             //Seteando condiciones necesarias para el inicio de cada ronda

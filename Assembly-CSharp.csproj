@@ -98,6 +98,7 @@
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\GroupingNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\BinaryExpressionNode.cs" />
     <Compile Include="Assets\Scripts\Context.cs" />
+    <Compile Include="Assets\Scripts\Manager\Deck Selector Menu.cs" />
     <Compile Include="Assets\Scripts\Card Stuffs\Card.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\WhileNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\EffectParametersAssignementNode.cs" />
