@@ -125,13 +125,16 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\Scripts\Compiler\Example.txt" />
     <None Include="Assets\Resources\Cards\Test13.txt" />
+    <None Include="Assets\Resources\Effects\Draw.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\Resources\Cards\Test5.txt" />
     <None Include="Assets\Resources\Cards\Test4.txt" />
     <None Include="Assets\Resources\Cards\Test1.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
     <None Include="Assets\Resources\Cards\Test12t.txt" />
+    <None Include="Assets\Resources\Effects\Damage.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
+    <None Include="Assets\Resources\Effects\Return To Deck.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\Resources\Cards\Test15.txt" />
     <None Include="Assets\Resources\Cards\Test14.txt" />

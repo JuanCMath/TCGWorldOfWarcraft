@@ -8,7 +8,6 @@ public class Effects : MonoBehaviour
 {
     public static Dictionary<string, EffectDeclarationNode> availableEffects = new Dictionary<string, EffectDeclarationNode>();
 
-
     public void Awake()
     {
         LoadEffects();
@@ -29,5 +28,7 @@ public class Effects : MonoBehaviour
                 }
             }
         }
+
+        Debug.Log(availableEffects.Count);
     }
 }

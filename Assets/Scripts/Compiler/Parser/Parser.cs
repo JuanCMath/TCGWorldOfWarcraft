@@ -474,9 +474,11 @@ namespace Compiler
                 {
                     currentIndex++;
                     ExpresionNodes right = ParseExpresion(defaultprecedence[opType] + 1);
-                    
+                    ExpresionNodes arguments = null;
+
                     Expect(TokenType.ParenL);
-                    ExpresionNodes arguments = ParseExpresion();
+                    if(!Match(TokenType.ParenR)) arguments = ParseExpresion();
+                    else arguments = null;
                     Expect(TokenType.ParenR);
                     left = new MethodCallNode(left, right, arguments);
                 }

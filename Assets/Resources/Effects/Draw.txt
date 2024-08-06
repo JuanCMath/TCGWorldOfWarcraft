@@ -1,0 +1,8 @@
+effect {
+	Name: "Draw",
+	Action: (targets, context) => {
+		topCard = context.Deck.Pop();
+		context.Hand.Add(topCard);
+		conext.Hand.Shuffle();
+	}
+}
