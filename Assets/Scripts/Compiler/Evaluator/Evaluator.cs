@@ -5,6 +5,9 @@ using UnityEngine;
 using System.IO;
 using System.Linq.Expressions;
 using UnityEditor;
+using System.Linq;
+using UnityEngine.Rendering;
+using Unity.VisualScripting;
 #nullable enable
 
 
@@ -12,10 +15,15 @@ namespace Compiler
 {
     public class Evaluator : MonoBehaviour
     {
-        public Stack<Dictionary<string, object>> scopes =  new Stack<Dictionary<string, object>>();
-
+        private Stack<Dictionary<string, object>> scopes =  new Stack<Dictionary<string, object>>();
+        
         public object? Evaluate(ASTNode node)
         {
+            scopes.Push(new Dictionary<string, object>());
+            scopes.Peek().Add("context", GameObject.Find("Context"));
+            scopes.Peek().Add("player1", GameObject.Find("Player1"));
+            scopes.Peek().Add("player2", GameObject.Find("Player2"));
+            
             switch(node)
             {
                 case CardDeclarationNode cardNode:
@@ -23,6 +31,10 @@ namespace Compiler
                 
                 case EffectDeclarationNode effectNode:
                     EvaluateEffectDeclarationNode(effectNode);
+                    return null;
+
+                case OnActivationNode onActivationNode:
+                    EvaluateOnActivationBlock(onActivationNode);
                     return null;
 
                 case StringNode stringNode:
@@ -62,8 +74,10 @@ namespace Compiler
                     {
                         throw new Exception($"Variable '{variableReference}' does not exist.");
                     }
+                    
                 case WhileNode whileNode:
                     object? loopConditionValue = Evaluate(whileNode.Condition);
+                
                     while (loopConditionValue is bool loopConditionBool && loopConditionBool)
                     {
                         EnterScope();
@@ -129,12 +143,12 @@ namespace Compiler
             data.isHero = EvaluateIsHero(cardnode.Type);
             data.cardName = Evaluate(cardnode.Name) as string;
             data.cardFaction = Evaluate(cardnode.Faction) as string;
-            data.attackPower = Evaluate(cardnode.Power) as int? ?? 0;
+            data.attackPower = Evaluate(cardnode.Power) is int number ? number: 0;
             data.slots = EvaluateRanges(cardnode.Ranges);
             data.effect = SaveOnActivationBlock(cardnode.OnActivation);
 
-            if(cardnode.description != null) data.cardDescription = Evaluate(cardnode.description) as string;
-            if(cardnode.artName != null) data.art = Resources.Load<Sprite>(EvaluateString(cardnode.artName));
+            data.cardDescription = cardnode.description != null ? Evaluate(cardnode.description) as string : null;
+            data.art = cardnode.artName != null ? Resources.Load<Sprite>(EvaluateString(cardnode.artName)) : null;
  
             return data;
         }
@@ -144,7 +158,7 @@ namespace Compiler
             return node.Value;
         }
 
-        private double EvaluateNumber(NumberNode node)
+        private int EvaluateNumber(NumberNode node)
         {
             return node.Value;
         }
@@ -204,7 +218,7 @@ namespace Compiler
             return node;
         }
 
-        private void EvaluateOnActivationBlock(OnActivationNode node)
+        public void EvaluateOnActivationBlock(OnActivationNode node)
         {
             foreach (EffectsToBeActivateNode effect in node.effectActivations)
             {
@@ -225,36 +239,117 @@ namespace Compiler
 
         private void EvaluateSelector(SelectorNode node)
         {
-            GameObject Source = Evaluate(node.source) as GameObject ?? throw new Exception("Source evaluation returned null.");
+            List<GameObject> cards = new List<GameObject>();
 
-            List<GameObject> cards = GetCardsInObject(Source);
+            string sourcefount = Evaluate(node.source) as string;
+
+            switch (sourcefount)
+            {
+                case "hand":
+                    if (GameObject.Find("Game Manger").GetComponent<GameManager>().state == gameTracker.Player1Turn)
+                        cards = GetCardsInObject(GameObject.Find("Player1").GetComponent<PlayerManager>().hand);
+                    else
+                        cards = GetCardsInObject(GameObject.Find("Player2").GetComponent<PlayerManager>().hand);
+                    
+                    if (FindVariableScope("CardsToPredicate") != null) FindVariableScope("CardsToPredicate")["CardsToPredicate"] = cards;
+                    
+                    break;
+
+                case "otherHand":
+                    if (GameObject.Find("Game Manger").GetComponent<GameManager>().state == gameTracker.Player1Turn)
+                        cards = GetCardsInObject(GameObject.Find("Player2").GetComponent<PlayerManager>().hand);
+                    else
+                        cards = GetCardsInObject(GameObject.Find("Player1").GetComponent<PlayerManager>().hand);
+
+                    if (FindVariableScope("CardsToPredicate") != null) FindVariableScope("CardsToPredicate")["CardsToPredicate"] = cards;    
+                    break;
+
+                case "field":
+                    if (GameObject.Find("Game Manger").GetComponent<GameManager>().state == gameTracker.Player1Turn)
+                        cards = GetCardsInObject(GameObject.Find("Player1").GetComponent<PlayerManager>().field);
+                    else
+                        cards = GetCardsInObject(GameObject.Find("Player2").GetComponent<PlayerManager>().field);
+
+                    if (FindVariableScope("CardsToPredicate") != null) FindVariableScope("CardsToPredicate")["CardsToPredicate"] = cards;
+                    break;
+                
+                case "otherField":
+                    if (GameObject.Find("Game Manger").GetComponent<GameManager>().state == gameTracker.Player1Turn)
+                        cards = GetCardsInObject(GameObject.Find("Player2").GetComponent<PlayerManager>().field);
+                    else
+                        cards = GetCardsInObject(GameObject.Find("Player1").GetComponent<PlayerManager>().field); 
+                    
+                    if (FindVariableScope("CardsToPredicate") != null) FindVariableScope("CardsToPredicate")["CardsToPredicate"] = cards;
+                    break;
+
+                case "deck": //TODO
+
+                case "otherDeck": //TODO
+
+                case "board":
+                    foreach (Transform child in GameObject.Find("Field p1").transform)
+                    {
+                        foreach (Transform child2 in child.gameObject.transform)
+                        {
+                            if(child2.GetComponent<Card>() != null) cards.Add(child2.gameObject);
+                        }
+                    }
+                    foreach (Transform child in GameObject.Find("Field p2").transform)
+                    {
+                        foreach (Transform child2 in child.gameObject.transform)
+                        {
+                            if(child2.GetComponent<Card>() != null) cards.Add(child2.gameObject);
+                        }
+                    }
+
+                    if (FindVariableScope("CardsToPredicate") != null) FindVariableScope("CardsToPredicate")["CardsToPredicate"] = cards;
+                    break;
+
+                case "parent":
+                    cards = (List<GameObject>)FindVariableScope("FilteredCards")["FilteredCards"];
+                    
+                    break;
+
+                default:
+                    throw new Exception("Unknown source");
+            }
 
             bool getOne = (bool?)Evaluate(node.single) ?? false;
 
-            scopes.Peek().Add("Sinlge", getOne);
-            scopes.Peek().Add("CardsToPredicate", cards);
-            
+            scopes.Peek().Add("Single", getOne);
+            if(FindVariableScope("CardsToPredicate") == null) scopes.Peek().Add("CardsToPredicate", cards);
+
             EvaluatePredicate(node.predicate);
         }
 
         private void EvaluatePredicate(PredicateNode node)
         {
+            
             EnterScope();
             Queue<GameObject> filteredCards = new Queue<GameObject>();
             bool getOne = (bool)FindVariableScope("Single")["Single"];
             
-            string temp = Evaluate(node.identifier.GameObject) as string ?? throw new Exception("Identifier evaluation returned null.");
+            List<GameObject> cards = FindVariableScope("CardsToPredicate")["CardsToPredicate"] as List<GameObject> ?? throw new Exception("Cards to predicate evaluation returned null.");
 
-            foreach (GameObject card in (List<GameObject>)FindVariableScope("CardToPredicate")["CardsToPredicate"])
+            //Guardo el nombre del identificador del predicate para la evluacion de la Expresion
+            string temp = Evaluate(node.identifier.GameObject) as string ?? throw new Exception("Identifier evaluation returned null.");
+            //Itero sobre todas las cartas a evaluar
+            foreach (GameObject card in cards)
             {
+                //Guardar la referencia al gameObject actual para llamarlo en la evaluacion de la expresion
                 node.identifier.GameObject.Value = card.gameObject.name;
+
+                //Evaluo Para que me devuelva el gameobject guardado en el paso anterior
                 var value = Evaluate(node.identifier);
+
+                //Añado la referencia al gameObject usando el identifier del predicate
                 if (value != null)
                 {
                     scopes.Peek().Add(temp, value);
                 }
                 else throw new Exception("Predicate evaluation returned null.");
                 
+                //Evaluo la condicion, si true añado la carta como que paso la evaluacion del predicate
                 if (Evaluate(node.Condition) is bool condition && condition)
                 {
                     filteredCards.Enqueue(card);
@@ -262,16 +357,21 @@ namespace Compiler
                     if (getOne) break;
                 }
 
+                //Elimino la referencia actual del objeto
                 scopes.Peek().Remove(temp);
             }
             ExitScope();
+
+            //Acualizo las cartas del predicado
             scopes.Peek().Remove("CardsToPredicate");
-            scopes.Peek().Add("FilteredCards", filteredCards);
+            scopes.Peek().Add("FilteredCards", filteredCards.ToList());
         }
 
         private void EvaluatePostActionNode(PostActionNode node)
         {
             if (node.selector !=null) EvaluateSelector(node.selector);
+            
+
             EvaluateEffect(node.parameters);
 
             if(node.postAction != null)
@@ -300,7 +400,7 @@ namespace Compiler
             {
                 foreach (VariableAssignementNode parameter in node.Params.Params)
                 {
-                    if (scopes.Peek().ContainsKey(EvaluateString(parameter.Name)))
+                    if (FindVariableScope(EvaluateString(parameter.Name)) != null)
                     {
                         continue;
                     }
@@ -321,8 +421,7 @@ namespace Compiler
             string temp = Evaluate(node.Targets.GameObject) as string ?? throw new Exception("Target evaluation returned null.");
 
             scopes.Peek().Add(temp, (List<GameObject>)FindVariableScope("FilteredCards")["FilteredCards"]);
-
-            foreach (StatementNodes statement in node.Body.Statements)
+            foreach (ASTNode statement in node.Body.Statements)
             {
                 Evaluate(statement);
             }
@@ -330,15 +429,23 @@ namespace Compiler
             ExitScope();
         }
 
-        private double EvaluateUnaryExpressionNode(UnaryExpressionNode node)
+        private int EvaluateUnaryExpressionNode(UnaryExpressionNode node)
         {
             object? operand = Evaluate(node.Expression);
+
+            string variableReference = "";
+
+            if(node.Expression is VariableReferenceNode variableReferenceNode)
+            {
+                variableReference = EvaluateString(variableReferenceNode.Name);
+            }
 
             switch(node.Operator.type)
             {
                 case TokenType.MinusOne:
-                    if (operand is double operandDouble)
+                    if (operand is int operandDouble)
                     {
+                        if(FindVariableScope(variableReference) != null) FindVariableScope(variableReference)[variableReference] = operandDouble - 1;
                         return operandDouble - 1;
                     }
                     else 
@@ -346,8 +453,9 @@ namespace Compiler
                         throw new Exception("Unary operator - is only defined for numbers.");
                     }
                 case TokenType.PlusOne:
-                    if (operand is double operandDouble2)
+                    if (operand is int operandDouble2)
                     {
+                        if(FindVariableScope(variableReference) != null) FindVariableScope(variableReference)[variableReference] = operandDouble2 + 1;
                         return operandDouble2 + 1;
                     }
                     else 
@@ -364,10 +472,23 @@ namespace Compiler
             object? left = Evaluate(node.Left);
             object? right = Evaluate(node.Right);
 
+            GameObject card = null;
+            object propertyName = "";
+            
+            if(node.Operator.type == TokenType.MinusEqual ||
+               node.Operator.type == TokenType.PlusEqual  )
+            {
+                if(node.Left is PropertyCallNode propertyCall)
+                {
+                    card = Evaluate(propertyCall.Target) as GameObject;
+                    propertyName = propertyCall.PropertyName is StringNode stringNode ? EvaluateString(stringNode) : throw new Exception("Property name must be a PropertyName.");
+                }
+            }
+
             switch(node.Operator.type)
             {
                 case TokenType.Plus:
-                    if (left is double leftDoublePlus && right is double rightDoublePlus)
+                    if (left is int leftDoublePlus && right is int rightDoublePlus)
                     {
                         return leftDoublePlus + rightDoublePlus;
                     }
@@ -376,7 +497,7 @@ namespace Compiler
                         throw new Exception("Binary operator + is only defined for numbers and strings.");
                     }
                 case TokenType.Sub:
-                    if (left is double leftDoubleSub && right is double rightDoubleSub)
+                    if (left is int leftDoubleSub && right is int rightDoubleSub)
                     {
                         return leftDoubleSub - rightDoubleSub;
                     }
@@ -384,8 +505,28 @@ namespace Compiler
                     {
                         throw new Exception("Binary operator - is only defined for numbers.");
                     }
+                case TokenType.MinusEqual:
+                    if(left is int leftDoubleMinusEqual && right is int rightDoubleMinusEqual)
+                    {
+                        if(propertyName as string == "Power" && card != null) card.GetComponent<Card>().attackPower = leftDoubleMinusEqual - rightDoubleMinusEqual;
+                        return leftDoubleMinusEqual - rightDoubleMinusEqual;
+                    }
+                    else
+                    {
+                        throw new Exception("Binary operator -= is only defined for numbers.");
+                    }
+                case TokenType.PlusEqual:
+                    if(left is int leftDoublePlusEqual && right is int rightDoublePlusEqual)
+                    {
+                        if(propertyName as string == "Power" && card != null) card.GetComponent<Card>().attackPower = leftDoublePlusEqual + rightDoublePlusEqual;
+                        return leftDoublePlusEqual - rightDoublePlusEqual;
+                    }
+                    else
+                    {
+                        throw new Exception("Binary operator += is only defined for numbers.");
+                    }
                 case TokenType.Multiplication:
-                    if (left is double leftDoubleMult && right is double rightDoubleMult)
+                    if (left is int leftDoubleMult && right is int rightDoubleMult)
                     {
                         return leftDoubleMult * rightDoubleMult;
                     }
@@ -394,7 +535,7 @@ namespace Compiler
                         throw new Exception("Binary operator * is only defined for numbers.");
                     }
                 case TokenType.Div:
-                    if (left is double leftDoubleDiv && right is double rightDoubleDiv)
+                    if (left is int leftDoubleDiv && right is int rightDoubleDiv)
                     {
                         return leftDoubleDiv / rightDoubleDiv;
                     }
@@ -403,7 +544,7 @@ namespace Compiler
                         throw new Exception("Binary operator / is only defined for numbers.");
                     }
                 case TokenType.Pow:
-                    if (left is double leftDoublePow && right is double rightDoublePow)
+                    if (left is int leftDoublePow && right is int rightDoublePow)
                     {
                         return Math.Pow(leftDoublePow, rightDoublePow);
                     }
@@ -412,7 +553,7 @@ namespace Compiler
                         throw new Exception("Binary operator ^ is only defined for numbers.");
                     }
                 case TokenType.Equal:
-                    if (left is double leftDouble && right is double rightDouble)
+                    if (left is int leftDouble && right is int rightDouble)
                     {
                         return leftDouble == rightDouble;
                     }
@@ -429,7 +570,7 @@ namespace Compiler
                         throw new Exception("Binary operator == is only defined for numbers, strings and booleans.");
                     }
                 case TokenType.NotEqual:
-                    if (left is double leftDoubleNotEqual && right is double rightDoubleNotEqual)
+                    if (left is int leftDoubleNotEqual && right is int rightDoubleNotEqual)
                     {
                         return leftDoubleNotEqual != rightDoubleNotEqual;
                     }
@@ -442,7 +583,7 @@ namespace Compiler
                         throw new Exception("Binary operator != is only defined for numbers, strings and booleans.");
                     }
                 case TokenType.GreaterThan:
-                    if (left is double leftDoubleGreater && right is double rightDoubleGreater)
+                    if (left is int leftDoubleGreater && right is int rightDoubleGreater)
                     {
                         return leftDoubleGreater > rightDoubleGreater;
                     }
@@ -451,7 +592,7 @@ namespace Compiler
                         throw new Exception("Binary operator > is only defined for numbers.");
                     }
                 case TokenType.GreatherOrEqual:
-                    if (left is double leftDoubleGreaterEqual && right is double rightDoubleGreaterEqual)
+                    if (left is int leftDoubleGreaterEqual && right is int rightDoubleGreaterEqual)
                     {
                         return leftDoubleGreaterEqual >= rightDoubleGreaterEqual;
                     }
@@ -460,7 +601,7 @@ namespace Compiler
                         throw new Exception("Binary operator >= is only defined for numbers.");
                     }
                 case TokenType.LessOrEqual:
-                    if (left is double leftDoubleLessEqual && right is double rightDoubleLessEqual)
+                    if (left is int leftDoubleLessEqual && right is int rightDoubleLessEqual)
                     {
                         return leftDoubleLessEqual <= rightDoubleLessEqual;
                     }
@@ -469,7 +610,7 @@ namespace Compiler
                         throw new Exception("Binary operator <= is only defined for numbers.");
                     }
                 case TokenType.LessThan:
-                    if (left is double leftDoubleLess && right is double rightDoubleLess)
+                    if (left is int leftDoubleLess && right is int rightDoubleLess)
                     {
                         return leftDoubleLess < rightDoubleLess;
                     }
@@ -514,7 +655,7 @@ namespace Compiler
                         throw new Exception("Binary operator + is only defined for strings.");
                     }
                 default :
-                    throw new System.Exception("Unknown binary operator");
+                    throw new Exception("Unknown binary operator");
                 }
         }
 
@@ -537,9 +678,11 @@ namespace Compiler
                 {
                     case "Power": 
                         return objectReferenceNode.GetComponent<Card>().attackPower;
+                    case "Faction":
+                        return objectReferenceNode.GetComponent<Card>().cardFaction;
                     case "Owner":
                         if(objectReferenceNode.tag == "Card Player1")
-                            return "player 1";
+                            return "player1";
                         else
                             return "player2";
                     default:
@@ -551,43 +694,43 @@ namespace Compiler
                 switch(propertyName)
                 {
                     case "TriggerPlayer":
-                        if (GameObject.Find("Game Manger").GetComponent<GameManager>().state == gameTracker.Player1Turn)
-                            return GameObject.Find("Player1 Manager");
+                        if (GameObject.Find("Game Manager").GetComponent<GameManager>().state == gameTracker.Player1Turn)
+                            return "player1";
                         else
-                            return GameObject.Find("Player2 Manager");
+                            return "player2";
                             
                     case "Hand":
-                        if (GameObject.Find("Game Manger").GetComponent<GameManager>().state == gameTracker.Player1Turn)
-                            return GetCardsInObject(GameObject.Find("Player1 Manager").GetComponent<PlayerManager>().hand);
+                        if (GameObject.Find("Game Manager").GetComponent<GameManager>().state == gameTracker.Player1Turn)
+                            return GetCardsInObject(GameObject.Find("Player1").GetComponent<PlayerManager>().hand);
                         else
-                            return GetCardsInObject(GameObject.Find("Player2 Manager").GetComponent<PlayerManager>().hand);
+                            return GetCardsInObject(GameObject.Find("Player2").GetComponent<PlayerManager>().hand);
 
                     case "Field":
                         if (GameObject.Find("Game Manger").GetComponent<GameManager>().state == gameTracker.Player1Turn)
-                            return GetCardsInObject(GameObject.Find("Player1 Manager").GetComponent<PlayerManager>().field);
+                            return GetCardsInObject(GameObject.Find("Player1").GetComponent<PlayerManager>().field);
                         else
-                            return GetCardsInObject(GameObject.Find("Player2 Manager").GetComponent<PlayerManager>().field);
+                            return GetCardsInObject(GameObject.Find("Player2").GetComponent<PlayerManager>().field);
 
                     case "Graveyard":
                         if (GameObject.Find("Game Manger").GetComponent<GameManager>().state == gameTracker.Player1Turn)
-                            return GetCardsInObject(GameObject.Find("Player1 Manager").GetComponent<PlayerManager>().graveyard);
+                            return GetCardsInObject(GameObject.Find("Player1").GetComponent<PlayerManager>().graveyard);
                         else
-                            return GetCardsInObject(GameObject.Find("Player2 Manager").GetComponent<PlayerManager>().graveyard);
+                            return GetCardsInObject(GameObject.Find("Player2").GetComponent<PlayerManager>().graveyard);
                     
-                    case "Deck":
+                    case "Deck":  //TODO
                         if (GameObject.Find("Game Manger").GetComponent<GameManager>().state == gameTracker.Player1Turn)
-                            return GetCardsInObject(GameObject.Find("Player1 Manager").GetComponent<PlayerManager>().deck);
+                            return GetCardsInObject(GameObject.Find("Player1").GetComponent<PlayerManager>().deck);
                         else
-                            return GetCardsInObject(GameObject.Find("Player2 Manager").GetComponent<PlayerManager>().deck);
+                            return GetCardsInObject(GameObject.Find("Player2").GetComponent<PlayerManager>().deck);
 
                     case "Board":
                         List<GameObject> cards = new List<GameObject>();
 
-                        foreach (Transform child in GameObject.Find("Panels p1").transform)
+                        foreach (Transform child in GameObject.Find("Field p1").transform)
                         {
                             if(child.GetComponent<Card>() != null) cards.Add(child.gameObject);
                         }
-                        foreach (Transform child in GameObject.Find("Panels p2").transform)
+                        foreach (Transform child in GameObject.Find("Field p2").transform)
                         {
                             if(child.GetComponent<Card>() != null) cards.Add(child.gameObject);
                         }
@@ -607,13 +750,23 @@ namespace Compiler
         {
             object obj = Evaluate(node.Target);
             object MethodName = node.MethodName is StringNode stringNode ? EvaluateString(stringNode) : throw new Exception("Property name must be a PropertyName.");
-            GameObject? argument = Evaluate(node.Arguments) as GameObject;
+            GameObject argument;
+
+            if (node.Arguments != null && Evaluate(node.Arguments) is string argumentString)
+            {
+                argument = FindVariableScope(argumentString)[argumentString] as GameObject;
+            }
+            else if (node.Arguments != null && Evaluate(node.Arguments) is GameObject tempArgument)
+            {
+                argument = tempArgument;
+            }
+            else
+            {
+                argument = null;
+            }
             
             
-            if(obj is GameObject objectReferenceNode                && 
-               objectReferenceNode.GetComponent<Context>() != null  
-               )
-             //TODO, crear el object context con su script asociado
+            if(obj is GameObject objectReferenceNode && objectReferenceNode.GetComponent<Context>() != null  )
             {
                 switch(MethodName)
                 {
@@ -817,7 +970,7 @@ namespace Compiler
                 }
             }
 
-            throw new Exception($"Variable '{variableName}' does not exist.");
+            return null;
         }
     }
 }

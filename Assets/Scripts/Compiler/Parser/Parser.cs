@@ -227,7 +227,7 @@ namespace Compiler
 
         public SelectorNode SelectorParser()
         {
-            GameObjectReferenceNode source = null;
+            StringNode source = null;
             BooleanNode single = null;
             PredicateNode predicate = null;
 
@@ -241,7 +241,7 @@ namespace Compiler
                 switch (propertyName)
                 {
                     case TokenType.Source:
-                        source = new GameObjectReferenceNode(new StringNode(ExpectString()));
+                        source = new StringNode(ExpectString());
                         Expect(TokenType.Comma);
                         break;
                     case TokenType.Single:
@@ -258,18 +258,16 @@ namespace Compiler
         }
         public PredicateNode PredicateParser()
         {
-            GameObjectReferenceNode indentifier = null;
-            ExpresionNodes condition = null;
-
             Expect(TokenType.ParenL);
-            indentifier = new GameObjectReferenceNode(new StringNode(Expect(TokenType.Identifier).lexeme));
+            GameObjectReferenceNode indentifier = new GameObjectReferenceNode(new StringNode(Expect(TokenType.Identifier).lexeme));
             Expect(TokenType.ParenR);
 
             Expect(TokenType.Lambda);
-            condition = ParseExpresion();
+            ExpresionNodes condition = ParseExpresion();
 
             return new PredicateNode(indentifier, condition);
         }
+
         public PostActionNode PostActionParser()
         {
             EffectParametersAssignementNode parameters = null;
@@ -753,12 +751,18 @@ namespace Compiler
         {
             var token = Expect(tokens[currentIndex].type);
 
-            if (token.type != TokenType.True && token.type != TokenType.False)
+            if (token.type == TokenType.True)
             {
-                throw new Exception($"Expected boolean, but found '{token}'.");
+                return true;
             }
-
-            return true;
+            else if(token.type == TokenType.False)
+            {
+                return false;
+            }
+            else
+            {
+                throw new Exception($"Expected bollean but found {token}");
+            }
         }
 
 

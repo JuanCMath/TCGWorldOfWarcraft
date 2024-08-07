@@ -4,9 +4,9 @@ namespace Compiler
 {
     public class NumberNode : TerminalNodes
     {
-        public double Value;
+        public int Value;
 
-        public NumberNode (double value)
+        public NumberNode (int value)
         {
             this.Value = value;
         }

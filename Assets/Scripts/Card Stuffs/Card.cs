@@ -1,3 +1,4 @@
+using Compiler;
 using Enums;
 using TMPro;
 using UnityEngine;
@@ -23,6 +24,7 @@ public class Card : MonoBehaviour
     public string cardName;
     public string cardFaction;
     public string cardDescription;
+    public OnActivationNode cardEffect;
     public bool isHero;
     public type cardType;
     public string[] cardSlot;
@@ -47,6 +49,7 @@ public class Card : MonoBehaviour
         cardName = cardData.cardName;
         cardFaction = cardData.cardFaction;
         cardDescription = cardData.cardDescription;
+        cardEffect = cardData.effect;
         isHero = cardData.isHero;
         cardSlot = cardData.slots;
         attackPower = cardData.attackPower;

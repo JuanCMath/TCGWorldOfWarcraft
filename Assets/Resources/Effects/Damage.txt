@@ -8,7 +8,7 @@ effect {
 			i = 0;
 			while (i++ < Amount)
 			{
-				target.Power -=1;
+				target.Power -= 1;
 			}
 		};
 	}

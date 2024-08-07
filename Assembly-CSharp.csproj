@@ -83,7 +83,6 @@
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\ASTNode.cs" />
     <Compile Include="Assets\Scripts\Card Stuffs\Draggable.cs" />
     <Compile Include="Assets\Scripts\Compiler\Lexer\Lexer.cs" />
-    <Compile Include="Assets\Scripts\CardContainer.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\ConditionalExpresionNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\PredicateNode.cs" />
     <Compile Include="Assets\Scripts\Manager\Main Menu.cs" />
@@ -111,7 +110,6 @@
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\UnaryExpressionNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\EffectDeclarationNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\CardDeclarationNode.cs" />
-    <Compile Include="Assets\Scripts\Events\Effect Manager.cs" />
     <Compile Include="Assets\Scripts\Compiler\Evaluator\Evaluator.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Math Nodes\BlockNode.cs" />
     <Compile Include="Assets\Scripts\Databases\Enums.cs" />

@@ -1,8 +1,25 @@
-effect {
-	Name: "Draw",
-	Action: (targets, context) => {
-		topCard = context.Deck.Pop();
-		context.Hand.Add(topCard);
-		conext.Hand.Shuffle();
-	}
+card {
+	Type: "Oro",
+	Name: "Beluga",
+	Faction: "Northern Realms",
+	Power: 10,
+	Range: ["Melee", "Range"],
+	ArtName: "Aspectos - Dragones Clima 1 - Assault",
+	Description: "Es Pato",
+	OnActivation: 
+	[
+		{
+			Effect: 
+			{
+				Name: "Damage",
+				Amount: 5,
+			},
+			Selector: 
+			{
+				Source: "board",
+				Single: false,
+				Predicate: (unit) => unit.Faction == "Northern" @@ "Realms"
+			},
+		}
+	]
 }

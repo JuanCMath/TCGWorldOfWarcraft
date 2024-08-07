@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace Compiler
 {
     public class PredicateNode : StatementNodes
@@ -10,6 +7,7 @@ namespace Compiler
 
         public PredicateNode(GameObjectReferenceNode identifier, ExpresionNodes condition)
         {
+            this.identifier = identifier;
             this.Condition = condition;
         }
     }

@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 using Enums;
 using System.Text.RegularExpressions;
 using System.Linq;
+using Compiler;
 
 public class DropZoneGeneric : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
@@ -12,19 +13,32 @@ public class DropZoneGeneric : MonoBehaviour, IDropHandler, IPointerEnterHandler
         private string allowedCards;
         private type[] allowedCardsType;
 
+        public void OnDrop(PointerEventData eventData) //Metodo que se inicia cuando un onjeto se dropea en la zona
+        {           
+            GameObject dropedCard = eventData.pointerDrag;
+
+            Draggable draggedComponent = dropedCard.GetComponent<Draggable>();
+            //Si tienes algo agarrado y Si el panel no esta lleno y Si la carta es del mismo tipo del panel entonces dropear
+            if (draggedComponent != null)
+            {
+                if (CardCanBePlaced(dropedCard))
+                {
+                    draggedComponent.parentToReturnTo = this.transform;
+                    GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable --;
+
+                    ApplyEffect(dropedCard);  
+                }      
+            }  
+        }
+        
         public void ApplyEffect(GameObject dropedCard)
         {
-                //TODO: Implementar efectos de cartas
+                Evaluator evaluator = new Evaluator();
+                evaluator.Evaluate(dropedCard.GetComponent<Card>().cardEffect);
         }
 
         public bool CardCanBePlaced(GameObject dropedCard)
         {
-            Debug.Log(maxCards >= gameObject.transform.childCount);                          
-            Debug.Log(    GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable > 0);
-            Debug.Log(playerCanPlaceCard == true);
-            Debug.Log(    allowedCardsType.Contains(dropedCard.GetComponent<Card>().cardType));
-            Debug.Log(    dropedCard.GetComponent<Card>().cardSlot.Contains(allowedCards));
-
             if (maxCards >= gameObject.transform.childCount                                              &&
                 GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable > 0 &&
                 playerCanPlaceCard == true                                                               &&
@@ -65,23 +79,7 @@ public class DropZoneGeneric : MonoBehaviour, IDropHandler, IPointerEnterHandler
             }
         }
 
-        public void OnDrop(PointerEventData eventData) //Metodo que se inicia cuando un onjeto se dropea en la zona
-        {           
-            GameObject dropedCard = eventData.pointerDrag;
-
-            Draggable draggedComponent = dropedCard.GetComponent<Draggable>();
-            //Si tienes algo agarrado y Si el panel no esta lleno y Si la carta es del mismo tipo del panel entonces dropear
-            if (draggedComponent != null)
-            {
-                if (CardCanBePlaced(dropedCard))
-                {
-                    draggedComponent.parentToReturnTo = this.transform;
-                    GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable --;
-
-                    ApplyEffect(dropedCard);  
-                }      
-            }  
-        }
+        
 
     public void Start()
     {

@@ -17,11 +17,10 @@ namespace Compiler
             ASTNode AST = parsedExpresion.Parsing();
 
             if (AST is EffectDeclarationNode) return AST;
-            else
-            {
-                Evaluator evaluator = new Evaluator();
-                return evaluator.Evaluate(AST);
-            }
+            
+            
+            Evaluator evaluator = new Evaluator();
+            return evaluator.Evaluate(AST);
         }
     }
 }

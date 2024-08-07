@@ -28,7 +28,5 @@ public class Effects : MonoBehaviour
                 }
             }
         }
-
-        Debug.Log(availableEffects.Count);
     }
 }

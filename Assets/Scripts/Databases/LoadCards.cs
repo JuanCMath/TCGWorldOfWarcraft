@@ -28,7 +28,5 @@ public class Cards : MonoBehaviour
                 }
             }
         }
-        
-        Debug.Log(availableCards.Count);
     }
 }
