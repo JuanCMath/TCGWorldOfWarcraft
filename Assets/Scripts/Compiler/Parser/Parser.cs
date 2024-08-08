@@ -637,10 +637,12 @@ namespace Compiler
                 || token.type == TokenType.FieldOfPlayer
                 || token.type == TokenType.GraveyardOfPlayer
                 || token.type == TokenType.DeckOfplayer
+                || token.type == TokenType.Deck
                 || token.type == TokenType.Hand
                 || token.type == TokenType.Field
                 || token.type == TokenType.Graveyard
                 || token.type == TokenType.Owner
+                || token.type == TokenType.Add
                 || token.type == TokenType.Power
                 || token.type == TokenType.TriggerPlayer
                 || token.type == TokenType.ArtName
@@ -690,10 +692,12 @@ namespace Compiler
                 || token.type == TokenType.FieldOfPlayer
                 || token.type == TokenType.GraveyardOfPlayer
                 || token.type == TokenType.DeckOfplayer
+                || token.type == TokenType.Deck
                 || token.type == TokenType.Hand
                 || token.type == TokenType.Field
                 || token.type == TokenType.Graveyard
                 || token.type == TokenType.Owner
+                || token.type == TokenType.Add
                 || token.type == TokenType.Power
                 || token.type == TokenType.TriggerPlayer
                 || token.type == TokenType.ArtName

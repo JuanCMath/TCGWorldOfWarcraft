@@ -145,14 +145,8 @@ public class PlayerManager : MonoBehaviour
     //Retorna una carta seleccionada al deck
     public void ReturnCardToDeck(GameObject card)
     {   
-        //Tomamos el Nombre de la carta que vamos a eliminar
-        string name = card.GetComponent<Card>().cardName;
-        //Eliminamos la carta de la mano
-        Destroy(card);
-        //Añadimos el scriptable object con el nombre de la carta a la lista de cartas del deck
-        deck.GetComponent<Deck>().deck.Add(Cards.availableCards.Find(card => card.cardName == name));
-        //Barajeamos el deck
-        deck.GetComponent<Deck>().ShuffleDeck();
+        card.transform.SetParent(deck.transform);
+        card.transform.localPosition = new Vector3(515,0,0);
     }
 
     //Poniendo carta lider en el campo
@@ -168,27 +162,14 @@ public class PlayerManager : MonoBehaviour
         for (int i = 0; i < amount; i++)     
         {   
             if (hand.transform.GetComponentsInChildren<Card>(true).Length < 10)
-            {       
-                //Instanciando la carta con el prefab y en la posicion de la mano
-                GameObject g = Instantiate(cardPrefab, hand.transform);                         
-                //Dandole a cada prefab de carta los datos de los scriptable objects
-                g.GetComponent<Card>().cardData = deck.GetComponent<Deck>().deck[i];
-                //Eliminando la carta robada
-                deck.GetComponent<Deck>().deck.RemoveAt(i);                          
-                //Dandole un nombre a la carta en el inspector
-                g.name = g.GetComponent<Card>().cardData.cardName;  
+            {   
+                GameObject card = deck.transform.GetChild(1).gameObject;
+                card.transform.SetParent(hand.transform);
             }
             else
             {
-                //Instanciando la carta con el prefab y en la posicion del cementerio
-                GameObject g = Instantiate(cardPrefab, graveyard.transform);           
-                g.transform.localPosition = new Vector3(0,0,0);              
-                //Dandole a cada prefab de carta los datos de los scriptable objects
-                g.GetComponent<Card>().cardData = deck.GetComponent<Deck>().deck[i];
-                //Eliminando la carta robada
-                deck.GetComponent<Deck>().deck.RemoveAt(i);                          
-                //Dandole un nombre a la carta en el inspector
-                g.name = g.GetComponent<Card>().cardData.cardName;
+                GameObject card = deck.transform.GetChild(1).gameObject;
+                card.transform.SetParent(graveyard.transform);
             }                   
         }     
     }
@@ -210,42 +191,7 @@ public class PlayerManager : MonoBehaviour
             power += child.GetComponent<Card>().attackPower;
         }
     }
-    /*
-    public void applyClima()
-    {
-        int amountOfChange;
-        int amounOfClimas = climaZone.transform.childCount;
-        
-        for (int i = 0; i < amounOfClimas; i ++)
-        {
-            amountOfChange = climaZone.transform.GetChild(i).GetComponent<Card>().effectNumber;
-            EffectsManager.ClimateEffect(climaZone, amountOfChange);
-        }
-    }
-
-    public void applyAumento()
-    {
-        int amountOfChangeM;
-        if (aumentoMZone.transform.childCount != 0) 
-        {
-            amountOfChangeM = aumentoMZone.transform.GetChild(0).GetComponent<Card>().effectNumber;
-            EffectsManager.IncreaseEffect(meleeZone, amountOfChangeM);
-        }
-        int amountOfChangeR;
-        if (aumentoRZone.transform.childCount != 0) 
-        {
-            amountOfChangeR = aumentoRZone.transform.GetChild(0).GetComponent<Card>().effectNumber;
-            EffectsManager.IncreaseEffect(rangeZone, amountOfChangeR);
-        }
-
-        int amountOfChangeS;
-        if (aumentoSZone.transform.childCount != 0) 
-        {
-            amountOfChangeS = aumentoSZone.transform.GetChild(0).GetComponent<Card>().effectNumber;
-            EffectsManager.IncreaseEffect(siegeZone, amountOfChangeS);
-        }
-    }
-    */
+    
     public void ShowCardBack()
     {
         if (owner == player.Player1)
@@ -317,7 +263,7 @@ public class PlayerManager : MonoBehaviour
     
     public void Update()
     {
-        deckText.text = deck.GetComponent<Deck>().deck.Count.ToString();
+        deckText.text = (deck.transform.childCount - 1).ToString();
         discardText.text = (graveyard.transform.childCount - 1).ToString();
     }
  }

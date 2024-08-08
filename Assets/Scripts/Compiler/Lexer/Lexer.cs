@@ -48,9 +48,9 @@ namespace Compiler
 
 
         //Methods
-        Find, Push, SendBottom, Pop, Remove, Shuffle, 
+        Find, Push, SendBottom, Pop, Remove, Shuffle, Add,
         HandOfPlayer, FieldOfPlayer, GraveyardOfPlayer, DeckOfplayer, 
-        Hand, Field, Graveyard, Owner, Power, TriggerPlayer, Board
+        Hand, Field, Graveyard, Owner, Power, TriggerPlayer, Board, Deck
     }
 
     // Lexer class for tokenizing the input string
@@ -125,12 +125,14 @@ namespace Compiler
             {"SendBottom", TokenType.SendBottom},
             {"Pop", TokenType.Pop},
             {"Remove", TokenType.Remove},
+            {"Add", TokenType.Add},
             {"Shuffle", TokenType.Shuffle},
             {"Field", TokenType.Field},
             {"FieldOfPlayer", TokenType.FieldOfPlayer},
             {"Graveyard", TokenType.Graveyard},
             {"GraveyardOfPlayer", TokenType.GraveyardOfPlayer},
             {"DeckOfPlayer", TokenType.DeckOfplayer},
+            {"Deck", TokenType.Deck},
             {"Owner", TokenType.Owner},
             {"Power", TokenType.CardPower},
             {"TriggerPlayer", TokenType.TriggerPlayer},

@@ -667,7 +667,7 @@ namespace Compiler
             }
         }
 
-        private object EvaluatePropertyCallNode(PropertyCallNode node)
+        private object? EvaluatePropertyCallNode(PropertyCallNode node)
         {
             object obj = Evaluate(node.Target) is GameObject objectReferenceNode ? objectReferenceNode : throw new Exception("Target of property call must be a GameObject.");
             object propertyName = node.PropertyName is StringNode stringNode ? EvaluateString(stringNode) : throw new Exception("Property name must be a PropertyName.");
@@ -706,19 +706,19 @@ namespace Compiler
                             return GetCardsInObject(GameObject.Find("Player2").GetComponent<PlayerManager>().hand);
 
                     case "Field":
-                        if (GameObject.Find("Game Manger").GetComponent<GameManager>().state == gameTracker.Player1Turn)
+                        if (GameObject.Find("Game Manager").GetComponent<GameManager>().state == gameTracker.Player1Turn)
                             return GetCardsInObject(GameObject.Find("Player1").GetComponent<PlayerManager>().field);
                         else
                             return GetCardsInObject(GameObject.Find("Player2").GetComponent<PlayerManager>().field);
 
                     case "Graveyard":
-                        if (GameObject.Find("Game Manger").GetComponent<GameManager>().state == gameTracker.Player1Turn)
+                        if (GameObject.Find("Game Manager").GetComponent<GameManager>().state == gameTracker.Player1Turn)
                             return GetCardsInObject(GameObject.Find("Player1").GetComponent<PlayerManager>().graveyard);
                         else
                             return GetCardsInObject(GameObject.Find("Player2").GetComponent<PlayerManager>().graveyard);
                     
-                    case "Deck":  //TODO
-                        if (GameObject.Find("Game Manger").GetComponent<GameManager>().state == gameTracker.Player1Turn)
+                    case "Deck":
+                        if (GameObject.Find("Game Manager").GetComponent<GameManager>().state == gameTracker.Player1Turn)
                             return GetCardsInObject(GameObject.Find("Player1").GetComponent<PlayerManager>().deck);
                         else
                             return GetCardsInObject(GameObject.Find("Player2").GetComponent<PlayerManager>().deck);
@@ -728,11 +728,17 @@ namespace Compiler
 
                         foreach (Transform child in GameObject.Find("Field p1").transform)
                         {
-                            if(child.GetComponent<Card>() != null) cards.Add(child.gameObject);
+                            foreach (Transform child2 in child.gameObject.transform)
+                            {
+                            if(child2.GetComponent<Card>() != null) cards.Add(child.gameObject);
+                            }
                         }
                         foreach (Transform child in GameObject.Find("Field p2").transform)
                         {
-                            if(child.GetComponent<Card>() != null) cards.Add(child.gameObject);
+                            foreach (Transform child2 in child.gameObject.transform)
+                            {
+                            if(child2.GetComponent<Card>() != null) cards.Add(child.gameObject);
+                            }
                         }
                         return cards;
 
@@ -746,10 +752,10 @@ namespace Compiler
             }
         }
 
-        private object EvaluateMethodCallNode(MethodCallNode node)
+        private object? EvaluateMethodCallNode(MethodCallNode node)
         {
             object obj = Evaluate(node.Target);
-            object MethodName = node.MethodName is StringNode stringNode ? EvaluateString(stringNode) : throw new Exception("Property name must be a PropertyName.");
+            object MethodName = node.MethodName is StringNode stringNode ? EvaluateString(stringNode) : throw new Exception("Method name must be a PropertyName.");
             GameObject argument;
 
             if (node.Arguments != null && Evaluate(node.Arguments) is string argumentString)
@@ -762,9 +768,9 @@ namespace Compiler
             }
             else
             {
+                Debug.Log("here");
                 argument = null;
             }
-            
             
             if(obj is GameObject objectReferenceNode && objectReferenceNode.GetComponent<Context>() != null  )
             {
@@ -785,93 +791,68 @@ namespace Compiler
                     case "DeckOfplayer":
                         List<GameObject> cardsOnDeck = GetCardsInObject(argument.GetComponent<PlayerManager>().deck);
                         return cardsOnDeck;
-
                     default:
                         throw new Exception("Unknown Method name");
                 }
-            } 
+            }
+
+            else if (obj is List<GameObject> gameObjectListReference2 && argument == null)
+            {
+                Transform panelOfTheList = gameObjectListReference2[gameObjectListReference2.Count % 2].transform.parent;
+
+                switch(MethodName)
+                {
+                    case "Pop":
+                        while (GameObject.Find("Utility").transform.childCount > 0)
+                        {
+                            Destroy(panelOfTheList.transform.GetChild(0).gameObject);
+                        }
+
+                        gameObjectListReference2[0].transform.SetParent(GameObject.Find("Utility").transform);
+                        return GameObject.Find("Utility").transform.GetChild(0).gameObject;
+
+                    case "Shuffle":
+                        
+                        ShuffleCards(panelOfTheList.gameObject);
+                        
+                        return null;
+
+                    default :
+                        throw new Exception("Unknown Method name");
+                }
+            }
+
             else if(obj is List<GameObject> gameObjectListReference && argument.GetComponent<Card>() != null)
             {
                 Transform panelOfTheList = gameObjectListReference[gameObjectListReference.Count % 2].transform.parent;
+                
 
                 switch(MethodName)
                 {
                     case "Find": //En el proximo capitulo
                     case "Push":
-                        if(panelOfTheList.gameObject.GetComponent<Deck>() != null)
-                        {
-                            string cardName = argument.GetComponent<Card>().name;
-                            CardData card = GetCardOfName(cardName);
+                        argument.transform.SetParent(panelOfTheList);
+                        argument.transform.SetAsFirstSibling();
 
-                            Destroy(argument);
-                            GameObject.Find(panelOfTheList.name).GetComponent<Deck>().PushCard(card);
-                        }
-                        else
-                        {
-                            argument.transform.SetParent(panelOfTheList);
-                            argument.transform.SetAsFirstSibling();
-                        }
                         return null;
                         
                     case "SendBottom":
-                        if(panelOfTheList.gameObject.GetComponent<Deck>() != null)
-                        {
-                            string cardName = argument.GetComponent<Card>().name;
-                            CardData card = GetCardOfName(cardName);
-
-                            Destroy(argument);
-                            GameObject.Find(panelOfTheList.name).GetComponent<Deck>().SendBottom(card);
-                        }
-                        else
-                        {
-                            argument.transform.SetParent(panelOfTheList);
-                            argument.transform.SetAsLastSibling();
-                        }
-                        return null;
                         
-                    case "Pop":
-                        if(panelOfTheList.gameObject.GetComponent<Deck>() != null)
-                        {
-                            CardData temp = panelOfTheList.gameObject.GetComponent<Deck>().PopCard();
-
-                            gameObjectListReference.Remove(argument);
-
-                            return InstantiateCard(temp, GameObject.Find("Utility").transform);;
-                        }
-                        else
-                        {
-                            while ( GameObject.Find("Utility").transform.childCount > 0)
-                            { 
-                                Destroy(GameObject.Find("Utility").transform.GetChild(0).gameObject);
-                            }
-
-                            gameObjectListReference[0].transform.SetParent(GameObject.Find("Utility").transform );       
-                            return GameObject.Find("Utility").transform.GetChild(0).gameObject;
-                        }
+                        argument.transform.SetParent(panelOfTheList);
+                        argument.transform.SetAsLastSibling();
+                        
+                        return null;
 
                     case "Remove":
-                        if(panelOfTheList.gameObject.GetComponent<Deck>() != null)
-                        {
-                            string cardName = argument.GetComponent<Card>().name;
-                            CardData card = GetCardOfName(cardName);
 
-                            GameObject.Find(panelOfTheList.name).GetComponent<Deck>().RemoveCard(card);
-                        }
-                        else
-                        {
-                            Destroy(argument);
-                        }
+                        Destroy(argument);
                         return null;
                         
-                    case "Shuffle":
-                        if(panelOfTheList.gameObject.GetComponent<Deck>() != null)
-                        {
-                            GameObject.Find(panelOfTheList.name).GetComponent<Deck>().ShuffleDeck();
-                        }
-                        else
-                        {
-                            ShuffleCards(panelOfTheList.gameObject);
-                        }
+                    case "Add":
+
+                        GameObject card = argument;
+                        card.transform.SetParent(panelOfTheList);
+                        card.transform.SetAsLastSibling();
                         return null;
 
                     default:
@@ -883,48 +864,6 @@ namespace Compiler
                 throw new Exception("This GameObject cant be called with a Method");
             }
         }
-    
-
-
-        private GameObject InstantiateCard(CardData data, Transform panel)
-        {
-            GameObject prefab; 
-
-            if (GameObject.Find("Game Manger").GetComponent<GameManager>().state == gameTracker.Player1Turn)
-            {
-                prefab = GameObject.Find("player 1").GetComponent<PlayerManager>().cardPrefab;
-            }
-            else
-            {
-                prefab = GameObject.Find("player 2").GetComponent<PlayerManager>().cardPrefab;
-            }
-
-            GameObject card = Instantiate(prefab , panel);
-            card.GetComponent<Card>().cardData = data;
-            card.name = card.GetComponent<Card>().cardData.cardName;
-
-
-            return card;
-        }
-
-        private CardData GetCardOfName(string name)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new ArgumentException("Name cannot be null or empty", nameof(name));
-            }
-
-            foreach (CardData card in Cards.availableCards)
-            {
-                if (card.name == name)
-                {
-                    return card;
-                }
-            }
-
-            throw new FileNotFoundException("The specified card does not exist", name);
-        }
-
 
         private void ShuffleCards(GameObject panel)
         {
@@ -969,7 +908,6 @@ namespace Compiler
                     return scope;
                 }
             }
-
             return null;
         }
     }

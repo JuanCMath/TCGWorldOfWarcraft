@@ -361,7 +361,6 @@ GameObject:
   - component: {fileID: 96004661}
   - component: {fileID: 96004667}
   - component: {fileID: 96004668}
-  - component: {fileID: 96004669}
   m_Layer: 5
   m_Name: Clima Zone 2
   m_TagString: Untagged
@@ -474,18 +473,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3eaf46d9bc618dc428cfc5bb1f3f1f47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &96004669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 96004659}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c18ab8ac554494babdf692a3168f9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &99047141
@@ -993,7 +980,6 @@ GameObject:
   - component: {fileID: 171783807}
   - component: {fileID: 171783806}
   - component: {fileID: 171783810}
-  - component: {fileID: 171783811}
   m_Layer: 5
   m_Name: Range Zone
   m_TagString: Untagged
@@ -1108,18 +1094,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3eaf46d9bc618dc428cfc5bb1f3f1f47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &171783811
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 171783803}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c18ab8ac554494babdf692a3168f9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &180033778
@@ -1646,50 +1620,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 257603655}
   m_CullTransparentMesh: 1
---- !u!1 &258356233
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 258356234}
-  - component: {fileID: 258356235}
-  m_Layer: 0
-  m_Name: Effect Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &258356234
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 258356233}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -72.08032, y: 270.29828, z: 15.764204}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1681513803}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &258356235
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 258356233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0695d706b7748154c972e98a877ab376, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &270842145
 GameObject:
   m_ObjectHideFlags: 0
@@ -2642,7 +2572,6 @@ GameObject:
   - component: {fileID: 403890438}
   - component: {fileID: 403890437}
   - component: {fileID: 403890441}
-  - component: {fileID: 403890442}
   m_Layer: 5
   m_Name: Range Zone 2
   m_TagString: Untagged
@@ -2757,18 +2686,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3eaf46d9bc618dc428cfc5bb1f3f1f47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &403890442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 403890434}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c18ab8ac554494babdf692a3168f9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &451017904
@@ -3741,7 +3658,6 @@ GameObject:
   - component: {fileID: 737718823}
   - component: {fileID: 737718822}
   - component: {fileID: 737718826}
-  - component: {fileID: 737718827}
   m_Layer: 5
   m_Name: Aumento R
   m_TagString: Untagged
@@ -3858,18 +3774,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eaf46d9bc618dc428cfc5bb1f3f1f47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &737718827
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 737718819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c18ab8ac554494babdf692a3168f9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &792100968
 GameObject:
   m_ObjectHideFlags: 0
@@ -3961,7 +3865,7 @@ GameObject:
   - component: {fileID: 833846008}
   - component: {fileID: 833846007}
   m_Layer: 5
-  m_Name: '#cartas 2'
+  m_Name: '#cartas'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4710,7 +4614,6 @@ GameObject:
   - component: {fileID: 1018325248}
   - component: {fileID: 1018325247}
   - component: {fileID: 1018325251}
-  - component: {fileID: 1018325252}
   m_Layer: 5
   m_Name: Aumento M 2
   m_TagString: Untagged
@@ -4825,18 +4728,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3eaf46d9bc618dc428cfc5bb1f3f1f47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1018325252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1018325244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c18ab8ac554494babdf692a3168f9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1038882107
@@ -5425,7 +5316,6 @@ GameObject:
   - component: {fileID: 1201730852}
   - component: {fileID: 1201730851}
   - component: {fileID: 1201730855}
-  - component: {fileID: 1201730856}
   m_Layer: 5
   m_Name: Aumento R 2
   m_TagString: Untagged
@@ -5542,18 +5432,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eaf46d9bc618dc428cfc5bb1f3f1f47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1201730856
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1201730848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c18ab8ac554494babdf692a3168f9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1217779657
 GameObject:
   m_ObjectHideFlags: 0
@@ -5568,7 +5446,6 @@ GameObject:
   - component: {fileID: 1217779661}
   - component: {fileID: 1217779660}
   - component: {fileID: 1217779664}
-  - component: {fileID: 1217779665}
   m_Layer: 5
   m_Name: Aumento M
   m_TagString: Untagged
@@ -5685,18 +5562,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eaf46d9bc618dc428cfc5bb1f3f1f47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1217779665
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1217779657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c18ab8ac554494babdf692a3168f9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1219823143
 GameObject:
   m_ObjectHideFlags: 0
@@ -5711,7 +5576,6 @@ GameObject:
   - component: {fileID: 1219823147}
   - component: {fileID: 1219823146}
   - component: {fileID: 1219823150}
-  - component: {fileID: 1219823151}
   m_Layer: 5
   m_Name: Aumento S 2
   m_TagString: Untagged
@@ -5826,18 +5690,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3eaf46d9bc618dc428cfc5bb1f3f1f47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1219823151
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1219823143}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c18ab8ac554494babdf692a3168f9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1222444520
@@ -6430,7 +6282,6 @@ GameObject:
   - component: {fileID: 1331299084}
   - component: {fileID: 1331299083}
   - component: {fileID: 1331299087}
-  - component: {fileID: 1331299088}
   m_Layer: 5
   m_Name: Aumento S
   m_TagString: Untagged
@@ -6545,18 +6396,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3eaf46d9bc618dc428cfc5bb1f3f1f47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1331299088
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1331299080}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c18ab8ac554494babdf692a3168f9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1369004091
@@ -7121,7 +6960,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1438966709}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10.584203}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7990,7 +7829,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 258356234}
   - {fileID: 351006349}
   - {fileID: 2018725610}
   - {fileID: 180033779}
@@ -9199,7 +9037,6 @@ GameObject:
   - component: {fileID: 1988740576}
   - component: {fileID: 1988740581}
   - component: {fileID: 1988740582}
-  - component: {fileID: 1988740583}
   m_Layer: 5
   m_Name: Clima Zone
   m_TagString: Untagged
@@ -9314,18 +9151,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eaf46d9bc618dc428cfc5bb1f3f1f47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1988740583
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1988740573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c18ab8ac554494babdf692a3168f9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2009433856
 GameObject:
   m_ObjectHideFlags: 0
@@ -9340,7 +9165,6 @@ GameObject:
   - component: {fileID: 2009433860}
   - component: {fileID: 2009433858}
   - component: {fileID: 2009433863}
-  - component: {fileID: 2009433864}
   m_Layer: 5
   m_Name: Melee Zone
   m_TagString: Untagged
@@ -9455,18 +9279,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3eaf46d9bc618dc428cfc5bb1f3f1f47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2009433864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2009433856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c18ab8ac554494babdf692a3168f9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2018725608
@@ -9641,7 +9453,6 @@ GameObject:
   - component: {fileID: 2025033410}
   - component: {fileID: 2025033409}
   - component: {fileID: 2025033413}
-  - component: {fileID: 2025033414}
   m_Layer: 5
   m_Name: Siege Zone
   m_TagString: Untagged
@@ -9756,18 +9567,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3eaf46d9bc618dc428cfc5bb1f3f1f47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2025033414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2025033406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c18ab8ac554494babdf692a3168f9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2045945878
@@ -10247,7 +10046,6 @@ GameObject:
   - component: {fileID: 2115632258}
   - component: {fileID: 2115632257}
   - component: {fileID: 2115632261}
-  - component: {fileID: 2115632262}
   m_Layer: 5
   m_Name: Melee Zone 2
   m_TagString: Untagged
@@ -10364,18 +10162,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eaf46d9bc618dc428cfc5bb1f3f1f47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2115632262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2115632254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c18ab8ac554494babdf692a3168f9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2117122873
 GameObject:
   m_ObjectHideFlags: 0
@@ -10390,7 +10176,6 @@ GameObject:
   - component: {fileID: 2117122877}
   - component: {fileID: 2117122876}
   - component: {fileID: 2117122880}
-  - component: {fileID: 2117122881}
   m_Layer: 5
   m_Name: Siege Zone 2
   m_TagString: Untagged
@@ -10505,18 +10290,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3eaf46d9bc618dc428cfc5bb1f3f1f47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2117122881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2117122873}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c18ab8ac554494babdf692a3168f9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807

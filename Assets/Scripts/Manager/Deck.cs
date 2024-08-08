@@ -1,14 +1,16 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Deck : MonoBehaviour
 {
     public string faction;
 
-    public List<CardData> deck = new List<CardData>();
-    public CardData leadCard;
+    private List<CardData> deck = new List<CardData>();
+    private CardData leadCard;
     
+
     public void LoadDeck()
     {
         foreach (CardData card in Cards.availableCards)
@@ -18,8 +20,19 @@ public class Deck : MonoBehaviour
                 deck.Add(card);
             }
         }
-
+        InstantiateDeck();
         LoadLead();
+    }
+
+    private void InstantiateDeck()
+    {
+        foreach (CardData card in deck)
+        {
+            GameObject cardObject = Instantiate(gameObject.transform.parent.GetComponent<PlayerManager>().cardPrefab, gameObject.transform);
+            cardObject.GetComponent<Card>().cardData = card;
+            cardObject.name = card.cardName;
+            cardObject.transform.localPosition = new Vector3(515,0,0);
+        }
     }
 
     private void LoadLead()
@@ -27,44 +40,47 @@ public class Deck : MonoBehaviour
         //TODO
     }
 
-    public void PushCard(CardData card)
+    public void PushCard(GameObject card)
     {
-        deck.Insert(0, card);
+        card.transform.SetParent(gameObject.transform);
+        card.transform.SetSiblingIndex(0);
     }
 
-    public CardData PopCard()
+    public GameObject PopCard()
     {
-        CardData card = deck[0];
-        deck.RemoveAt(0);
+        GameObject card = gameObject.transform.GetChild(0).gameObject;
+        Destroy(gameObject.transform.GetChild(0).gameObject);
         return card;
     }
 
-    public void RemoveCard(CardData card)
+    public void RemoveCard(GameObject card)
     {
-        deck.Remove(card);
+        Destroy(card);
     }
 
-    public void SendBottom(CardData card)
+    public void SendBottom(GameObject card)
     {
-        deck.Insert(deck.Count, card);
+        card.transform.SetParent(gameObject.transform);
+        card.transform.SetAsLastSibling();
     }
 
     public void ShuffleDeck()    
     {
-        System.Random rng = new System.Random();  
-        int n = deck.Count;  
-        while (n > 1)
+        int childCount = gameObject.transform.childCount;
+        System.Random rand = new System.Random();
+    
+        for (int i = 0; i < childCount; i++)
         {
-            n--;
-            int k = rng.Next(n + 1);
-            CardData value = deck[k];
-            deck[k] = deck[n];
-            deck[n] = value;
-        }
+            int randomIndex = rand.Next(childCount);
+            gameObject.transform.GetChild(i).SetSiblingIndex(randomIndex);
+        } 
     }
 
-    /* private void OnGUI()
+    public void Clear()
     {
-        faction = GUI.TextField(new Rect(10, 10, 200, 20), faction);
-    } */
+        foreach (Transform child in gameObject.transform)
+        {
+            if(child.gameObject.GetComponent<Card>() != null) Destroy(child);
+        }
+    }
 }

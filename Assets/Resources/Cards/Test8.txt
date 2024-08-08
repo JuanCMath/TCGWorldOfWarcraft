@@ -20,6 +20,9 @@ card {
 				Single: false,
 				Predicate: (unit) => unit.Faction == "Northern" @@ "Realms"
 			},
+		},
+		{
+			Effect: "Draw"
 		}
 	]
 }

@@ -65,6 +65,7 @@ public class GameManager : MonoBehaviour
             if (carta.transform.IsChildOf(handP1.transform)) continue;
             else if (carta.transform.IsChildOf(leadP1.transform)) continue;
             else if (carta.transform.IsChildOf(panelCardDsiplay.transform)) continue;
+            else if (carta.transform.IsChildOf(GameObject.Find("Player1").GetComponent<PlayerManager>().deck.transform)) continue;
 
             //Si no esta en la mano destruyela, Aqui podriamos poner despues que se vayan al cementerio
             helper1 += carta.GetComponent<Card>().attackPower;
@@ -83,6 +84,8 @@ public class GameManager : MonoBehaviour
             if (carta.transform.IsChildOf(handP2.transform)) continue;
             else if (carta.transform.IsChildOf(leadP2.transform)) continue;
             else if (carta.transform.IsChildOf(panelCardDsiplay.transform)) continue;
+            else if (carta.transform.IsChildOf(GameObject.Find("Player2").GetComponent<PlayerManager>().deck.transform)) continue;
+            
             //Si no esta en la mano destruyela, Aqui podriamos poner despues que se vayan al cementerio
             helper2 += carta.GetComponent<Card>().attackPower;
         }
@@ -270,8 +273,8 @@ public class GameManager : MonoBehaviour
         player1CanSwapCards = true;
         player2CanSwapCards = true;
         player1StartTheRound = true;
-        GameObject.Find("Player1").GetComponent<PlayerManager>().deck.GetComponent<Deck>().deck.Clear();
-        GameObject.Find("Player2").GetComponent<PlayerManager>().deck.GetComponent<Deck>().deck.Clear();
+        GameObject.Find("Player1").GetComponent<PlayerManager>().deck.GetComponent<Deck>().Clear();
+        GameObject.Find("Player2").GetComponent<PlayerManager>().deck.GetComponent<Deck>().Clear();
         Cards.availableCards.Clear();
     }
 
