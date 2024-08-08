@@ -60,6 +60,7 @@ namespace Compiler
                     else
                     {
                         scopes.Peek().Add(variableName, value);
+                        Debug.Log("Variable " + variableName + " added to scope." + " Value: " + value);
                         break;
                     }
 
@@ -370,7 +371,6 @@ namespace Compiler
         private void EvaluatePostActionNode(PostActionNode node)
         {
             if (node.selector !=null) EvaluateSelector(node.selector);
-            
 
             EvaluateEffect(node.parameters);
 
@@ -768,7 +768,6 @@ namespace Compiler
             }
             else
             {
-                Debug.Log("here");
                 argument = null;
             }
             
@@ -788,7 +787,7 @@ namespace Compiler
                         List<GameObject> cardsOnGraveyard = GetCardsInObject(argument.GetComponent<PlayerManager>().graveyard);
                         return cardsOnGraveyard;
 
-                    case "DeckOfplayer":
+                    case "DeckOfPlayer":
                         List<GameObject> cardsOnDeck = GetCardsInObject(argument.GetComponent<PlayerManager>().deck);
                         return cardsOnDeck;
                     default:
@@ -824,7 +823,7 @@ namespace Compiler
 
             else if(obj is List<GameObject> gameObjectListReference && argument.GetComponent<Card>() != null)
             {
-                Transform panelOfTheList = gameObjectListReference[gameObjectListReference.Count % 2].transform.parent;
+                Transform panelOfTheList = gameObjectListReference[0].transform.parent;
                 
 
                 switch(MethodName)
@@ -832,6 +831,7 @@ namespace Compiler
                     case "Find": //En el proximo capitulo
                     case "Push":
                         argument.transform.SetParent(panelOfTheList);
+                        argument.transform.position = panelOfTheList.position;
                         argument.transform.SetAsFirstSibling();
 
                         return null;
@@ -839,6 +839,7 @@ namespace Compiler
                     case "SendBottom":
                         
                         argument.transform.SetParent(panelOfTheList);
+                        argument.transform.position = panelOfTheList.position;
                         argument.transform.SetAsLastSibling();
                         
                         return null;
@@ -852,6 +853,7 @@ namespace Compiler
 
                         GameObject card = argument;
                         card.transform.SetParent(panelOfTheList);
+                        argument.transform.position = panelOfTheList.position;
                         card.transform.SetAsLastSibling();
                         return null;
 

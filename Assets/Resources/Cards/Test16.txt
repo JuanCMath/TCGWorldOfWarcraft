@@ -3,7 +3,9 @@ card {
 	Name: "Beluga",
 	Faction: "Northern Realms",
 	Power: 10,
-	Range: ["Melee", "Ranged"],
+	Range: ["Melee", "Range"],
+	ArtName: "Aspectos - Dragones Clima 1 - Assault",
+	Description: "Es Pato",
 	OnActivation: 
 	[
 		{
@@ -18,15 +20,15 @@ card {
 				Single: false,
 				Predicate: (unit) => unit.Faction == "Northern" @@ "Realms"
 			},
-			PostAction: 
+			PostAction:
 			{
 				Type: "ReturnToDeck",
-					Selector: 
-					{
-						Source: "parent",
-						Single: false,
-						Predicate: (unit) => unit.Power < 1
-					},
+				Selector: 
+				{	
+					Source: "parent",
+					Single: false,
+					Predicate: (unit) => unit.Power < 10
+				},
 			}
 		},
 		{

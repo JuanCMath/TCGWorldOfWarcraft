@@ -6,7 +6,6 @@ effect {
 			deck = context.DeckOfPlayer(owner);
 			deck.Push(target);
 			deck.Shuffle();
-			context.Board.Remove(target);
 		};
 	}
 }

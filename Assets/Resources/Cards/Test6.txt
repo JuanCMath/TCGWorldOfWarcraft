@@ -20,6 +20,16 @@ card {
 				Single: false,
 				Predicate: (unit) => unit.Faction == "Northern" @@ "Realms"
 			},
+			PostAction:
+			{
+				Type: "ReturnToDeck",
+				Selector: 
+				{	
+					Source: "parent",
+					Single: false,
+					Predicate: (unit) => unit.Power < 10
+				},
+			}
 		},
 		{
 			Effect: "Draw"
