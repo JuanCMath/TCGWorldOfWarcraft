@@ -83,4 +83,12 @@ public class Deck : MonoBehaviour
             if(child.gameObject.GetComponent<Card>() != null) Destroy(child);
         }
     }
+
+    void Update()
+    {
+        foreach (Transform child in gameObject.transform)
+        {
+            if (child.gameObject.GetComponent<Card>() != null) child.gameObject.transform.localPosition = new Vector3(515, 0, 0);
+        }
+    }
 }

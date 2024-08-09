@@ -146,7 +146,6 @@ public class PlayerManager : MonoBehaviour
     public void ReturnCardToDeck(GameObject card)
     {   
         card.transform.SetParent(deck.transform);
-        card.transform.localPosition = new Vector3(515,0,0);
     }
 
     //Poniendo carta lider en el campo

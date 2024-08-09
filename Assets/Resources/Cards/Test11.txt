@@ -27,7 +27,7 @@ card {
 				{	
 					Source: "parent",
 					Single: false,
-					Predicate: (unit) => unit.Power < 10
+					Predicate: (unit) => unit.Power < 11
 				},
 			}
 		},

@@ -60,7 +60,6 @@ namespace Compiler
                     else
                     {
                         scopes.Peek().Add(variableName, value);
-                        Debug.Log("Variable " + variableName + " added to scope." + " Value: " + value);
                         break;
                     }
 
@@ -283,9 +282,23 @@ namespace Compiler
                     if (FindVariableScope("CardsToPredicate") != null) FindVariableScope("CardsToPredicate")["CardsToPredicate"] = cards;
                     break;
 
-                case "deck": //TODO
+                case "deck":
+                    if (GameObject.Find("Game Manger").GetComponent<GameManager>().state == gameTracker.Player1Turn)
+                        cards = GetCardsInObject(GameObject.Find("Player1").GetComponent<PlayerManager>().deck);
+                    else
+                        cards = GetCardsInObject(GameObject.Find("Player2").GetComponent<PlayerManager>().deck); 
+                    
+                    if (FindVariableScope("CardsToPredicate") != null) FindVariableScope("CardsToPredicate")["CardsToPredicate"] = cards;
+                    break;
 
-                case "otherDeck": //TODO
+                case "otherDeck":
+                    if (GameObject.Find("Game Manger").GetComponent<GameManager>().state == gameTracker.Player1Turn)
+                        cards = GetCardsInObject(GameObject.Find("Player2").GetComponent<PlayerManager>().deck);
+                    else
+                        cards = GetCardsInObject(GameObject.Find("Player1").GetComponent<PlayerManager>().deck); 
+                    
+                    if (FindVariableScope("CardsToPredicate") != null) FindVariableScope("CardsToPredicate")["CardsToPredicate"] = cards;
+                    break;
 
                 case "board":
                     foreach (Transform child in GameObject.Find("Field p1").transform)
@@ -308,7 +321,6 @@ namespace Compiler
 
                 case "parent":
                     cards = (List<GameObject>)FindVariableScope("FilteredCards")["FilteredCards"];
-                    
                     break;
 
                 default:
@@ -390,7 +402,6 @@ namespace Compiler
                     Evaluate(parameter);
                 }
             }
-
             Evaluate(Effects.availableEffects[effectname]);
         }
 
@@ -856,6 +867,37 @@ namespace Compiler
                         argument.transform.position = panelOfTheList.position;
                         card.transform.SetAsLastSibling();
                         return null;
+
+                    default:
+                        throw new Exception("Unknown Method name");
+                }
+            }
+            else if (obj is List<GameObject> gameObjectListReference3 && argument != null && node.Arguments is PredicateNode predicateNode)
+            {
+                switch(MethodName)
+                {
+                    case "Find":
+
+                        List<GameObject> tempCards = new List<GameObject>();
+
+                        string temp = EvaluateString(predicateNode.identifier.GameObject) as string ?? throw new Exception("Identifier evaluation returned null.");
+                        foreach (GameObject card in gameObjectListReference3)
+                        {
+                            predicateNode.identifier.GameObject.Value = card.gameObject.name;
+                            var value = Evaluate(predicateNode.identifier);
+                            if (value != null)
+                            {
+                                scopes.Peek().Add(temp, value);
+                            }
+                            else throw new Exception("Predicate evaluation returned null.");
+                            
+                            if (Evaluate(predicateNode.Condition) is bool condition && condition)
+                            {
+                                tempCards.Add(card);
+                            }
+                            scopes.Peek().Remove(temp);
+                        }
+                        return tempCards;
 
                     default:
                         throw new Exception("Unknown Method name");
