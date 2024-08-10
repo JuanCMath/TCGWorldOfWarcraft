@@ -839,7 +839,6 @@ namespace Compiler
 
                 switch(MethodName)
                 {
-                    case "Find": //En el proximo capitulo
                     case "Push":
                         argument.transform.SetParent(panelOfTheList);
                         argument.transform.position = panelOfTheList.position;
@@ -880,7 +879,7 @@ namespace Compiler
 
                         List<GameObject> tempCards = new List<GameObject>();
 
-                        string temp = EvaluateString(predicateNode.identifier.GameObject) as string ?? throw new Exception("Identifier evaluation returned null.");
+                        string temp = EvaluateString(predicateNode.identifier.GameObject);
                         foreach (GameObject card in gameObjectListReference3)
                         {
                             predicateNode.identifier.GameObject.Value = card.gameObject.name;
@@ -909,6 +908,8 @@ namespace Compiler
             }
         }
 
+
+        #region Utils
         private void ShuffleCards(GameObject panel)
         {
             int childCount = panel.transform.childCount;
@@ -954,5 +955,6 @@ namespace Compiler
             }
             return null;
         }
+        #endregion
     }
 }
