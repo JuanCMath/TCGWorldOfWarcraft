@@ -1,0 +1,38 @@
+card {
+	Type: "Oro",
+	Name: "Beluga",
+	Faction: "Northern Realms",
+	Power: 10,
+	Range: ["Melee", "Range"],
+	ArtName: "Aspectos - Dragones Clima 1 - Assault",
+	Description: "Es Pato",
+	OnActivation: 
+	[
+		{
+			Effect: 
+			{
+				Name: "Damage",
+				Amount: 5,
+			},
+			Selector: 
+			{
+				Source: "board",
+				Single: false,
+				Predicate: (unit) => unit.Faction == "Northern" @@ "Realms"
+			},
+			PostAction:
+			{
+				Type: "ReturnToDeck",
+				Selector: 
+				{	
+					Source: "parent",
+					Single: false,
+					Predicate: (unit) => unit.Power < 11
+				},
+			}
+		},
+		{
+			Effect: "Draw"
+		}
+	]
+}

@@ -2,12 +2,7 @@ using System.Collections.Generic;
 using System;
 using Enums;
 using UnityEngine;
-using System.IO;
-using System.Linq.Expressions;
-using UnityEditor;
 using System.Linq;
-using UnityEngine.Rendering;
-using Unity.VisualScripting;
 #nullable enable
 
 
@@ -135,7 +130,7 @@ namespace Compiler
             return null;
         }
 
-        public CardData EvaluateCardDeclarationNode(CardDeclarationNode cardnode)
+        private CardData EvaluateCardDeclarationNode(CardDeclarationNode cardnode)
         {
             CardData data = new CardData();
 
@@ -149,7 +144,7 @@ namespace Compiler
 
             data.cardDescription = cardnode.description != null ? Evaluate(cardnode.description) as string : null;
             data.art = cardnode.artName != null ? Resources.Load<Sprite>(EvaluateString(cardnode.artName)) : null;
- 
+
             return data;
         }
 
@@ -170,8 +165,7 @@ namespace Compiler
 
         private type EvaluateType(StringNode node)
         {
-            string value = EvaluateString(node);    
-
+            string value = EvaluateString(node);
             switch(value)
             {
                 case "Oro":
@@ -186,6 +180,8 @@ namespace Compiler
                     return type.Clima;
                 case "Señuelo":
                     return type.Señuelo;
+                case "Lider":
+                    return type.Lider;
                 default:
                     throw new System.Exception("Unknown type");
             }
@@ -218,7 +214,7 @@ namespace Compiler
             return node;
         }
 
-        public void EvaluateOnActivationBlock(OnActivationNode node)
+        private void EvaluateOnActivationBlock(OnActivationNode node)
         {
             foreach (EffectsToBeActivateNode effect in node.effectActivations)
             {

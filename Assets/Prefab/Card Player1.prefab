@@ -480,7 +480,6 @@ MonoBehaviour:
   cardData: {fileID: 0}
   cardBack: {fileID: 6283772191882467972}
   displayCardBack: 0
-  effectNumber: 0
   cardDescText: {fileID: 2050434192302956749}
   cardTypeText: {fileID: 5607479977113299648}
   cardAttack: {fileID: 1911395282554155704}
@@ -489,9 +488,9 @@ MonoBehaviour:
   cardName: 
   cardFaction: 0
   cardDescription: 
-  isHero: 1
-  cardSlot: 0
+  isHero: 0
   cardType: 0
+  cardSlot: []
   attackPower: 0
   art: {fileID: 9161095751068518372}
 --- !u!114 &3874239343401358296

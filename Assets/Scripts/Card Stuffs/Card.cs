@@ -13,7 +13,6 @@ public class Card : MonoBehaviour
     public bool displayCardBack;
 
     [Header("Card Info")]
-    //public TextMeshProUGUI carNametext;
     public TextMeshProUGUI cardDescText;
     public TextMeshProUGUI cardTypeText;
     public TextMeshProUGUI cardAttack;
@@ -51,6 +50,7 @@ public class Card : MonoBehaviour
         cardDescription = cardData.cardDescription;
         cardEffect = cardData.effect;
         isHero = cardData.isHero;
+        cardType = cardData.cardType;
         cardSlot = cardData.slots;
         attackPower = cardData.attackPower;
 

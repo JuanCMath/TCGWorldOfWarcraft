@@ -1,11 +1,11 @@
 card {
-	Type: "Oro",
-	Name: "Beluga",
-	Faction: "Northern Realms",
-	Power: 10,
-	Range: ["Melee", "Range"],
-	ArtName: "Aspectos - Dragones Clima 1 - Assault",
-	Description: "Es Pato",
+	Type: "Clima",
+	Name: "Cataclysm",
+	Faction: "Aspectos",
+	Power: 0,
+	Range: ["X"],
+	ArtName: "Aspectos - Aumento 1 - Cataclysm",
+	Description: "Daña a toda carta que no sea de su faccion por 3 puntos de ataque",
 	OnActivation: 
 	[
 		{
@@ -18,21 +18,8 @@ card {
 			{
 				Source: "board",
 				Single: false,
-				Predicate: (unit) => unit.Faction == "Northern" @@ "Realms"
+				Predicate: (unit) => unit.Faction != "Aspectos"
 			},
-			PostAction:
-			{
-				Type: "ReturnToDeck",
-				Selector: 
-				{	
-					Source: "parent",
-					Single: false,
-					Predicate: (unit) => unit.Power < 11
-				},
-			}
-		},
-		{
-			Effect: "Draw"
 		}
 	]
 }

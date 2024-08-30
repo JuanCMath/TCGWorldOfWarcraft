@@ -30,6 +30,7 @@ namespace Compiler
                 { TokenType.Div, 4 },
                 { TokenType.Pow,5},
             };
+
         public Parse(List<Token> tokens)
         {
             this.tokens = tokens;
@@ -51,7 +52,7 @@ namespace Compiler
             }
         }
 
-        public CardDeclarationNode CardDeclarationParser()
+        private CardDeclarationNode CardDeclarationParser()
         {
             StringNode name = null;
             StringNode type = null;
@@ -111,7 +112,7 @@ namespace Compiler
             return new CardDeclarationNode(name, type, faction, power, ranges, onActivation, artName, description);
         }
 
-        public OnActivationNode OnActivationParser()
+        private OnActivationNode OnActivationParser()
         {
             List<EffectsToBeActivateNode> effectActivations = new List<EffectsToBeActivateNode>();
 
@@ -131,7 +132,7 @@ namespace Compiler
             return new OnActivationNode(effectActivations);
         }
 
-        public EffectsToBeActivateNode EffectsToBeActivateParser()
+        private EffectsToBeActivateNode EffectsToBeActivateParser()
         {
             EffectParametersAssignementNode effect = null;
             SelectorNode selector = null;
@@ -176,7 +177,7 @@ namespace Compiler
             return new EffectsToBeActivateNode(effect, selector, postAction);
         }
 
-        public EffectParametersAssignementNode EffectParametersAssignementParser()
+        private EffectParametersAssignementNode EffectParametersAssignementParser()
         {
             StringNode Name = null;
             List<VariableAssignementNode> parameters = new List<VariableAssignementNode>();
@@ -225,7 +226,7 @@ namespace Compiler
             return new EffectParametersAssignementNode(Name, parameters);
         }
 
-        public SelectorNode SelectorParser()
+        private SelectorNode SelectorParser()
         {
             StringNode source = null;
             BooleanNode single = null;
@@ -256,7 +257,8 @@ namespace Compiler
             Expect(TokenType.BraceR);
             return new SelectorNode(source, single, predicate);
         }
-        public PredicateNode PredicateParser()
+
+        private PredicateNode PredicateParser()
         {
             Expect(TokenType.ParenL);
             GameObjectReferenceNode indentifier = new GameObjectReferenceNode(new StringNode(Expect(TokenType.Identifier).lexeme));
@@ -268,7 +270,7 @@ namespace Compiler
             return new PredicateNode(indentifier, condition);
         }
 
-        public PostActionNode PostActionParser()
+        private PostActionNode PostActionParser()
         {
             EffectParametersAssignementNode parameters = null;
             SelectorNode selector = null;
@@ -306,7 +308,7 @@ namespace Compiler
             return new PostActionNode(parameters, selector, postAction);
         }
 
-        public EffectDeclarationNode EffectDeclarationParser()
+        private EffectDeclarationNode EffectDeclarationParser()
         {
             StringNode name = null;
             EffectParamsReferenceNode param = null;
@@ -340,7 +342,7 @@ namespace Compiler
             return new EffectDeclarationNode(name, param, action);
         }
 
-        public EffectParamsReferenceNode EffectParamsReferenceParser()
+        private EffectParamsReferenceNode EffectParamsReferenceParser()
         {
             List<VariableAssignementNode> param = new List<VariableAssignementNode>();
 
@@ -364,7 +366,7 @@ namespace Compiler
             return new EffectParamsReferenceNode(param);
         }
 
-        public ActionDeclarationNode ActionDeclarationParser()
+        private ActionDeclarationNode ActionDeclarationParser()
         {
             Expect(TokenType.ParenL);
             GameObjectReferenceNode target = new GameObjectReferenceNode(new StringNode(Expect(TokenType.Identifier).lexeme));
@@ -378,8 +380,7 @@ namespace Compiler
             return new ActionDeclarationNode(target, context, body);
         }
 
-
-        public ASTNode StatementParser()
+        private ASTNode StatementParser()
         {
             if (Match(TokenType.WhileCycle))
             {
@@ -432,7 +433,7 @@ namespace Compiler
             }
         }
 
-        public List<ASTNode> ParseBlock()
+        private List<ASTNode> ParseBlock()
         {
             List<ASTNode> bodyStatements = new List<ASTNode>();
             Expect(TokenType.BraceL);
@@ -451,11 +452,12 @@ namespace Compiler
             return bodyStatements;
         }
 
-        public ExpresionNodes ParseExpresion(int i = 0)
+        private ExpresionNodes ParseExpresion(int i = 0)
         {
             return ParseBinaryExpresion(i);
         }
-        public ExpresionNodes ParseBinaryExpresion(int minPrecedence)
+
+        private ExpresionNodes ParseBinaryExpresion(int minPrecedence)
         {
             ExpresionNodes left = ParseUnaryExpresion();
 
@@ -495,7 +497,7 @@ namespace Compiler
             }
         }
 
-        public ExpresionNodes ParseUnaryExpresion()
+        private ExpresionNodes ParseUnaryExpresion()
         {
             if (tokens[currentIndex + 1].type == TokenType.MinusOne)
             {
@@ -515,7 +517,7 @@ namespace Compiler
             }
         }
 
-        public ExpresionNodes ParsePrimaryExpresion()
+        private ExpresionNodes ParsePrimaryExpresion()
         {
             if (Match(TokenType.Number))
             {
@@ -553,7 +555,6 @@ namespace Compiler
             }
         }
 
-        // This method is used to check if the current token is the expected token (return rangeList, current++)
         private StringNode[] ExpectStringArray()
         {
             List<StringNode> temporalRanges = new List<StringNode>();

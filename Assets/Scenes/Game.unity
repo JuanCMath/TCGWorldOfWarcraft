@@ -2771,9 +2771,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1038882107}
+      - m_Target: {fileID: 1038882111}
         m_TargetAssemblyTypeName: DeckSelectorMenu, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: NextFaction
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4824,6 +4824,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   factionSelectorText: {fileID: 30349894}
+  index: 0
   Choosed: 0
   ChoosedFaction: 
 --- !u!1 &1080402384
@@ -5839,8 +5840,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   faction: Northern Realms
-  deck: []
-  leadCard: {fileID: 0}
 --- !u!1 &1254979320
 GameObject:
   m_ObjectHideFlags: 0
@@ -7079,8 +7078,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   faction: Northern Realms
-  deck: []
-  leadCard: {fileID: 0}
 --- !u!1 &1439623099
 GameObject:
   m_ObjectHideFlags: 0
@@ -7863,7 +7860,7 @@ MonoBehaviour:
   handP1: {fileID: 216967025}
   handP2: {fileID: 1453628168}
   cardDisplayPrefab: {fileID: 5710362436332554621, guid: 3bdddcae7d4732447a9bf1486233b2f4, type: 3}
-  panelCardDsiplay: {fileID: 1424904777}
+  panelCardDisplay: {fileID: 1424904777}
   deckSelectorMenu: {fileID: 101774045}
   endGameMenu: {fileID: 2091912310}
   deckSelectorP1: {fileID: 1038882107}
@@ -8946,6 +8943,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   factionSelectorText: {fileID: 1453562729}
+  index: 0
   Choosed: 0
   ChoosedFaction: 
 --- !u!1 &1981071956

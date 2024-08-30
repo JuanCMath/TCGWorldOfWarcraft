@@ -1,7 +1,6 @@
 using UnityEngine;
 using Enums;
 using TMPro;
-using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 { 
@@ -20,14 +19,14 @@ public class GameManager : MonoBehaviour
     [Header("Pass Manager")]
     public bool player1Pass;
     public bool player2Pass;
-    
+
     [Header("Scene Objects")]
     public GameObject leadP1;
     public GameObject leadP2;
     public GameObject handP1;
     public GameObject handP2;
     public GameObject cardDisplayPrefab;
-    public GameObject panelCardDsiplay;
+    public GameObject panelCardDisplay;
     public GameObject deckSelectorMenu;
     public GameObject endGameMenu;
     public GameObject deckSelectorP1;
@@ -64,7 +63,7 @@ public class GameManager : MonoBehaviour
             //Si esta en la mano no la destruyas
             if (carta.transform.IsChildOf(handP1.transform)) continue;
             else if (carta.transform.IsChildOf(leadP1.transform)) continue;
-            else if (carta.transform.IsChildOf(panelCardDsiplay.transform)) continue;
+            else if (carta.transform.IsChildOf(panelCardDisplay.transform)) continue;
             else if (carta.transform.IsChildOf(GameObject.Find("Player1").GetComponent<PlayerManager>().deck.transform)) continue;
 
             //Si no esta en la mano destruyela, Aqui podriamos poner despues que se vayan al cementerio
@@ -83,7 +82,7 @@ public class GameManager : MonoBehaviour
             //Si esta en la mano no la destruyas
             if (carta.transform.IsChildOf(handP2.transform)) continue;
             else if (carta.transform.IsChildOf(leadP2.transform)) continue;
-            else if (carta.transform.IsChildOf(panelCardDsiplay.transform)) continue;
+            else if (carta.transform.IsChildOf(panelCardDisplay.transform)) continue;
             else if (carta.transform.IsChildOf(GameObject.Find("Player2").GetComponent<PlayerManager>().deck.transform)) continue;
             
             //Si no esta en la mano destruyela, Aqui podriamos poner despues que se vayan al cementerio
@@ -142,10 +141,6 @@ public class GameManager : MonoBehaviour
     //Metodo para terminar la ronda
     public void EndRound()  //Seteamos las condiciones para el final de ronda
     {
-        //Aplicamos clima
-        //GameObject.Find("Player1").GetComponent<PlayerManager>().applyClima();
-        //GameObject.Find("Player2").GetComponent<PlayerManager>().applyClima();
-        //Contamos el ataque de cada jugador en el campo
         GameObject.Find("Player1").GetComponent<PlayerManager>().CountAttackOnField();
         GameObject.Find("Player2").GetComponent<PlayerManager>().CountAttackOnField();
 
@@ -276,6 +271,7 @@ public class GameManager : MonoBehaviour
         GameObject.Find("Player1").GetComponent<PlayerManager>().deck.GetComponent<Deck>().Clear();
         GameObject.Find("Player2").GetComponent<PlayerManager>().deck.GetComponent<Deck>().Clear();
         Cards.availableCards.Clear();
+        Effects.availableEffects.Clear();
     }
 
     //Inicial el juego

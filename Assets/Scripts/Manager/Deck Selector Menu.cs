@@ -9,7 +9,7 @@ public class DeckSelectorMenu : MonoBehaviour
 {
     public TextMeshProUGUI factionSelectorText;
 
-    private static int index = 0;
+    public int index = 0;
     public bool Choosed = false;
     public string ChoosedFaction = "";
 
@@ -38,7 +38,7 @@ public class DeckSelectorMenu : MonoBehaviour
             index += 1;
         }
     }
-
+ 
     public void PreviousFaction()
     {
         if (index == 0)

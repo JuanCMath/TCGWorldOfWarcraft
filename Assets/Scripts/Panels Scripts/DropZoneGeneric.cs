@@ -31,13 +31,13 @@ public class DropZoneGeneric : MonoBehaviour, IDropHandler, IPointerEnterHandler
             }  
         }
         
-        public void ApplyEffect(GameObject dropedCard)
+        private void ApplyEffect(GameObject dropedCard)
         {
                 Evaluator evaluator = new Evaluator();
                 evaluator.Evaluate(dropedCard.GetComponent<Card>().cardEffect);
         }
 
-        public bool CardCanBePlaced(GameObject dropedCard)
+        private bool CardCanBePlaced(GameObject dropedCard)
         {
             if (maxCards >= gameObject.transform.childCount                                              &&
                 GameObject.Find("Game Manager").GetComponent<GameManager>().numberOfActionsAvailable > 0 &&
@@ -133,8 +133,8 @@ public class DropZoneGeneric : MonoBehaviour, IDropHandler, IPointerEnterHandler
         allowedCards = match.Groups[1].Success ? new string ("Melee") :
                           match.Groups[2].Success ? new string ("Range") :
                           match.Groups[3].Success ? new string ("Siege") :
-                          match.Groups[4].Success ? new string ("Clima") :
-                          match.Groups[5].Success ? new string ("Aumento") : 
+                          match.Groups[4].Success ? new string ("X") :
+                          match.Groups[5].Success ? new string ("X") : 
                           null;
 
         allowedCardsType = match.Groups[1].Success ? new type[] {type.Unidad, type.Señuelo} :

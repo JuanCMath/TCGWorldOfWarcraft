@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using Compiler;
 
 public class Cards : MonoBehaviour
 {
@@ -14,7 +13,6 @@ public class Cards : MonoBehaviour
 
     private void LoadCards()
     {
-
         string[] files = Directory.GetFiles(@"D:\Unity\TCGWorldOfWarcraft\Assets\Resources\Cards", "*.txt");
 
         foreach (string file in files)

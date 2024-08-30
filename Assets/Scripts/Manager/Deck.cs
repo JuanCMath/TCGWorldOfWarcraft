@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Enums;
 
 public class Deck : MonoBehaviour
 {
@@ -28,6 +29,8 @@ public class Deck : MonoBehaviour
     {
         foreach (CardData card in deck)
         {
+            if (card.cardType == type.Lider) continue;
+
             GameObject cardObject = Instantiate(gameObject.transform.parent.GetComponent<PlayerManager>().cardPrefab, gameObject.transform);
             cardObject.GetComponent<Card>().cardData = card;
             cardObject.name = card.cardName;
@@ -37,7 +40,18 @@ public class Deck : MonoBehaviour
 
     private void LoadLead()
     {
-        //TODO
+        foreach (CardData card in deck)
+        {
+            if (card.cardType == type.Lider)
+            {
+                leadCard = card;
+                GameObject cardObject = Instantiate(gameObject.transform.parent.GetComponent<PlayerManager>().cardLeadPrefab, gameObject.transform.parent.GetComponent<PlayerManager>().lead.transform);
+                cardObject.GetComponent<Card>().cardData = card;
+                cardObject.name = card.cardName;
+                cardObject.transform.localPosition = new Vector3(515,0,0);
+                break;
+            }
+        }
     }
 
     public void PushCard(GameObject card)
@@ -78,9 +92,11 @@ public class Deck : MonoBehaviour
 
     public void Clear()
     {
+        deck.Clear();
+        leadCard = null;
         foreach (Transform child in gameObject.transform)
         {
-            if(child.gameObject.GetComponent<Card>() != null) Destroy(child);
+            if(child.gameObject.GetComponent<Card>() != null) Destroy(child.gameObject);
         }
     }
 

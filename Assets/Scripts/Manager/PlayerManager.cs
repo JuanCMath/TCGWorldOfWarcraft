@@ -51,6 +51,7 @@ public class PlayerManager : MonoBehaviour
             //Si esta en la mano no la destruyas
             if (carta.transform.IsChildOf(hand.transform)) continue;
             else if (carta.transform.IsChildOf(lead.transform)) continue;
+            else if (carta.transform.IsChildOf(deck.transform)) continue;
 
             //Si no esta en la mano destruyela, Aqui podriamos poner despues que se vayan al cementerio
             carta.transform.SetParent(graveyard.transform);
