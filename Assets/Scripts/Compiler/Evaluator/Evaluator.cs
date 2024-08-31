@@ -72,7 +72,7 @@ namespace Compiler
                     
                 case WhileNode whileNode:
                     object? loopConditionValue = Evaluate(whileNode.Condition);
-                
+                    
                     while (loopConditionValue is bool loopConditionBool && loopConditionBool)
                     {
                         EnterScope();
@@ -242,7 +242,7 @@ namespace Compiler
             switch (sourcefount)
             {
                 case "hand":
-                    if (GameObject.Find("Game Manger").GetComponent<GameManager>().state == gameTracker.Player1Turn)
+                    if (GameObject.Find("Game Manager").GetComponent<GameManager>().state == gameTracker.Player1Turn)
                         cards = GetCardsInObject(GameObject.Find("Player1").GetComponent<PlayerManager>().hand);
                     else
                         cards = GetCardsInObject(GameObject.Find("Player2").GetComponent<PlayerManager>().hand);
@@ -252,7 +252,7 @@ namespace Compiler
                     break;
 
                 case "otherHand":
-                    if (GameObject.Find("Game Manger").GetComponent<GameManager>().state == gameTracker.Player1Turn)
+                    if (GameObject.Find("Game Manager").GetComponent<GameManager>().state == gameTracker.Player1Turn)
                         cards = GetCardsInObject(GameObject.Find("Player2").GetComponent<PlayerManager>().hand);
                     else
                         cards = GetCardsInObject(GameObject.Find("Player1").GetComponent<PlayerManager>().hand);
@@ -261,7 +261,7 @@ namespace Compiler
                     break;
 
                 case "field":
-                    if (GameObject.Find("Game Manger").GetComponent<GameManager>().state == gameTracker.Player1Turn)
+                    if (GameObject.Find("Game Manager").GetComponent<GameManager>().state == gameTracker.Player1Turn)
                         cards = GetCardsInObject(GameObject.Find("Player1").GetComponent<PlayerManager>().field);
                     else
                         cards = GetCardsInObject(GameObject.Find("Player2").GetComponent<PlayerManager>().field);
@@ -270,7 +270,7 @@ namespace Compiler
                     break;
                 
                 case "otherField":
-                    if (GameObject.Find("Game Manger").GetComponent<GameManager>().state == gameTracker.Player1Turn)
+                    if (GameObject.Find("Game Manager").GetComponent<GameManager>().state == gameTracker.Player1Turn)
                         cards = GetCardsInObject(GameObject.Find("Player2").GetComponent<PlayerManager>().field);
                     else
                         cards = GetCardsInObject(GameObject.Find("Player1").GetComponent<PlayerManager>().field); 
@@ -279,7 +279,7 @@ namespace Compiler
                     break;
 
                 case "deck":
-                    if (GameObject.Find("Game Manger").GetComponent<GameManager>().state == gameTracker.Player1Turn)
+                    if (GameObject.Find("Game Manager").GetComponent<GameManager>().state == gameTracker.Player1Turn)
                         cards = GetCardsInObject(GameObject.Find("Player1").GetComponent<PlayerManager>().deck);
                     else
                         cards = GetCardsInObject(GameObject.Find("Player2").GetComponent<PlayerManager>().deck); 
@@ -288,7 +288,7 @@ namespace Compiler
                     break;
 
                 case "otherDeck":
-                    if (GameObject.Find("Game Manger").GetComponent<GameManager>().state == gameTracker.Player1Turn)
+                    if (GameObject.Find("Game Manager").GetComponent<GameManager>().state == gameTracker.Player1Turn)
                         cards = GetCardsInObject(GameObject.Find("Player2").GetComponent<PlayerManager>().deck);
                     else
                         cards = GetCardsInObject(GameObject.Find("Player1").GetComponent<PlayerManager>().deck); 
@@ -427,7 +427,10 @@ namespace Compiler
             
             string temp = Evaluate(node.Targets.GameObject) as string ?? throw new Exception("Target evaluation returned null.");
 
-            scopes.Peek().Add(temp, (List<GameObject>)FindVariableScope("FilteredCards")["FilteredCards"]);
+            if ( FindVariableScope("FilteredCards") != null)
+            {
+                scopes.Peek().Add(temp, (List<GameObject>)FindVariableScope("FilteredCards")["FilteredCards"]);
+            }
             foreach (ASTNode statement in node.Body.Statements)
             {
                 Evaluate(statement);

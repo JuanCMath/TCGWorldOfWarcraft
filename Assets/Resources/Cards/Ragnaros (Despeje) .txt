@@ -1,0 +1,24 @@
+card {
+	Type: "Despeje",
+	Name: "Ragnaros",
+	Faction: "Aspectos",
+	Power: 0,
+	Range: ["X"],
+	ArtName: "Aspectos - Despeje 2 - Ragnaros",
+	Description: "Retorna a la mano una carta del campo enemigo",
+	OnActivation: 
+	[
+		{
+			Effect: 
+			{
+				Name: "ReturnToHand",
+			},
+			Selector: 
+			{
+				Source: "board",
+				Single: true,
+				Predicate: (unit) => unit.Faction != "Aspectos"
+			},
+		}
+	]
+}

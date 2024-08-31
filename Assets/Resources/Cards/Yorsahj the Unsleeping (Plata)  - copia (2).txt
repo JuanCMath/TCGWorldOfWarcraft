@@ -1,0 +1,25 @@
+card {
+	Type: "Plata",
+	Name: "Yorsahj the Unsleeping",
+	Faction: "Aspectos",
+	Power: 9,
+	Range: ["Siege"],
+	ArtName: "Aspectos - Plata 3 - Yorsahj the Unsleeping ",
+	Description: "Sana a todos sus aliados 2 puntos de ataque",
+	OnActivation: 
+	[
+		{
+			Effect: 
+			{
+				Name: "Heal",
+				Amount: 3,
+			},
+			Selector: 
+			{
+				Source: "field",
+				Single: false,
+				Predicate: (unit) => unit.Faction == "Aspectos"
+			},
+		}
+	]
+}

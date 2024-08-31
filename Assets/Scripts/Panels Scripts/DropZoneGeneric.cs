@@ -33,8 +33,11 @@ public class DropZoneGeneric : MonoBehaviour, IDropHandler, IPointerEnterHandler
         
         private void ApplyEffect(GameObject dropedCard)
         {
+            if(dropedCard.GetComponent<Card>().cardEffect != null)
+            {
                 Evaluator evaluator = new Evaluator();
                 evaluator.Evaluate(dropedCard.GetComponent<Card>().cardEffect);
+            }
         }
 
         private bool CardCanBePlaced(GameObject dropedCard)

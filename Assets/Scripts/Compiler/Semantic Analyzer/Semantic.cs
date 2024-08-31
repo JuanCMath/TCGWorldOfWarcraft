@@ -7,8 +7,8 @@ namespace Compiler
 {
     public class Semantic
     {
-        static List<string> acceptedTypesOfCards = new List<string> { "Oro", "Plata", "Despeje", "Señuelo", "Clima", "Lider"};
-        static List<string> acceptedTypesOfRanges = new List<string> {"Melee", "Range", "Sienge", "X"};
+        static List<string> acceptedTypesOfCards = new List<string> { "Oro", "Plata", "Despeje", "Señuelo", "Clima", "Lider", "Aumento"};
+        static List<string> acceptedTypesOfRanges = new List<string> {"Melee", "Range", "Siege", "X"};
         public static List<string> acceptedTypesOfEffects = new List<string> {};
 
         public void CheckCemantic(ASTNode node)

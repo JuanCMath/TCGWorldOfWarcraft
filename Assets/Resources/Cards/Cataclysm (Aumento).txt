@@ -1,0 +1,25 @@
+card {
+	Type: "Aumento",
+	Name: "Cataclysm",
+	Faction: "Aspectos",
+	Power: 0,
+	Range: ["X"],
+	ArtName: "Aspectos - Aumento 1 - Cataclysm",
+	Description: "Aumenta 2 puntos de ataque a todos los dragones del campo",
+	OnActivation: 
+	[
+		{
+			Effect: 
+			{
+				Name: "Heal",
+				Amount: 3,
+			},
+			Selector: 
+			{
+				Source: "board",
+				Single: false,
+				Predicate: (unit) => unit.Faction == "Aspectos"
+			},
+		}
+	]
+}

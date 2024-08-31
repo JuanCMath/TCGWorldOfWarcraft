@@ -1,0 +1,25 @@
+card {
+	Type: "Clima",
+	Name: "Assault",
+	Faction: "Aspectos",
+	Power: 0,
+	Range: ["X"],
+	ArtName: "Aspectos - Dragones Clima 1 - Assault",
+	Description: "Daña a toda carta que no sea de su faccion por 3 puntos de ataque",
+	OnActivation: 
+	[
+		{
+			Effect: 
+			{
+				Name: "Damage",
+				Amount: 4,
+			},
+			Selector: 
+			{
+				Source: "board",
+				Single: false,
+				Predicate: (unit) => unit.Faction != "Aspectos"
+			},
+		}
+	]
+}

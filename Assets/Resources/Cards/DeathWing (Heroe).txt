@@ -1,0 +1,21 @@
+card {
+	Type: "Lider",
+	Name: "Deathwing",
+	Faction: "Aspectos",
+	Power: 0,
+	Range: ["X"],
+	ArtName: "Aspectos - Lider - Deathwing",
+	Description: "Roba 2 cartas",
+	OnActivation: 
+	[
+		{
+			Effect: 
+			{
+				Name: "Draw",
+			},
+		},
+		{
+			Effect: "Draw"
+		}
+	]
+}

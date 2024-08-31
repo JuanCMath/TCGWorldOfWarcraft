@@ -1,0 +1,9 @@
+card {
+	Type: "Oro",
+	Name: "Alextrasza",
+	Faction: "Aspectos",
+	Power: 10,
+	Range: ["Melee", "Range","Siege"],
+	ArtName: "Aspectos - Heroe 1 -Alextrasza",
+	Description: "Poderoso Dragon listo para combatir",
+}

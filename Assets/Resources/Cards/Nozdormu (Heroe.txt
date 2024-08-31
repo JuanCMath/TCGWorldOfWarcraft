@@ -1,0 +1,9 @@
+card {
+	Type: "Oro",
+	Name: "Nozdormu",
+	Faction: "Aspectos",
+	Power: 9,
+	Range: ["Melee", "Range","Siege"],
+	ArtName: "Aspectos - Heroe 3 -Nozdormu",
+	Description: "Poderoso Dragon listo para combatir",
+}

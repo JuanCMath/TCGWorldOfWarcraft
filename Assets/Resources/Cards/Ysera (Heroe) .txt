@@ -1,0 +1,9 @@
+card {
+	Type: "Oro",
+	Name: "Ysera",
+	Faction: "Aspectos",
+	Power: 8,
+	Range: ["Melee", "Range","Siege"],
+	ArtName: "Aspectos - Heroe 4 - Ysera",
+	Description: "Poderoso Dragon listo para combatir",
+}

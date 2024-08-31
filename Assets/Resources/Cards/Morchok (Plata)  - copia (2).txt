@@ -1,0 +1,25 @@
+card {
+	Type: "Plata",
+	Name: "Morchok",
+	Faction: "Aspectos",
+	Power: 7,
+	Range: ["Melee"],
+	ArtName: "Aspectos - Plata 1 - Morchok ",
+	Description: "Retorna a la mano a todos los enemigos con menos de 8 puntos de ataque",
+	OnActivation: 
+	[
+		{
+			Effect: 
+			{
+				Name: "ReturnToHand",
+				Amount: 5,
+			},
+			Selector: 
+			{
+				Source: "otherField",
+				Single: false,
+				Predicate: (unit) => unit.Power < 8
+			},
+		}
+	]
+}

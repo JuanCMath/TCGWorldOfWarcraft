@@ -1,0 +1,25 @@
+card {
+	Type: "Aumento",
+	Name: "Subdue",
+	Faction: "Aspectos",
+	Power: 0,
+	Range: ["X"],
+	ArtName: "Aspectos - Aumento 2 - Subdue",
+	Description: "Aumenta 1 punto de ataque a todos los dragones del campo",
+	OnActivation: 
+	[
+		{
+			Effect: 
+			{
+				Name: "Heal",
+				Amount: 5,
+			},
+			Selector: 
+			{
+				Source: "board",
+				Single: false,
+				Predicate: (unit) => unit.Faction == "Aspectos"
+			},
+		}
+	]
+}

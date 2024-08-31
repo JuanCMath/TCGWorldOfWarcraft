@@ -1,0 +1,25 @@
+card {
+	Type: "Plata",
+	Name: "Morchok",
+	Faction: "Aspectos",
+	Power: 5,
+	Range: ["Siege"],
+	ArtName: "Aspectos - Plata 4 - Ultraxion ",
+	Description: "Daña a todo enemigo con menos de 6 puntos de ataque",
+	OnActivation: 
+	[
+		{
+			Effect: 
+			{
+				Name: "Damage",
+				Amount: 2,
+			},
+			Selector: 
+			{
+				Source: "otherField",
+				Single: false,
+				Predicate: (unit) => unit.Power < 6
+			},
+		}
+	]
+}

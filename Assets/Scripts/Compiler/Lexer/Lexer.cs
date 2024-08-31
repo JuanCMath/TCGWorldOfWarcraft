@@ -139,7 +139,7 @@ namespace Compiler
             {"Board", TokenType.Board}
         }; 
 
-        private static Regex symbols = new Regex(@"\+=@|-=|!=|>=|<=|\|\||--|\+\+|==|\{|\}|@@|=>|\(|\)|\[|\]|\.|,|=|\+|-|\*|/|%|\^|:|;|@|!|>|<", RegexOptions.IgnoreCase);
+        private static Regex symbols = new Regex(@"\+=|-=|!=|>=|<=|\|\||--|\+\+|==|\{|\}|@@|=>|\(|\)|\[|\]|\.|,|=|\+|-|\*|/|%|\^|:|;|@|!|>|<", RegexOptions.IgnoreCase);
         private static Regex number = new Regex(@"[0-9]+|[0-9]*\.[0-9]+");
         private static Regex identifier = new Regex(@"[_a-zA-Z][_a-zA-Z0-9]*");
 

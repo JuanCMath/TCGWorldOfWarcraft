@@ -1,0 +1,25 @@
+card {
+	Type: "Plata",
+	Name: "Aspectos - Plata 2 - Warlord Zon ozz",
+	Faction: "Aspectos",
+	Power: 8,
+	Range: ["Siege"],
+	ArtName: "Aspectos - Plata 2 - Aspectos - Plata 2 - Warlord Zon ozz ",
+	Description: "Aumenta 1 punto de ataque a todos los dragones con menos ataque que el",
+	OnActivation: 
+	[
+		{
+			Effect: 
+			{
+				Name: "ReturnToHand",
+				Amount: 5,
+			},
+			Selector: 
+			{
+				Source: "otherField",
+				Single: false,
+				Predicate: (unit) => unit.Power < 8
+			},
+		}
+	]
+}
