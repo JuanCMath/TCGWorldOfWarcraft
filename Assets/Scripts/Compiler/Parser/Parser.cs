@@ -48,7 +48,7 @@ namespace Compiler
                 case TokenType.EffectDeclaration:
                     return EffectDeclarationParser();
                 default:
-                    throw new Exception($"Unexpected property '{propertyName}'.");    
+                    throw new Exception($"Unexpected property '{propertyName}'. at line: {tokens[currentIndex].line} column: {tokens[currentIndex].column}");    
             }
         }
 
@@ -105,7 +105,7 @@ namespace Compiler
                         Expect(TokenType.Comma);
                         break;
                     default:
-                        throw new Exception($"Unexpected property '{propertyName}'.");
+                        throw new Exception($"Unexpected property '{propertyName}'. at line: {tokens[currentIndex].line} column: {tokens[currentIndex].column}");
                 }
             }
             Expect(TokenType.BraceR);
@@ -170,7 +170,7 @@ namespace Compiler
                         Expect(TokenType.Comma);
                         break;
                     default:
-                        throw new Exception($"Unexpected property '{propertyName}'.");
+                        throw new Exception($"Unexpected property '{propertyName}'. at line: {tokens[currentIndex].line} column: {tokens[currentIndex].column}");
                 }
             }
             Expect(TokenType.BraceR);
@@ -219,7 +219,7 @@ namespace Compiler
                         Expect(TokenType.Comma);
                         break;
                     default:
-                        throw new Exception($"Unexpected property '{tokens[currentIndex].type}'.");
+                        throw new Exception($"Unexpected property '{tokens[currentIndex].type}'. at line: {tokens[currentIndex].line} column: {tokens[currentIndex].column}");
                 }
             }
             Expect(TokenType.BraceR);
@@ -252,6 +252,8 @@ namespace Compiler
                     case TokenType.Predicate:
                         predicate = PredicateParser();
                         break;
+                    default:
+                        throw new Exception($"Unexpected property '{propertyName}'. at line: {tokens[currentIndex].line} column: {tokens[currentIndex].column}");
                 }
             }
             Expect(TokenType.BraceR);
@@ -301,7 +303,7 @@ namespace Compiler
                         postAction = PostActionParser();
                         break;
                     default:
-                        throw new Exception($"Unexpected property '{propertyName}'.");
+                        throw new Exception($"Unexpected property '{propertyName}'. at line: {tokens[currentIndex].line} column: {tokens[currentIndex].column}");
                 }
             }
             Expect(TokenType.BraceR);
@@ -335,7 +337,7 @@ namespace Compiler
                         action = ActionDeclarationParser();
                         break;
                     default:
-                        throw new Exception($"Unexpected property '{propertyName}'.");
+                        throw new Exception($"Unexpected property '{propertyName}'. at line: {tokens[currentIndex].line} column: {tokens[currentIndex].column}");
                 }
             }
             Expect(TokenType.BraceR);

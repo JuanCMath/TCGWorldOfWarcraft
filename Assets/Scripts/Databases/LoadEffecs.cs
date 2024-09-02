@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Compiler;
 using System.IO;
 using UnityEngine;
+using Unity.VisualScripting;
 
 public class Effects : MonoBehaviour
 {
@@ -16,7 +17,10 @@ public class Effects : MonoBehaviour
     private void LoadEffects()
     {
         string[] files = Directory.GetFiles("Assets/Resources/Effects", "*.txt");
+        string[] persistentFiles = Directory.GetFiles(Application.persistentDataPath, "*.txt");
 
+        if (persistentFiles != null) files.AddRange(persistentFiles);
+        
         foreach (string file in files)
         {
             using (StreamReader sr = new StreamReader(file))

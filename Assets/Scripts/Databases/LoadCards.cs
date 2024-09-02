@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using Unity.VisualScripting;
+using System.Linq;
 
 public class Cards : MonoBehaviour
 {
@@ -14,7 +16,10 @@ public class Cards : MonoBehaviour
     private void LoadCards()
     {
         string[] files = Directory.GetFiles(@"D:\Unity\TCGWorldOfWarcraft\Assets\Resources\Cards", "*.txt");
+        string[] persistentFiles = Directory.GetFiles(Application.persistentDataPath, "*.txt");
 
+        if (persistentFiles != null) files.AddRange(persistentFiles);
+        
         foreach (string file in files)
         {
             using (StreamReader sr = new StreamReader(file))

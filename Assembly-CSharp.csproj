@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\ActionDeclarationNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\NonTerminals\Card Nodes\EffectParamsReferenceNode.cs" />
     <Compile Include="Assets\Scripts\Compiler\Parser\ASTNodes\ASTNode.cs" />
+    <Compile Include="Assets\Scripts\Manager\CreateCard Menu.cs" />
     <Compile Include="Assets\Scripts\Card Stuffs\Draggable.cs" />
     <Compile Include="Assets\Scripts\Card Stuffs\CardLeadEffect.cs" />
     <Compile Include="Assets\Scripts\Compiler\Lexer\Lexer.cs" />
