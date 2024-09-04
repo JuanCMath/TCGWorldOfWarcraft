@@ -24,6 +24,7 @@ public class MainMenu : MonoBehaviour
     {
         CardCreator.SetActive(false);
         CardCreator.GetComponent<CreateCardMenu>().output.text = "";
+        CardCreator.GetComponent<CreateCardMenu>().ResetValues();
     }
 
     public void CreateCard()
@@ -31,7 +32,7 @@ public class MainMenu : MonoBehaviour
         if (CardCreator.GetComponent<CreateCardMenu>().canBeCompiled)
         {
             CardCreator.GetComponent<CreateCardMenu>().SaveInput();
-            CardCreator.GetComponent<CreateCardMenu>().canBeCompiled = false;
+            CardCreator.GetComponent<CreateCardMenu>().ResetValues();
             CardCreator.SetActive(false);
         }
     }

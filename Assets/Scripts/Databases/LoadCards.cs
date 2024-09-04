@@ -7,7 +7,7 @@ using System.Linq;
 public class Cards : MonoBehaviour
 {
     public static List<CardData> availableCards = new List<CardData>();
-
+    
     void Awake()
     {
         LoadCards();
@@ -15,9 +15,9 @@ public class Cards : MonoBehaviour
 
     private void LoadCards()
     {
-        string[] files = Directory.GetFiles(@"D:\Unity\TCGWorldOfWarcraft\Assets\Resources\Cards", "*.txt");
+        List<string> files = Directory.GetFiles(@"D:\Unity\TCGWorldOfWarcraft\Assets\Resources\Cards", "*.txt").ToList();
         string[] persistentFiles = Directory.GetFiles(Application.persistentDataPath, "*.txt");
-
+        
         if (persistentFiles != null) files.AddRange(persistentFiles);
         
         foreach (string file in files)

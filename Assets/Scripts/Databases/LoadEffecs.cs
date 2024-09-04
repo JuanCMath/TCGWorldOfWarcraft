@@ -4,6 +4,7 @@ using Compiler;
 using System.IO;
 using UnityEngine;
 using Unity.VisualScripting;
+using System.Linq;
 
 public class Effects : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class Effects : MonoBehaviour
 
     private void LoadEffects()
     {
-        string[] files = Directory.GetFiles("Assets/Resources/Effects", "*.txt");
+        List<string> files = Directory.GetFiles("Assets/Resources/Effects", "*.txt").ToList();
         string[] persistentFiles = Directory.GetFiles(Application.persistentDataPath, "*.txt");
 
         if (persistentFiles != null) files.AddRange(persistentFiles);

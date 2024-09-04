@@ -168,7 +168,6 @@
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\Resources\Cards\Yorsahj the Unsleeping (Plata) .txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
-    <None Include="Assets\Scripts\Databases\Test.txt" />
     <None Include="Assets\Resources\Cards\Warlord Zon ozz (Plata).txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
   </ItemGroup>

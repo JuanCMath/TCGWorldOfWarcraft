@@ -5,17 +5,30 @@ using UnityEngine;
 using Compiler;
 using System.Data;
 using System;
+using Unity.UI;
+using UnityEngine.UI;
+using UnityEditor.UI;
 
 public class CreateCardMenu : MonoBehaviour
 {
     public TextMeshProUGUI output;
+    public TMP_InputField inputField;
+    private string tokenizableInput;
     public bool canBeCompiled = false;
     ASTNode AST;
+
+    public void ResetValues()
+    {   
+        output.text = "";
+        inputField.text = "";
+        canBeCompiled = false;
+    }
 
     public void ParseInput(string input)
     {
         try
         {
+            canBeCompiled = false;
             List<Token> tokens = Lexer.Tokenize(input);
 
             Parse parsedExpresion = new Parse(tokens);
@@ -23,6 +36,7 @@ public class CreateCardMenu : MonoBehaviour
 
             // Code to execute if parsing is successful
             canBeCompiled = true;
+            tokenizableInput = input;
             output.text = "Ready To Compile";
         }
         catch (SyntaxErrorException s)
@@ -40,14 +54,12 @@ public class CreateCardMenu : MonoBehaviour
         if (AST is CardDeclarationNode card)
         {
             string path = Application.persistentDataPath + $"/ {card.Name.Value}.txt";
-            string input = output.text;
-            System.IO.File.WriteAllText(path, input);
+            System.IO.File.WriteAllText(path, tokenizableInput);
         }
         else if (AST is EffectDeclarationNode effect)
         {
             string path = Application.persistentDataPath + $"/ {effect.Name.Value}.txt";
-            string input = output.text;
-            System.IO.File.WriteAllText(path, input);
+            System.IO.File.WriteAllText(path, tokenizableInput);
         }
     }
 }
