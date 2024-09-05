@@ -70,11 +70,11 @@ public class Card : MonoBehaviour
     {
         if (displayCardBack == true)
         {
-            cardBack.SetActive(true);
+            if(cardBack != null) cardBack.SetActive(true);
         }
         else
         {
-            cardBack.SetActive(false);
+            if(cardBack != null) cardBack.SetActive(false);
         }
     }
 

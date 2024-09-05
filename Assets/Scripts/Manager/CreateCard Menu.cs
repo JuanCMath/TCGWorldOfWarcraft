@@ -11,10 +11,15 @@ using UnityEditor.UI;
 
 public class CreateCardMenu : MonoBehaviour
 {
+    public GameObject displayedCard;
+    public GameObject prefab;
+    public GameObject displayPanel;
     public TextMeshProUGUI output;
     public TMP_InputField inputField;
+
     private string tokenizableInput;
     public bool canBeCompiled = false;
+
     ASTNode AST;
 
     public void ResetValues()
@@ -22,6 +27,31 @@ public class CreateCardMenu : MonoBehaviour
         output.text = "";
         inputField.text = "";
         canBeCompiled = false;
+    }
+
+    public void DisplayCard()
+    {
+        if (canBeCompiled)
+        {
+            if (AST is CardDeclarationNode card)
+            {
+                card.OnActivation = null;
+
+                CardData cardToDisplay = Compiler.Compiler.ProcessInput(tokenizableInput) as CardData;
+
+                displayedCard = Instantiate(prefab, displayPanel.transform);
+                displayedCard.GetComponent<Card>().cardData = cardToDisplay;
+                displayedCard.transform.localPosition = new Vector3(0,0,0);
+                displayedCard.transform.localScale *= 5;
+            }
+        }
+        else
+        {
+            foreach (Transform child in displayPanel.transform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
     }
 
     public void ParseInput(string input)
