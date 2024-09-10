@@ -28,5 +28,24 @@ namespace Compiler
             Evaluator evaluator = new Evaluator();
             return evaluator.Evaluate(AST);
         }
+
+        public static object? ProcessInputToDisplay(string input)
+        {
+            List<Token> tokens = Lexer.Tokenize(input);
+
+
+            Parse parsedExpresion = new Parse(tokens);
+            ASTNode AST = parsedExpresion.Parsing();
+
+            if (AST is EffectDeclarationNode) 
+            {
+                EffectDeclarationNode tempAST = AST as EffectDeclarationNode;
+                Semantic.acceptedTypesOfEffects.Add(tempAST.Name.Value);
+                return AST;
+            }
+            
+            Evaluator evaluator = new Evaluator();
+            return evaluator.Evaluate(AST);
+        }
     }
 }

@@ -43,7 +43,7 @@ namespace Compiler
                     }
                     else if (cardNode.OnActivation != null)
                     {
-                        CheckCemantic(cardNode.OnActivation);
+                        if(cardNode.OnActivation != null) CheckCemantic(cardNode.OnActivation);
                     }
 
                     break;

@@ -35,9 +35,7 @@ public class CreateCardMenu : MonoBehaviour
         {
             if (AST is CardDeclarationNode card)
             {
-                card.OnActivation = null;
-
-                CardData cardToDisplay = Compiler.Compiler.ProcessInput(tokenizableInput) as CardData;
+                CardData cardToDisplay = Compiler.Compiler.ProcessInputToDisplay(tokenizableInput) as CardData;
 
                 displayedCard = Instantiate(prefab, displayPanel.transform);
                 displayedCard.GetComponent<Card>().cardData = cardToDisplay;
