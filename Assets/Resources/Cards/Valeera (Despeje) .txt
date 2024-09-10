@@ -15,7 +15,7 @@ card {
 			},
 			Selector: 
 			{
-				Source: "board",
+				Source: "otherfield",
 				Single: true,
 				Predicate: (unit) => unit.Faction != "Aspectos"
 			},

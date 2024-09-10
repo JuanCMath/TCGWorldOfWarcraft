@@ -1,0 +1,25 @@
+card {
+	Type: "Plata",
+	Name: "Sindragosa",
+	Faction: "Icc",
+	Power: 8,
+	Range: ["Siege"],
+	ArtName: "Icc - Plata 3 - Sindragosa",
+	Description: "Aumenta 1 punto de ataque a todos los caballeros de a plaga con menos ataque que el",
+	OnActivation: 
+	[
+		{
+			Effect: 
+			{
+				Name: "Heal",
+				Amount: 2,
+			},
+			Selector: 
+			{
+				Source: "otherField",
+				Single: false,
+				Predicate: (unit) => unit.Power < 8
+			},
+		}
+	]
+}

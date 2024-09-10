@@ -1,0 +1,25 @@
+card {
+	Type: "Aumento",
+	Name: "Frostmourne",
+	Faction: "Icc",
+	Power: 0,
+	Range: ["X"],
+	ArtName: "Icc - Aumento 2 - Frostmourne",
+	Description: "Aumenta 2 puntos de ataque a los aliados con menos de 7 de attack power",
+	OnActivation: 
+	[
+		{
+			Effect: 
+			{
+				Name: "Heal",
+				Amount: 3,
+			},
+			Selector: 
+			{
+				Source: "field",
+				Single: true,
+				Predicate: (unit) => unit.Power < 7
+			},
+		}
+	]
+}

@@ -12,7 +12,7 @@ card {
 			Effect: 
 			{
 				Name: "Heal",
-				Amount: 5,
+				Amount:2,
 			},
 			Selector: 
 			{

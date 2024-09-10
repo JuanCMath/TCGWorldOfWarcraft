@@ -1,0 +1,21 @@
+card {
+	Type: "Lider",
+	Name: "The Lich King",
+	Faction: "Icc",
+	Power: 0,
+	Range: ["X"],
+	ArtName: "Icc - Lider - The Lich King",
+	Description: "Roba 2 cartas",
+	OnActivation: 
+	[
+		{
+			Effect: 
+			{
+				Name: "Draw",
+			},
+		},
+		{
+			Effect: "Draw"
+		}
+	]
+}

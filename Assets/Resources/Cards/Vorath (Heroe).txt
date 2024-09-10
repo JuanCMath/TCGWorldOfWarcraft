@@ -1,0 +1,9 @@
+card {
+	Type: "Oro",
+	Name: "Vorath",
+	Faction: "Icc",
+	Power: 7,
+	Range: ["Range","Siege"],
+	ArtName: "Icc - Heroe 4 - Vorath",
+	Description: "Poderosa Guerrera listo para combatir",
+}

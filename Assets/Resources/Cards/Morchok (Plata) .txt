@@ -12,7 +12,6 @@ card {
 			Effect: 
 			{
 				Name: "ReturnToHand",
-				Amount: 5,
 			},
 			Selector: 
 			{

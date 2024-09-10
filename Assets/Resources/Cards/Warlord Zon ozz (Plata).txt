@@ -11,8 +11,8 @@ card {
 		{
 			Effect: 
 			{
-				Name: "ReturnToHand",
-				Amount: 5,
+				Name: "Heal",
+				Amount: 2,
 			},
 			Selector: 
 			{

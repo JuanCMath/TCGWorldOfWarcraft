@@ -1,0 +1,9 @@
+card {
+	Type: "Oro",
+	Name: "Tirion",
+	Faction: "Icc",
+	Power: 8,
+	Range: ["Melee"],
+	ArtName: "Icc - Heroe 2 - Tirion",
+	Description: "Poderoso Guerrero listo para combatir",
+}

@@ -5,17 +5,18 @@ card {
 	Power: 0,
 	Range: ["X"],
 	ArtName: "Aspectos - Deck 1 - Aumento 3 - Arcane Reflection",
-	Description: "Aumenta 3 puntos de ataque a los dragones con menos de 7 de atack power",
+	Description: "Aumenta 3 puntos de ataque a los dragones con menos de 7 de attack power",
 	OnActivation: 
 	[
 		{
 			Effect: 
 			{
-				Name: "ReturnToHand",
+				Name: "Heal",
+				Amount: 4,
 			},
 			Selector: 
 			{
-				Source: "board",
+				Source: "field",
 				Single: true,
 				Predicate: (unit) => unit.Power < 7
 			},

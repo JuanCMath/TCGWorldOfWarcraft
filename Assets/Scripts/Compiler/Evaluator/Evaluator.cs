@@ -327,7 +327,7 @@ namespace Compiler
 
             scopes.Peek().Add("Single", getOne);
             if(FindVariableScope("CardsToPredicate") == null) scopes.Peek().Add("CardsToPredicate", cards);
-
+        
             EvaluatePredicate(node.predicate);
         }
 
@@ -740,14 +740,14 @@ namespace Compiler
                         {
                             foreach (Transform child2 in child.gameObject.transform)
                             {
-                            if(child2.GetComponent<Card>() != null) cards.Add(child.gameObject);
+                            if(child2.GetComponent<Card>() != null) cards.Add(child2.gameObject);
                             }
                         }
                         foreach (Transform child in GameObject.Find("Field p2").transform)
                         {
                             foreach (Transform child2 in child.gameObject.transform)
                             {
-                            if(child2.GetComponent<Card>() != null) cards.Add(child.gameObject);
+                            if(child2.GetComponent<Card>() != null) cards.Add(child2.gameObject);
                             }
                         }
                         return cards;
@@ -925,10 +925,25 @@ namespace Compiler
         {
             List<GameObject> cards = new List<GameObject>();
 
-            foreach (Transform transform in panel.transform)
+            if(panel == GameObject.Find("Player2").GetComponent<PlayerManager>().field ||
+               panel == GameObject.Find("Player1").GetComponent<PlayerManager>().field   )
             {
-                if (transform.GetComponent<Card>() != null) cards.Add(transform.gameObject);
+                foreach (Transform child in panel.transform)
+                {
+                    foreach (Transform child2 in child)
+                    {
+                        if(child2.GetComponent<Card>() != null) cards.Add(child2.gameObject);
+                    }
+                }
             }
+            else
+            {
+                foreach (Transform transform in panel.transform)
+                {
+                    if (transform.GetComponent<Card>() != null) cards.Add(transform.gameObject);
+                }
+            }
+            
 
             return cards;
         }

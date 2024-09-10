@@ -1,0 +1,25 @@
+card {
+	Type: "Clima",
+	Name: "Favor of Acherus",
+	Faction: "Icc",
+	Power: 0,
+	Range: ["X"],
+	ArtName: "Icc - Clima 3 - Favor of Acherus",
+	Description: "Daña a toda carta que no sea de su faccion por 1 puntos de ataque",
+	OnActivation: 
+	[
+		{
+			Effect: 
+			{
+				Name: "Damage",
+				Amount: 2,
+			},
+			Selector: 
+			{
+				Source: "board",
+				Single: false,
+				Predicate: (unit) => unit.Faction != "Icc"
+			},
+		}
+	]
+}

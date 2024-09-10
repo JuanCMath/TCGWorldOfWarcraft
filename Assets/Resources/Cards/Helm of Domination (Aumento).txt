@@ -1,0 +1,25 @@
+card {
+	Type: "Aumento",
+	Name: "Helm of Domination",
+	Faction: "Icc",
+	Power: 0,
+	Range: ["X"],
+	ArtName: "Icc - Aumento 1 - Helm of Domination",
+	Description: "Aumenta 3 puntos de ataque a los aliados con menos de 7 de attack power",
+	OnActivation: 
+	[
+		{
+			Effect: 
+			{
+				Name: "Heal",
+				Amount: 4,
+			},
+			Selector: 
+			{
+				Source: "field",
+				Single: true,
+				Predicate: (unit) => unit.Power < 7
+			},
+		}
+	]
+}

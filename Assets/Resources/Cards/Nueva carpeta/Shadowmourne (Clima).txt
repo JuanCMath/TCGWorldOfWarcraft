@@ -1,0 +1,25 @@
+card {
+	Type: "Clima",
+	Name: "Shadowmourne",
+	Faction: "Icc",
+	Power: 0,
+	Range: ["X"],
+	ArtName: "Icc - Clima 2 - Shadowmourne",
+	Description: "Daña a toda carta que no sea de su faccion por 2 puntos de ataque",
+	OnActivation: 
+	[
+		{
+			Effect: 
+			{
+				Name: "Damage",
+				Amount: 3,
+			},
+			Selector: 
+			{
+				Source: "board",
+				Single: false,
+				Predicate: (unit) => unit.Faction != "Icc"
+			},
+		}
+	]
+}

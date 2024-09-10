@@ -1,0 +1,24 @@
+card {
+	Type: "Despeje",
+	Name: "Quake",
+	Faction: "Icc",
+	Power: 0,
+	Range: ["X"],
+	ArtName: "Icc - Despeje 1 - Quake",
+	Description: "Retorna a la mano una carta del campo enemigo",
+	OnActivation: 
+	[
+		{
+			Effect: 
+			{
+				Name: "ReturnToHand",
+			},
+			Selector: 
+			{
+				Source: "board",
+				Single: true,
+				Predicate: (unit) => unit.Faction != "Icc"
+			},
+		}
+	]
+}

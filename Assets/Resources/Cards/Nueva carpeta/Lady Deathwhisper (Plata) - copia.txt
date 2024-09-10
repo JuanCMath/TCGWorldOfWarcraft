@@ -1,0 +1,25 @@
+card {
+	Type: "Plata",
+	Name: "Lady Deathwhisper",
+	Faction: "Icc",
+	Power: 9,
+	Range: ["Siege"],
+	ArtName: "Icc - PLata 4 - Lady Deathwhisper",
+	Description: "Sana a todos sus aliados 2 puntos de ataque",
+	OnActivation: 
+	[
+		{
+			Effect: 
+			{
+				Name: "Heal",
+				Amount: 3,
+			},
+			Selector: 
+			{
+				Source: "field",
+				Single: false,
+				Predicate: (unit) => unit.Faction == "Icc"
+			},
+		}
+	]
+}
